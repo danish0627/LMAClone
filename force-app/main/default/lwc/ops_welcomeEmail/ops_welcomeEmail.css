@@ -1,0 +1,47 @@
+.TdBody1{
+    font-family: Century Gothic, CenturyGothic,AppleGothic, Arial, sans-serif; 
+    color: #666666; 
+    font-size: 13px; 
+    line-height: 20px;
+}
+.TdCutomerDetails{
+    font-family: Century Gothic, CenturyGothic,AppleGothic, Arial, sans-serif; 
+    color: #444444;
+}
+.TdDetails{
+    font-family: Century Gothic, CenturyGothic,AppleGothic, Arial, sans-serif;
+    color: #000000; 
+    font-size: 13px; 
+    line-height: 22px; 
+    color: #666666;
+}
+.nx-pagetitle-subtitle {
+    color: #706e6b;
+    padding: 0 6px .15rem 1px;
+    line-height: 4pt;
+    font-style: normal;
+    font-weight: 400;
+    font-size: .75rem;
+    line-height: 1;
+    text-transform: uppercase;
+}
+.dialogContent{
+    color: #3e3e3c;
+    font-weight: bold;
+    text-align:center;
+}
+.previewEmailDiv{
+    width:90%!important; 
+    max-width: 90%!important;
+    min-width: 90%!important;
+    position: fixed;
+    top: 37px;
+    left: 79px;
+    max-height: 650px!important;
+}
+.tableBGC{
+    background-color: #ededed;
+}
+.buttons{
+    float: right;
+}

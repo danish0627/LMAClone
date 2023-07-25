@@ -1,0 +1,239 @@
+<template>
+    <lightning-layout multiple-rows="true">
+        <lightning-layout-item size="5" padding="around-small">
+            <p class="req-bold-text slds-text-heading_medium"><strong>Account Details</strong></p>
+
+            <!-- form-1 Account view form-->
+            <c-forms-placeholder is-show={isShow}></c-forms-placeholder>
+            <template if:true={spinner}>
+                <lightning-spinner size="small" variant="brand"></lightning-spinner>
+            </template>
+            <div class={viewForm}>
+                <lightning-record-view-form density="compact" object-api-name="Account" record-id={accountId}>
+                    <div class="slds-form">
+                        <div class="slds-form__item slds-form-element_readonly" role="listitem">
+                            <lightning-output-field field-name="Name"></lightning-output-field>
+                            <!--<lightning-button-icon onclick={openEditForm} icon-name="utility:edit"
+                                icon-class="slds-button__icon_hint" variant="bare" size="small"></lightning-button-icon>-->
+                        </div>
+                        <div class="slds-form__item slds-form-element_readonly" role="listitem">
+                            <lightning-output-field field-name="BillingStreet"></lightning-output-field>
+                            <!--<lightning-button-icon onclick={openEditForm} icon-name="utility:edit"
+                                icon-class="slds-button__icon_hint" variant="bare" size="small"></lightning-button-icon>-->
+                        </div>
+                        <div class="slds-form__item slds-form-element_readonly" role="listitem">
+                            <lightning-output-field field-name="BillingState"></lightning-output-field>
+                            <!--<lightning-button-icon onclick={openEditForm} icon-name="utility:edit"
+                                icon-class="slds-button__icon_hint" variant="bare" size="small"></lightning-button-icon>-->
+                        </div>
+                        <div class="slds-form__item slds-form-element_readonly" role="listitem">
+                            <lightning-output-field field-name="BillingStateCode"></lightning-output-field>
+                            <!--<lightning-button-icon onclick={openEditForm} icon-name="utility:edit"
+                                icon-class="slds-button__icon_hint" variant="bare" size="small"></lightning-button-icon>-->
+                        </div>
+                        <div class="slds-form__item slds-form-element_readonly" role="listitem">
+                            <lightning-output-field field-name="BillingCountry"></lightning-output-field>
+                            <!--<lightning-button-icon onclick={openEditForm} icon-name="utility:edit"
+                                icon-class="slds-button__icon_hint" variant="bare" size="small"></lightning-button-icon>-->
+                        </div>
+                    </div>
+                </lightning-record-view-form>
+            </div>
+            
+            <!-- NOTE: If required account detail edit feature only remove comments from bellow edit form and above edit icons -->
+            <!-- Account Edit Form-->
+            <!--<div class={editForm}>
+                <lightning-record-edit-form class="acc-form" density="compact" object-api-name="Account"
+                    record-id={accountId} onload={handleLoad} onsubmit={handleAccountSubmit} onerror={handleAccountError} onsuccess={handleAccountSuccess}>
+                    <div class="slds-form">
+                        <div class="slds-form__item" role="listitem">
+                            <lightning-input-field field-name="Name"></lightning-input-field>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <lightning-input-field field-name="BillingStreet"></lightning-input-field>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <lightning-input-field field-name="BillingState"></lightning-input-field>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <lightning-input-field field-name="BillingStateCode"></lightning-input-field>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <lightning-input-field field-name="BillingCountry"></lightning-input-field>
+                        </div>
+                    </div>
+                    <div class="slds-clearfix">
+                        <div class="slds-float_right">
+                            <lightning-button type="submit" class="save-button" variant="brand"
+                                icon-name="utility:check" label="Update"></lightning-button>&nbsp;&nbsp;
+                            <lightning-button label="Cancel" variant="destructive" icon-name="utility:close"
+                                onclick={viewFormAction}></lightning-button>
+                        </div>
+                    </div>
+                </lightning-record-edit-form>
+            </div>-->
+
+            <p class="slds-p-top_medium req-bold-text slds-text-heading_medium"><strong>Contact Details</strong></p>
+            <template if:true={contactId}>
+                <lightning-record-edit-form class="con-form" density="compact" object-api-name="Contact"
+                    record-id={contactId} onload={handleLoad} onsubmit={handleSubmit} onsuccess={handleSuccess} onerror={handleError}>
+                    <div class="slds-form">
+                        <!--<div class="slds-form__item" role="listitem">
+                            <div
+                                class="slds-form-element slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label">User Type</span>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">{userType}</div>
+                                </div>
+                            </div>
+                        </div>-->
+                        <div class="slds-form__item" role="listitem">
+                            <div
+                                class="slds-form-element slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label">Exhibiting As Name</span>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">{accountName}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label">Booth Contact First Name</span>
+                                <lightning-input-field field-name="FirstName" variant="label-hidden">
+                                </lightning-input-field>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label">Booth Contact Last Name</span>
+                                <lightning-input-field field-name="LastName" variant="label-hidden">
+                                </lightning-input-field>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label">Company Address 1</span>
+                                <lightning-input-field field-name="MailingStreet" variant="label-hidden">
+                                </lightning-input-field>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label">Company Address 2</span>
+                                <lightning-input-field field-name="OtherStreet" variant="label-hidden">
+                                </lightning-input-field>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label">Country</span>
+                                <lightning-input-field field-name="MailingCountry" variant="label-hidden">
+                                </lightning-input-field>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label">State/Province</span>
+                                <lightning-input-field field-name="MailingState" variant="label-hidden">
+                                </lightning-input-field>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label">City</span>
+                                <lightning-input-field field-name="MailingCity" variant="label-hidden">
+                                </lightning-input-field>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label">Postal Code</span>
+                                <lightning-input-field field-name="MailingPostalCode" variant="label-hidden">
+                                </lightning-input-field>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <lightning-input-field field-name="MobilePhone"></lightning-input-field>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <lightning-input-field field-name="Fax__c"></lightning-input-field>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <lightning-input-field field-name="Email"></lightning-input-field>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <lightning-input-field field-name="Website__c"></lightning-input-field>
+                        </div>
+                        <!--<div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_horizontal slds-hint-parent">
+                                <span class="slds-form-element__label">Company Description</span>
+                                <lightning-input-field field-name="Description__c" variant="label-hidden">
+                                </lightning-input-field>
+                            </div>
+                        </div>-->
+                    </div>
+                    <div class="slds-clearfix">
+                        <div class="slds-float_right">
+                            <lightning-button type="submit" class="save-button" variant="brand"
+                                icon-name="utility:check" label="Update"></lightning-button>&nbsp;&nbsp;
+                        </div>
+                    </div>
+                </lightning-record-edit-form>
+            </template>
+        </lightning-layout-item>
+        <lightning-layout-item size="7" padding="around-small">
+            <template if:true={oppList}>
+            <div class="summaryHeader" style="background-color: #ebebeb; padding-top: 15px; padding-left: 15px; padding-right: 15px;">Stand Summary</div>
+        
+            <div style="background-color: #ebebeb; padding-left: 15px; padding-right: 15px;overflow: auto;padding-bottom: 10px;">
+            <br/>
+        
+            <template for:each={oppList} for:item="item">      
+                <table key={item.Id} class="summarytable">
+                    <tbody>
+                        <tr>
+                            <th style="width:40%" class="textBold">{item.boothNameTitle} # {item.boothName}</th>
+                            <th style="width:60%">
+                                <template if:true={item.evnSetting}>
+                                    <a href={item.mapLink} target="_blank">Map It</a>
+                                </template> 
+                            </th>
+                        </tr>
+                        <tr>
+                        <td >{item.exhibitingAsTitle}:</td>
+                        <td>{item.exhibitingAs}</td> 
+                        </tr>
+                        <tr>
+                            <td >{item.boothAreaTitle}:</td>
+                            <td>{item.boothArea}</td>
+                        </tr>
+                        <tr>
+                            <td >{item.boothTypeTitle}:</td>
+                            <td>{item.boothType}</td>
+                        </tr>
+                        <tr>
+                            <td >Recent Opportunity:</td>
+                            <td>
+                                <a href={item.mapOpportunityId} target="_blank">{item.mapOpportunity}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td >Agent Name:</td>
+                            <td>{item.agentName}</td>
+                        </tr>
+                        <tr>
+                            <th style="width:60%"></th>
+                        </tr>
+                        <!--<tr>
+                            <td>{!item.openSidesTitle?item.openSidesTitle:'Open Sides'}:</td>
+                            <td>{!item.openSides}</td>
+                        </tr>-->
+                    </tbody>
+                </table> 
+                <!-- End Booth table -->
+            </template> 
+        </div>
+    </template>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

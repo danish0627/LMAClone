@@ -1,0 +1,48 @@
+<!-- Updating Api Version for ticket no: EMEA-200 -->
+<template>
+    <article class="slds-card slds-p-around_medium">
+        <lightning-layout multiple-rows="false">
+            <lightning-layout-item size="12" class="slds-p-horizontal_medium slds-p-bottom_medium ">
+                <span class="slds-text-heading_medium" style="font-weight: bold;">{selectedEventName}</span>
+                <lightning-breadcrumbs>
+                    <lightning-breadcrumb label="Customer Centre" onclick={ccUrl}>
+                    </lightning-breadcrumb>
+                    <lightning-breadcrumb label="Customer Centre Settings" onclick={ccsettingUrl}>
+                    </lightning-breadcrumb>
+                    <lightning-breadcrumb label="Forms">
+                    </lightning-breadcrumb>
+                </lightning-breadcrumbs>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" class="slds-p-horizontal_medium">
+                <div class="slds-p-left_x-small">
+                    <lightning-tabset>
+                        <lightning-tab label="SETTINGS" value="t1">
+                            <div class="slds-p-left_small">
+                                <lightning-tabset>
+                                    <lightning-tab label="General">
+                                        <c-ops_form-general></c-ops_form-general>
+                                    </lightning-tab>
+                                    <lightning-tab label="Required Forms" onactive={tabSelect}>
+                                        <c-ops_form-required-forms where-call-from="required" filter-field1="Form_Type__c" filter1-label="Form Type" filter-field2="Form_Group__c" filter2-label="Group Type" condition={reqCondition}>
+                                        </c-ops_form-required-forms>
+                                    </lightning-tab>
+                                    <lightning-tab label="Additional Forms" onactive={tabSelect}>
+                                        <c-ops_form-required-forms where-call-from="additional" filter-field1="Form_Type__c" filter1-label="Form Type" filter-field2="Form_Group__c" filter2-label="Group Type" condition={addCondition}>
+                                        </c-ops_form-required-forms>
+                                        <!-- <c-ops_form-aditional-forms></c-ops_form-aditional-forms> -->
+                                    </lightning-tab>
+                                    <lightning-tab label="Permission">
+                                        <c-ops_form-permissions></c-ops_form-permissions>
+                                    </lightning-tab>
+                                </lightning-tabset>
+                            </div>
+                        </lightning-tab>
+                        <lightning-tab label="REPORT" value="t2">
+                            <c-ops_form-reports></c-ops_form-reports>
+                        </lightning-tab>
+                    </lightning-tabset>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </article>
+</template>

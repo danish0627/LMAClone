@@ -1,0 +1,47 @@
+<template>
+    <div class="slds-text-heading_small">Verify your selected components</div>
+        <div if:true={tableData} class="fixed-height slds-p-top_x-small">
+            <lightning-datatable
+                    key-field="id"
+                    columns={columns}
+                    data={tableData}
+                    hide-checkbox-column
+                    default-sort-direction={defaultSortDirection}
+                    sorted-direction={sortDirection}
+                    sorted-by={sortedBy}
+                    onsort={onHandleSort}>
+            </lightning-datatable>
+            <!--             
+            <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template if:true={destructiveDatamap} for:each={destructiveDatamap} for:item="item">
+                        <tr key={item.id}>
+                            <td>{item.name}</td>
+                            <td>{item.type}</td>
+                            <td><span class="slds-text-color_success">New</span></td>
+                        </tr>
+                    </template>
+                    <template if:true={rollbackDatamap} for:each={rollbackDatamap} for:item="item">
+                        <tr key={item.id}>
+                            <td>{item.name}</td>
+                            <td>{item.type}</td>
+                            <td><span class="datatable-orange">Existing</span></td>
+                        </tr>
+                    </template> 
+                    <tr if:false={destructiveDatamap}>
+                        <td colspan="3">No new component found!</td>
+                    </tr>
+                    <tr if:false={rollbackDatamap}>
+                        <td colspan="3">No existing component found!</td>
+                    </tr>
+                </tbody>
+            </table> -->
+        </div>
+</template>

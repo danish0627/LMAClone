@@ -1,0 +1,27 @@
+<!--
+Created By	 : Girikon(Mukesh)
+Created On	 : ‎July ‎22, ‎2019
+@description : Generic Table Component 
+               Support to display pie chart by passing data in json format
+Modification log 
+Modified By	: 
+-->
+
+<template>
+    
+    <lightning-card variant="narrow" title={chartTitle} class="card-chart">
+        <div slot="actions">
+            <lightning-button-menu menu-alignment="right" icon-name="utility:settings" alternative-text="Show menu" onselect={handleSelect}>
+                <lightning-menu-item label="Download PNG Image" value="png"></lightning-menu-item>
+                <lightning-menu-item label="Download JPG Image" value="jpg"></lightning-menu-item>
+            </lightning-button-menu>
+        </div>  
+        <div class="slds-align_absolute-center">
+            <div class="canvas-holder slds-align_absolute-center" style="text-align: center">		
+                <canvas class="commonChart" width={chartWidth} height={chartHeight} style="text-align: center"></canvas>
+            </div>                        
+            <div class="chartjs-tooltip" lwc:dom="manual"></div>
+            <div class="legend" lwc:dom="manual"></div>
+        </div>
+    </lightning-card>
+</template>

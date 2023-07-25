@@ -1,0 +1,78 @@
+<template>
+    <lightning-spinner if:true={spinner} size="small" variant="brand"></lightning-spinner> 
+    <lightning-modal-header label="Deployment Details"></lightning-modal-header>
+    <lightning-modal-body>
+        <div if:true={content}>
+            <div class="slds-card">
+                <lightning-layout>
+                    <lightning-layout-item size="4" flexibility="auto" padding="horizontal-medium">
+                       <b>Source Org Name :</b>  {content.GKNRMA__Source_SFDC_Org_Name__c}
+                    </lightning-layout-item>
+                    <lightning-layout-item size="4" flexibility="auto" padding="horizontal-medium">
+                        <b>Target Org Name :</b> {content.GKNRMA__Target_Org_Name__c}
+                    </lightning-layout-item>
+                    <lightning-layout-item size="4" flexibility="auto" padding="horizontal-medium">
+                        <b>Deployed Date :</b>  <lightning-formatted-date-time value={content.CreatedDate} hour="numeric" minute="2-digit" month="short" day="2-digit" ></lightning-formatted-date-time>
+                    </lightning-layout-item>
+               </lightning-layout>
+               <lightning-layout>
+                    <lightning-layout-item padding="horizontal-medium">
+                        <b>Package Name :</b> {content.GKNRMA__Package__r.Name} 
+                    </lightning-layout-item>
+                    <lightning-layout-item alignment-bump="left">
+                        <b>Deployment Name :</b> {content.Name}
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+            <br>
+            <h2>Constructive data list</h2>
+            <lightning-datatable 
+                key-field="Id" 
+                data={cdMap} 
+                columns={coloums} 
+                hide-checkbox-column="true">
+            </lightning-datatable>
+            <br>
+            <h2>Destructive data list</h2>
+            <lightning-datatable 
+                key-field="Id" 
+                data={ddMap} 
+                columns={coloums} 
+                hide-checkbox-column="true">
+            </lightning-datatable>
+            <lightning-layout multiple-rows="true" class="slds-p-top_small" if:true={isShowTestClasses}>
+                <lightning-layout-item size="6">
+                    <div class="slds-p-top_xx-small">
+                        <strong>Available Test Classes</strong>
+                    </div>
+                    <div class="fixed-height">                            
+                        <lightning-datatable 
+                            key-field="name" 
+                            onrowselection={handleRowSelection} 
+                            selected-rows={selectedClassList} 
+                            data={classList} 
+                            columns={testcolumn}>
+                        </lightning-datatable>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="6" padding="horizontal-small">
+                    <div class="slds-p-top_xx-small">
+                        <strong>Selected Apex Test Classes</strong>
+                    </div>
+                    <div class="fixed-height">
+                        <lightning-datatable 
+                            key-field="name" 
+                            onrowselection={handleRowSelection} 
+                            selected-rows={selectedClassList} 
+                            data={selectedClasses} 
+                            columns={testcolumn}>
+                        </lightning-datatable>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-modal-body>
+    <lightning-modal-footer>
+        <lightning-button label="Rollback" variant="brand-outline" onclick={rollbackConfirm}></lightning-button>
+    </lightning-modal-footer>
+</template>

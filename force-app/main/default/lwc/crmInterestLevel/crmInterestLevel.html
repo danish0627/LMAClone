@@ -1,0 +1,176 @@
+<template>
+    <template if:true={showHeader}>
+        <p><span style="font-size:20px;" lang={lang} dir={dir}>{Interest_Level} :</span></p><br/>
+    </template>
+    <template if:true={isVisible}>
+        <template if:true={spinner}>
+            <lightning-spinner variant="brand" size="small"></lightning-spinner>
+        </template>
+        <div class="slds-p-around_small">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th style="width:23px"></th>
+                        <th>Interest L1</th>
+                        <th>Interest L2</th>
+                        <th>Interest L3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={interestLevel} for:item="item" for:index="ind">
+                        <tr class="slds-hint-parent" key={item.index}>
+                            <td style="text-align: right">
+                                <template if:false={isOnlyOneRow}>
+                                    <lightning-button-icon onclick={removeRow} value={ind} icon-name="utility:close" variant="bare"></lightning-button-icon>
+                                </template>
+                            </td>
+                            <td>
+                                <c-common-lookup field-name="L1__c" condition={item.condition1} index={ind} onhandlelookup={setLookupField} help-text="" label="" object-label="Level Master" object-name="Levels_Master__c" name-field-api="LevelValue__c" search-placeholder="Search Level Masters"></c-common-lookup>
+                            </td>
+                            <td>
+                                <template if:true={item.condition2}>
+                                    <c-common-lookup field-name="L2__c" condition={item.condition2} index={ind} onhandlelookup={setLookupField} help-text="" label="" object-label="Level Master" object-name="Levels_Master__c" name-field-api="LevelValue__c" search-placeholder="Search Level Masters"></c-common-lookup>
+                                </template>
+                                <template if:false={item.condition2}>
+                                    <c-common-lookup field-name="L2__c" condition="Mapped_To_Level__c!=null AND Mapped_To_Level__c=\'\'" index={ind} onhandlelookup={setLookupField} help-text="" label="" object-label="Level Master" object-name="Levels_Master__c" name-field-api="LevelValue__c" search-placeholder="Search Level Masters"></c-common-lookup>
+                                </template>
+                            </td>
+                            <td>
+                                <template if:true={item.condition3}>
+                                    <c-common-lookup field-name="L3__c" condition={item.condition3} index={ind} onhandlelookup={setLookupField} help-text="" label="" object-label="Level Master" object-name="Levels_Master__c" name-field-api="LevelValue__c" search-placeholder="Search Level Masters"></c-common-lookup>    
+                                </template>
+                                <template if:false={item.condition3}>
+                                    <c-common-lookup field-name="L3__c" condition="Mapped_To_Level__c!=null AND Mapped_To_Level__c=\'\'" index={ind} onhandlelookup={setLookupField} help-text="" label="" object-label="Level Master" object-name="Levels_Master__c" name-field-api="LevelValue__c" search-placeholder="Search Level Masters"></c-common-lookup>    
+                                </template>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <div class="slds-align_absolute-center slds-m-top_small">
+                <lightning-button label="Cancel" onclick={cancelForm} variant="destructive" icon-name="utility:close"></lightning-button>&nbsp;&nbsp;
+                <lightning-button label="Save" onclick={submitData} variant="brand" icon-name="utility:check"></lightning-button>
+            </div>
+        </div>
+    </template>
+    <!-- Edit Modal-->
+    <template if:true={openEditModal}>
+        <lightning-record-edit-form class="edit_single_record" record-id={selectedId} object-api-name="LeadInterestLevelMapping__c" onsubmit={handleSubmit} onsuccess={handleSuccess} onerror={handleError}>
+            <section role="dialog" tabindex="-1" aria-labelledby="edit-form-heading" aria-modal="true" aria-describedby="modal-content-edit-form" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button type="button" onclick={closeModal} class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                            <lightning-icon icon-name="utility:close" variant="bare" size="small"></lightning-icon>
+                        </button>
+                        <h2 id="edit-form-heading" class="slds-text-heading_medium slds-hyphenate">Edit Record</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-edit-form" style="min-height:450px;max-height:auto">
+                        <template if:true={spinner}>
+                            <lightning-spinner size="small" variant="brand"></lightning-spinner>
+                        </template>
+                        <lightning-layout multiple-rows="true">                                
+                            <lightning-layout-item size="12" padding="around-small">
+                                <!-- Interest level 1 -->
+                                <c-common-lookup field-name="L1__c" condition={condition1} index="-1" selected-item-id={selectedRecord.L1__c} onhandlelookup={setEditLookupField} help-text="" label="Interest L1" object-label="Level Master" object-name="Levels_Master__c" name-field-api="LevelValue__c" search-placeholder="Search Level Masters"></c-common-lookup>
+                                <!-- Interest level 2 -->
+                                <template if:true={interestLevel2ToUpdate}>
+                                    <c-common-lookup field-name="L2__c" condition={condition2} index="-2" selected-item-id={interestLevel2ToUpdate} onhandlelookup={setEditLookupField} help-text="" label="Interest L2" object-label="Level Master" object-name="Levels_Master__c" name-field-api="LevelValue__c" search-placeholder="Search Level Masters"></c-common-lookup>
+                                </template>
+                                <template if:false={interestLevel2ToUpdate}>
+                                    <c-common-lookup field-name="L2__c" condition={condition2} index="-2" selected-item-id="" onhandlelookup={setEditLookupField} help-text="" label="Interest L2" object-label="Level Master" object-name="Levels_Master__c" name-field-api="LevelValue__c" search-placeholder="Search Level Masters"></c-common-lookup>
+                                </template>
+                                <!-- Interest level 3 -->
+                                <template if:true={interestLevel3ToUpdate}>
+                                    <c-common-lookup field-name="L3__c" condition={condition3} index="-3" selected-item-id={interestLevel3ToUpdate} onhandlelookup={setEditLookupField} help-text="" label="Interest L3" object-label="Level Master" object-name="Levels_Master__c" name-field-api="LevelValue__c" search-placeholder="Search Level Masters"></c-common-lookup>    
+                                </template>
+                                <template if:false={interestLevel3ToUpdate}>
+                                    <c-common-lookup field-name="L3__c" condition={condition3} index="-3" selected-item-id="" onhandlelookup={setEditLookupField} help-text="" label="Interest L3" object-label="Level Master" object-name="Levels_Master__c" name-field-api="LevelValue__c" search-placeholder="Search Level Masters"></c-common-lookup>    
+                                </template>
+                            </lightning-layout-item>    
+                        </lightning-layout>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button icon-name="utility:close" variant="destructive" onclick={closeModal} label="Cancel"></lightning-button>&nbsp;&nbsp;
+                        <lightning-button type="submit" icon-name="utility:check" variant="brand" label="Update"></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </lightning-record-edit-form>
+    </template>
+    <template if:true={condition}>
+        <template if:true={isUpdateableRecord}>
+            <c-common-table onopenmassupdate={massUpdateFormOpener} onrecordedit={handleEditModal} hide-checkbox-column="false" condition={condition} onopennewmodal={addRow} is-show-action="true" button1-label={Add_Interest_Level} object-label={Interest_Level} object-name="LeadInterestLevelMapping__c" fields="L1__r.LevelValue__c,L2__r.LevelValue__c,L3__r.LevelValue__c" fields-label="Interest L1,Interest L2,Interest L3"></c-common-table>
+        </template>
+        <template if:false={isUpdateableRecord}>                
+            <template if:true={isCreateableRecord}>
+                <c-common-table condition={condition} onopennewmodal={addRow} button1-label={Add_Interest_Level} object-label={Interest_Level} object-name="LeadInterestLevelMapping__c" fields="L1__r.LevelValue__c,L2__r.LevelValue__c,L3__r.LevelValue__c" fields-label="Interest L1,Interest L2,Interest L3"></c-common-table>
+            </template>
+            <template if:false={isCreateableRecord}>
+                <c-common-table condition={condition} object-label={Interest_Level} object-name="LeadInterestLevelMapping__c" fields="L1__r.LevelValue__c,L2__r.LevelValue__c,L3__r.LevelValue__c" fields-label="Interest L1,Interest L2,Interest L3"></c-common-table>
+            </template>
+        </template>
+    </template>
+        
+    <template if:true={massUpdateModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="edit-form-heading" aria-modal="true" aria-describedby="modal-content-edit-form" class="slds-modal slds-fade-in-open slds-modal_medium">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button type="button" onclick={cancelForm} class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                        <lightning-icon icon-name="utility:close" variant="bare" size="small"></lightning-icon>
+                    </button>
+                    <h2 id="edit-form-heading3" class="slds-text-heading_medium slds-hyphenate">Mass Update: {Interest_Level}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-edit-form2" style="min-height:450px;max-height:auto">
+                    <template if:true={spinner}>
+                        <lightning-spinner size="small" variant="brand"></lightning-spinner>
+                    </template>
+                    <lightning-layout multiple-rows="true">
+                        <!-- col 1 -->
+                        <lightning-layout-item size="12" padding="around-small">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                <thead>
+                                    <tr class="slds-line-height_reset">                                            
+                                        <th>Interest L1</th>
+                                        <th>Interest L2</th>
+                                        <th>Interest L3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={interestLevel} for:item="item" for:index="ind">
+                                        <tr class="slds-hint-parent" key={item.index}>                                                
+                                            <td>
+                                                <c-common-lookup selected-item-id={item.fieldValue1} field-name="L1__c" condition={item.condition1} index={ind} onhandlelookup={setLookupField} help-text="" label="" object-label="Level Master" object-name="Levels_Master__c" name-field-api="LevelValue__c" search-placeholder="Search Level Masters"></c-common-lookup>
+                                            </td>
+                                            <td>
+                                                <template if:true={item.condition2}>
+                                                    <c-common-lookup selected-item-id={item.fieldValue2} field-name="L2__c" condition={item.condition2} index={ind} onhandlelookup={setLookupField} help-text="" label="" object-label="Level Master" object-name="Levels_Master__c" name-field-api="LevelValue__c" search-placeholder="Search Level Masters"></c-common-lookup>
+                                                </template>
+                                                <template if:false={item.condition2}>
+                                                    <c-common-lookup selected-item-id={item.fieldValue2} field-name="L2__c" condition="Mapped_To_Level__c!=null AND Mapped_To_Level__c=\'\'" index={ind} onhandlelookup={setLookupField} help-text="" label="" object-label="Level Master" object-name="Levels_Master__c" name-field-api="LevelValue__c" search-placeholder="Search Level Masters"></c-common-lookup>
+                                                </template>
+                                            </td>
+                                            <td>
+                                                <template if:true={item.condition3}>
+                                                    <c-common-lookup selected-item-id={item.fieldValue3} field-name="L3__c" condition={item.condition3} index={ind} onhandlelookup={setLookupField} help-text="" label="" object-label="Level Master" object-name="Levels_Master__c" name-field-api="LevelValue__c" search-placeholder="Search Level Masters"></c-common-lookup>    
+                                                </template>
+                                                <template if:false={item.condition3}>
+                                                    <c-common-lookup selected-item-id={item.fieldValue3} field-name="L3__c" condition="Mapped_To_Level__c!=null AND Mapped_To_Level__c=\'\'" index={ind} onhandlelookup={setLookupField} help-text="" label="" object-label="Level Master" object-name="Levels_Master__c" name-field-api="LevelValue__c" search-placeholder="Search Level Masters"></c-common-lookup>    
+                                                </template>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button icon-name="utility:close" variant="destructive" onclick={cancelForm} label="Cancel"></lightning-button>&nbsp;&nbsp;
+                    <lightning-button icon-name="utility:check" variant="brand" onclick={updateBulkData} label="Update"></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

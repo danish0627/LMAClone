@@ -1,0 +1,397 @@
+<!--
+Created By	 : Girikon(Mukesh[STL-13])
+Created On	 : July 30, 2019
+@description : This is simple drawer table component and apply all other feature like pagination, sorting, filter and search.
+
+Modification log : 
+Modified By	: Mukesh Gupta[STL-16 fixed sorting(12 Aug, 2019)] 
+Updating Api Version for ticket no: EMEA-200
+-->
+
+<template>
+        <lightning-layout class="slds-m-bottom_small common-table">
+            <lightning-layout-item size="2" padding="horizontal-small">                    
+                <template if:true={showNewButton}>
+                    <lightning-button icon-name="utility:add" icon-position="left" label="Add New" variant="brand" onclick={openNewRecordModal}></lightning-button>
+                </template>
+            </lightning-layout-item>
+            <lightning-layout-item size="10" padding="horizontal-small">
+                <lightning-layout>
+                    <lightning-layout-item size="3" class="slds-p-right_xx-small slds-p-left_xx-small">                    
+                        <template if:true={filterField3}>
+                            <template if:true={isMultiPicklistFilter3}>
+                                <c-multi-picklist placeholder={filter3Label} options={filterField3Options} selected-options={filterField3Value} onmultipicklistselect={handleMultipicklistChange} filter-name="3"></c-multi-picklist>
+                            </template>
+                            <template if:false={isMultiPicklistFilter3}>
+                                <lightning-combobox options={filterField3Options} class="filter3" value={filterField3Value} label="filter-1" variant="label-hidden" onchange={handleFilterChange}></lightning-combobox>
+                            </template>     
+                        </template>
+                    </lightning-layout-item>                
+                    <lightning-layout-item size="3" class="slds-p-right_xx-small slds-p-left_xx-small">
+                        <template if:true={filterField2}>
+                            <template if:true={isMultiPicklistFilter2}>
+                                <c-multi-picklist placeholder={filter2Label} options={filterField2Options} selected-options={filterField2Value} onmultipicklistselect={handleMultipicklistChange} filter-name="2"></c-multi-picklist>                            
+                            </template>
+                            <template if:false={isMultiPicklistFilter2}>
+                                <lightning-combobox options={filterField2Options} class="filter2" value={filterField2Value} label="filter-2" variant="label-hidden" onchange={handleFilterChange}></lightning-combobox>
+                            </template>
+                        </template>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="3" class="slds-p-right_xx-small slds-p-left_xx-small">
+                        <template if:true={filterField1}>
+                            <template if:true={isMultiPicklistFilter1}>
+                                <c-multi-picklist placeholder={filter1Label} options={filterField1Options} selected-options={filterField1Value} onmultipicklistselect={handleMultipicklistChange} filter-name="1"></c-multi-picklist>                            
+                            </template>
+                            <template if:false={isMultiPicklistFilter1}>
+                                <lightning-combobox options={filterField1Options} class="filter1" value={filterField1Value} label="filter-3" variant="label-hidden" onchange={handleFilterChange}></lightning-combobox>
+                            </template>
+                        </template>
+                        <template if:true={isFilterByOwner}>
+                            <lightning-combobox options={ownerOptions} class="ownerfilter" value={selectedOwner} label="filter-4" variant="label-hidden" onchange={handleFilterChange}></lightning-combobox>
+                        </template>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="3" class="slds-p-right_xx-small slds-p-left_xx-small">
+                        <lightning-input type="search" value={searchValue} label="Search" placeholder="Search" variant="label-hidden" class="search-box" onchange={reloadData}></lightning-input>
+                        <button style="display: inline-block;margin-top: -2px;margin-left: -5px;" class="slds-button slds-button_icon slds-button_icon-brand" title="Search" onclick={searchData}>
+                            <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+                        </button>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+        </lightning-layout>
+            
+    
+        <c-table-placeholder is-show={isShow}></c-table-placeholder>
+        <template if:true={isTrue}>
+            <lightning-spinner variant="brand" size="small" title="Loading..."></lightning-spinner>
+        </template>
+    
+        <table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="slds-text-align_right" scope="col" style="width: 3.25rem;"></th>					
+                    <th aria-label="Invoice Number" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                        <a id="Name" onclick={handleSorting} class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">					          	
+                            <div class="slds-grid slds-grid_vertical-align-center">
+                                <span class="slds-truncate" title="Invoice Number">Invoice Number</span>
+                                <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                                </span>
+                            </div>
+                        </a>
+                    </th>
+                    <th aria-label="CustomOrderNumber" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                        <a id="CustomOrderNumber__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">					          	
+                            <div class="slds-grid slds-truncate slds-grid_vertical-align-center">
+                                <span class="slds-truncate" title="Custom Order Number">Custom Order Number</span>
+                                <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                    <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                                </span>
+                            </div>
+                        </a>
+                    </th>
+                    <th aria-label="Sequential Number" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                        <a id="Invoice_Number_SFDC__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">					          	
+                            <div class="slds-grid slds-truncate slds-grid_vertical-align-center" title="Sequential Number">
+                                <span class="slds-truncate" title="Sequential Number">Sequential Number</span>
+                                 <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                    <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                                </span>
+                            </div>
+                        </a>
+                    </th>
+                    <th aria-label="Invoice Date" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                        <a id="blng__InvoiceDate__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">					          	
+                            <div class="slds-grid slds-truncate slds-grid_vertical-align-center" title="Invoice Date">
+                              <span class="slds-truncate" title="Invoice Date">Invoice Date</span>
+                              <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                            </span>
+                            </div>
+                        </a>
+                    </th>
+                    <th aria-label="Payment Status" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                        <a id="Invoice_Payment_Status__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">					          	
+                            <div class="slds-grid slds-truncate slds-grid_vertical-align-center" title="Payment Status">
+                                <span class="slds-truncate" title="Payment Status">Payment Status</span>
+                                <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                    <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                                </span>
+                            </div>
+                        </a>
+                    </th>                
+                    <th aria-label="Payments" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                        <a id="blng__Payments__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">					          	
+                            <div class="slds-truncate slds-truncate slds-grid slds-grid_vertical-align-center" title="Payments">
+                                <span class="slds-truncate" title="Payments">Payments</span>
+                                <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                    <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                                </span>
+                            </div>
+                        </a>
+                    </th>					
+                    <th aria-label="Balance" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                        <a id="blng__Balance__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">					          	
+                            <div class="slds-grid slds-truncate slds-grid_vertical-align-center" title="Balance">
+                                <span class="slds-truncate" title="Balance">Balance</span>
+                                <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                    <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                                </span>
+                            </div>
+                        </a>
+                    </th>	
+                    <th aria-label="Status Flag" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                        <a id="blng__StatusFlag__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">					          	
+                            <div class="slds-grid slds-truncate slds-grid_vertical-align-center" title="Status Flag">
+                                <span class="slds-truncate" title="Status Flag">Status Flag</span>
+                                <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                    <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                                </span>
+                            </div>
+                        </a>
+                    </th>
+                    <th aria-label="Status" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                        <a id="blng__InvoiceStatus__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">					          	
+                            <div class="slds-grid slds-truncate slds-grid_vertical-align-center" title="Status">
+                                <span class="slds-truncate" title="Status">Status</span>
+                                <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                    <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                                </span>
+                            </div>
+                        </a>
+                    </th>
+                    <th aria-label="Due Date" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                        <a id="blng__DueDate__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">					          	
+                            <div class="slds-grid slds-truncate slds-grid_vertical-align-center"  title="Due Date">
+                                <span class="slds-truncate" title="Due Date">Due Date</span>
+                                <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                    <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                                </span>
+                            </div>
+                        </a>
+                    </th>
+                    <th aria-label="Invoice Processed" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                        <a id="Invoice_Processed__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">					          	
+                            <div class="slds-grid slds-truncate slds-grid_vertical-align-center" title="Invoice Processed">
+                                <span class="slds-truncate" title="Invoice Processed">Invoice Processed</span>
+                                <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                    <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                                </span>
+                            </div>
+                        </a>
+                    </th>
+                    <th aria-label="Payment Method" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                        <a id="blng__PaymentMethod__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">					          	
+                            <div class="slds-grid slds-truncate slds-grid_vertical-align-center" title="Payment Method">
+                                <span class="slds-truncate" title="Payment Method">Payment Method</span>
+                                <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                    <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                                </span>
+                            </div>
+                        </a>
+                    </th>
+                    <th aria-label="Total Amount" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                        <a id="blng__TotalAmount__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">					          	
+                            <div class="slds-grid slds-truncate slds-grid_vertical-align-center" title="Total Amount">
+                                <span class="slds-truncate" title="Total Amount">Total Amount</span>
+                                <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                    <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                                </span>
+                            </div>
+                        </a>
+                    </th>                    
+                    <th aria-label="LastViewedDate" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                        <a id="LastViewedDate" onclick={handleSorting} class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">					          	
+                            <div class="slds-grid slds-truncate slds-grid_vertical-align-center" title="LAST MODIFIED DATE">
+                                <span class="slds-truncate" title="LAST MODIFIED DATE">LAST MODIFIED DATE</span>
+                                <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                    <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                                </span>
+                            </div>
+                        </a>
+                    </th>				
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={tableData} for:item="item" for:index="ind">
+                    <tr key={item.Id} aria-selected="false" class="slds-hint-parent">
+                        <td class="slds-text-align_right" role="gridcell">                            
+                            <template if:true={isAccountActive}>
+                                <lightning-button-icon icon-name="doctype:attachment" alternative-text="View Invoice PDF" variant="bare"></lightning-button-icon>&nbsp;&nbsp;
+                                <lightning-button-icon icon-name="utility:email" alternative-text="Send Invoice by email" variant="bare"></lightning-button-icon>
+                            </template>
+                            <template if:false={isAccountActive}>
+                                <lightning-button-icon icon-name="doctype:attachment" alternative-text="View Invoice PDF" variant="bare" value={item.Id} onclick={openInvoice}></lightning-button-icon>&nbsp;&nbsp;
+                                <a href={item.emailLink}>
+                                    <lightning-button-icon icon-name="utility:email" alternative-text="Send Invoice by email" variant="bare"></lightning-button-icon>
+                                </a>
+                            </template>
+                        </td>
+                        <td tabindex="0">
+                            <div class="slds-truncate" title={item.Name}>
+                                {item.Name}
+                            </div>
+                        </td>
+                        <td tabindex="0">
+                            <div class="slds-truncate" title={item.CustomOrderNumber__c}>                            
+                                {item.CustomOrderNumber__c}
+                            </div>
+                        </td>                  						
+                        <td tabindex="0">
+                            <div class="slds-truncate" title={item.Invoice_Number_SFDC__c}>
+                                {item.Invoice_Number_SFDC__c}
+                            </div>
+                        </td>
+                        <td tabindex="0">
+                            <div class="slds-truncate" title={item.blng__InvoiceDate__c}>
+                                    <lightning-formatted-date-time value={item.blng__InvoiceDate__c} year="numeric" month="numeric" day="numeric"></lightning-formatted-date-time>
+                            </div>
+                        </td>
+                        <td tabindex="0">
+                            <div class="slds-truncate" title={item.Invoice_Payment_Status__c}>
+                                {item.Invoice_Payment_Status__c}
+                            </div>
+                        </td>					    
+                        <td tabindex="0">
+                            <div class="slds-truncate" title={item.blng__Payments__c}>  
+                                <lightning-formatted-number value={item.blng__Payments__c} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
+                            </div>
+                        </td>
+                        <td tabindex="0">
+                            <div class="slds-truncate" title={item.blng__Balance__c}>
+                                <lightning-formatted-number value={item.blng__Balance__c} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
+                            </div>
+                        </td>
+                        <td tabindex="0">
+                            <div class="slds-truncate" title={item.blng__StatusFlag__c}>
+                                <lightning-formatted-rich-text value={item.blng__StatusFlag__c}></lightning-formatted-rich-text>                                
+                            </div>
+                        </td>
+                        <td tabindex="0">
+                            <div class="slds-truncate" title={item.blng__InvoiceStatus__c}>
+                                {item.blng__InvoiceStatus__c}
+                            </div>
+                        </td>
+                        <td tabindex="0">
+                            <div class="slds-truncate" title={item.blng__DueDate__c}>
+                                <lightning-formatted-date-time value={item.blng__DueDate__c} year="numeric" month="numeric" day="numeric"></lightning-formatted-date-time>
+                            </div>
+                        </td>
+                        <td tabindex="0">
+                            <div class="slds-truncate" title={item.Invoice_Processed__c}>
+                                <template if:true={item.Invoice_Processed__c}>
+                                    <lightning-icon icon-name="utility:check" size="xx-small"></lightning-icon>
+                                </template>
+                            </div>
+                        </td>
+                        <td tabindex="0">
+                            <div class="slds-truncate" title={item.blng__PaymentMethod__c}>
+                                {item.blng__PaymentMethod__c}
+                            </div>
+                        </td>
+                        <td tabindex="0">
+                            <div class="slds-truncate" title={item.blng__TotalAmount__c}>
+                                <lightning-formatted-number value={item.blng__TotalAmount__c} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
+                            </div>
+                        </td>
+                        <td tabindex="0">
+                            <div class="slds-truncate" title="">
+                                <lightning-formatted-date-time value={item.LastModifiedDate} year="numeric" month="numeric" day="numeric" hour="2-digit" minute="2-digit"></lightning-formatted-date-time>
+                            </div>
+                        </td>
+                    </tr>
+               </template>
+          </tbody>
+    
+       </table>
+        <template if:true={error}>
+            <div class="slds-align_absolute-center">No {objectLabel} to Display</div>
+        </template>
+            
+        <template if:true={pageList}>
+            <lightning-layout multiple-rows="true" class="slds-m-around_small slds-clearfix">
+                <lightning-layout-item size="4" padding="horizontal_small">
+                    <div>
+                        Show                
+                        <lightning-combobox options={pagesizeList} value="10" label="Page Size" variant="label-hidden" placeholder="Page Size" onchange={onPageSizeChange} class="pagesize"></lightning-combobox>
+                        {objectLabel} per page.
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="8" class="slds-float_right" padding="horizontal_small">
+                    <div class="slds-float_right">
+                    {showPageView} of &nbsp;
+                    <template if:true={isMoreThan2000}>2000+</template>
+                    <template if:false={isMoreThan2000}>{totalRows}</template>&nbsp;
+                    <lightning-button-icon class="prev-btn" size="medium" icon-name="utility:chevronleft" onclick={getPrevData} variant="bare"></lightning-button-icon>&nbsp;
+                        <span class="slds-p-horizontal_x-small">
+                            <a href="javascript:void(0);" id="first" onclick={processMe} name="1" class={firstActiveClass}>1</a>
+                        </span>
+                        <span class="slds-p-horizontal_xxx-small">
+                            <a href="javascript:void(0);" id="none1">...</a>
+                        </span>
+                        <template for:each={pageList} for:item="item" for:index="ind">
+                            <span key={item} id={item} class="slds-p-horizontal_x-small">
+                                <a href="javascript:void(0);" id={item} onclick={processMe} name={item} class="">{item}</a>
+                            </span>
+                        </template>
+                        <span class="slds-p-horizontal_xxx-small">
+                            <a href="javascript:void(0);" id="none2">...</a>
+                        </span>
+                        <span key={item} id={item} class="slds-p-horizontal_x-small">
+                            <a href="javascript:void(0);" id="last" onclick={processMe} name={totalPage} class={lastActiveClass}>{totalPage}</a>
+                        </span>
+                    <lightning-button-icon class="next-btn" size="medium" icon-name="utility:chevronright" onclick={getNextData} variant="bare"></lightning-button-icon>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+        
+        
+        <slot name="newRecordModal"></slot>
+        <slot name="editRecordModal"></slot>
+        <slot name="actionRecordModal"></slot>
+    
+    
+    
+        <!-- Single Delete confirmation -->
+    <template if:true={isOpenSingleDeleteModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button onclick={noDelete} class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                        <lightning-icon icon-name="utility:close" variant="bare" size="small"></lightning-icon>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Confirmation</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-text-color_error slds-text-heading_small"> Do you realy want to delete record?</div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={noDelete}>No</button>
+                    <button class="slds-button slds-button_brand" onclick={yesDeleteAll}>Yes</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <template if:true={pdfUrl}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button onclick={closeInvoiceModal} class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                        <lightning-icon icon-name="utility:close" variant="bare" size="small"></lightning-icon>
+                    </button>
+                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">{pdfName}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2" style="height:500px">
+                    <iframe src={pdfUrl} style="width: 100%; border:0px;height:470px"></iframe>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeInvoiceModal}>Close</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

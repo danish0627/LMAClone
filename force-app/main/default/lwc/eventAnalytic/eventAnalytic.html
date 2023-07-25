@@ -1,0 +1,211 @@
+<!-- Updating Api Version for ticket no: EMEA-200 -->
+<template>
+	    <lightning-layout multiple-rows="true">
+		<lightning-layout-item size="9" padding="around-small">
+			<div class="slds-clearfix">
+				<div class="slds-float_right">
+					<lightning-input type="search" value={searchValue} label="Search" placeholder="Search" variant="label-hidden" class="search-box" onchange={reloadData}></lightning-input>
+					<button style="display: inline-block;margin-top: -2px;margin-left: -5px;" class="slds-button slds-button_icon slds-button_icon-brand" title="Search" onclick={searchData}>
+						<lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+					</button>
+				</div>
+			</div>
+			<c-table-placeholder is-show={spinner}></c-table-placeholder>
+			<!-- Parent table Start-->
+			<table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid" style="margin-top: 5px;">
+			  	<thead>
+				    <tr class="slds-line-height_reset">
+						<th class="slds-text-align_right" scope="col" style="width: 3.25rem;"></th>					
+						<th aria-label="Name" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+							<a id="Name" onclick={handleSorting} class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">
+					          	<div class="slds-grid slds-grid_vertical-align-center">
+						            <span class="slds-truncate" title="Event Series Name">Event Series Name</span>
+						            <span class="slds-icon_container slds-icon-utility-arrowup">
+                                        <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+						            </span>
+					          	</div>
+				        	</a>
+						</th>
+					</tr>
+			 	</thead>
+			 	<tbody>
+					<template if:false={parentTable}>
+						<tr><td colspan="2" style="text-align: center">No Event Series To Display</td></tr>
+					</template>
+			 		<template for:each={parentTable} for:item="item" for:index="ind">
+					    <tr key={item.Name} aria-selected="false" class="slds-hint-parent">
+						    <td class="slds-text-align_right" role="gridcell">
+						        <lightning-button-icon alternative-text="View Event Edition List" icon-name="utility:chevronright" variant="bare" value={item.Event_Series__c} onclick={toggleDetail}></lightning-button-icon>
+						    </td>					    
+						    <td tabindex="0">
+						        <div class="slds-truncate" title="">
+									<a href="javascript:void(0)" data-event-series-id={item.Event_Series__c} onclick={gotoEventDetail} target="_blank">{item.Name}</a>
+						       	</div>
+						    </td>
+					  	</tr>
+					  	<!-- detail rows-->
+					  	<tr key={item.Event_Series__c} id={item.Event_Series__c} class="detail-rows" style="display:none;">
+					  		<td colspan="2">
+					  			<div class="slds-card slds-p-horizontal_small">
+					  				<lightning-layout multiple-rows="true">
+					  				<lightning-layout-item size="9" padding="around-small">
+										<!-- SUBParent table Start-->
+										<table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_fixed-layout" role="grid">
+											<thead>
+												<tr class="slds-line-height_reset">
+													<th class="slds-text-align_right" scope="col" style="width: 3.25rem;"></th>					
+													<th aria-label="Event Edition Name" aria-sort="none" class="slds-is-resizable" scope="col">
+														<div class="slds-grid slds-grid_vertical-align-center">
+															<span class="slds-truncate" title="Event Edition Name"><a class="slds-th__action slds-text-link_reset">Event Edition Name</a></span>
+														</div>
+													</th>
+													<th aria-label="Amount" aria-sort="none" class="slds-is-resizable" scope="col">
+														<div class="slds-grid slds-grid_vertical-align-center">
+															<span class="slds-truncate" title={amount}><a class="slds-th__action slds-text-link_reset">{amount}</a></span>
+														</div>
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+												<template for:each={item.subParent} for:item="item2" for:index="ind2">
+													<tr key={item2.Name} aria-selected="false" class="slds-hint-parent">
+														<td class="slds-text-align_right" role="gridcell">
+															<lightning-button-icon alternative-text="Record Detail on Product Family" icon-name="utility:chevronright" variant="bare" value={item2.EventEdition__c} onclick={toggleDetail}></lightning-button-icon>
+														</td>					    
+														<td tabindex="0">
+															<div class="slds-truncate" title={item2.Name} style="white-space: normal;">
+																{item2.Name}
+															</div>
+														</td>
+														<td tabindex="0">
+															<div class="slds-truncate">
+																<lightning-formatted-number value={item2.expr0}  format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
+															</div>
+														</td>
+													</tr>
+													<!-- detail rows-->
+													<tr key={item2.EventEdition__c} id={item2.EventEdition__c} class="detail-rows" style="display:none;">
+														<td colspan="3">
+															<div class="slds-card slds-p-horizontal_small">
+																<lightning-layout multiple-rows="true">
+													  				<lightning-layout-item size="8" padding="around-small">
+																		<!-- Child table Start-->
+																		<table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_fixed-layout" role="grid">
+																			<thead>
+																				<tr class="slds-line-height_reset">													
+																					<th aria-label={prodFamly} aria-sort="none" class="slds-is-resizable" scope="col">
+																						<div class="slds-grid slds-grid_vertical-align-center">
+																							<span class="slds-truncate" title={prodFamly}><a class="slds-th__action slds-text-link_reset">{prodFamly}</a></span>
+																						</div>
+																					</th>
+																					<th aria-label="Event Edition Name" aria-sort="none" class="slds-is-resizable" scope="col">
+																						<div class="slds-grid slds-grid_vertical-align-center">
+																							<span class="slds-truncate" title="Event Edition Name"><a class="slds-th__action slds-text-link_reset">Event Edition Name</a></span>
+																						</div>
+																					</th>
+																					<th aria-label={tprice} aria-sort="none" class="slds-is-resizable" scope="col">
+																						<div class="slds-grid slds-grid_vertical-align-center">
+																							<span class="slds-truncate" title={tprice}><a class="slds-th__action slds-text-link_reset">{tprice}</a></span>
+																						</div>
+																					</th>
+																				</tr>
+																			</thead>
+																			<tbody>
+																				<template for:each={item2.childRecord} for:item="item3">
+																					<tr key={item3.Name} aria-selected="false" class="slds-hint-parent">						    
+																						<td tabindex="0">
+																							<div class="slds-truncate" title={item3.Family}  style="white-space: normal;">
+																								{item3.Family}
+																							</div>
+																						</td>
+																						<td tabindex="0">
+																							<div class="slds-truncate" title={item3.Name}  style="white-space: normal;">
+																								{item3.Name}
+																							</div>
+																						</td>
+																						<td tabindex="0">
+																							<div class="slds-truncate">
+																								<lightning-formatted-number value={item3.expr0} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>
+																							</div>
+																						</td>
+																					</tr>
+																				</template>
+																			</tbody>
+																		</table>
+																		<!-- Child table END-->
+																	</lightning-layout-item>
+																	<lightning-layout-item size="4" padding="around-small">
+																		<!-- Child Chart -->
+																		<c-common-chart chart-datas={item2.childRecord} chart-width="200px" chart-height="200px" chart-title="Product Family Chart"></c-common-chart>
+																	</lightning-layout-item>
+                                                                </lightning-layout>
+															</div>
+														</td>
+													</tr>
+												</template>
+											</tbody>
+										</table>
+										<!-- SUBParent table END-->
+									</lightning-layout-item>
+									<lightning-layout-item size="3" padding="around-small">
+										<!-- SUBParent Chart -->
+										<c-common-chart chart-datas={item.subParent} chart-width="250px" chart-height="250px" chart-title="Event Edition Chart"></c-common-chart>
+									</lightning-layout-item>
+									</lightning-layout>
+						  		</div>
+					  		</td>
+					  	</tr>
+				  	</template>
+				</tbody>
+	 		</table>
+			 <!-- Parent table END-->
+			 
+			<template if:true={pageList}>
+				<lightning-layout multiple-rows="true" class="slds-m-around_small slds-clearfix">
+					<lightning-layout-item size="4" padding="horizontal_small">
+						<div>
+							Show                
+							<lightning-combobox options={pagesizeList} value={pagesizeVisible} label="Page Size" variant="label-hidden" placeholder="Page Size" onchange={onPageSizeChange} class="pagesize"></lightning-combobox>
+							Event Series per page.
+						</div>
+					</lightning-layout-item>
+					<lightning-layout-item size="8" class="slds-float_right" padding="horizontal_small">
+						<div class="slds-float_right">
+						{showPageView} of &nbsp;
+						<template if:true={isMoreThan2000}>2000+</template>
+						<template if:false={isMoreThan2000}>{totalRows}</template>&nbsp;
+						<lightning-button-icon class="prev-btn" size="medium" icon-name="utility:chevronleft" onclick={getPrevData} variant="bare"></lightning-button-icon>&nbsp;
+							<span class="slds-p-horizontal_x-small">
+								<a href="javascript:void(0);" id="first" onclick={processMe} name="1" class={firstActiveClass}>1</a>
+							</span>
+							<span class="slds-p-horizontal_xxx-small">
+								<a href="javascript:void(0);" id="none1">...</a>
+							</span>
+							<template for:each={pageList} for:item="item" for:index="ind">
+								<span key={item} id={item} class="slds-p-horizontal_x-small">
+									<a href="javascript:void(0);" id={item} onclick={processMe} name={item} class="">{item}</a>
+								</span>
+							</template>
+							<span class="slds-p-horizontal_xxx-small">
+								<a href="javascript:void(0);" id="none2">...</a>
+							</span>
+							<span key={item} id={item} class="slds-p-horizontal_x-small">
+								<a href="javascript:void(0);" id="last" onclick={processMe} name={totalPage} class={lastActiveClass}>{totalPage}</a>
+							</span>
+						<lightning-button-icon class="next-btn" size="medium" icon-name="utility:chevronright" onclick={getNextData} variant="bare"></lightning-button-icon>
+						</div>
+					</lightning-layout-item>
+				</lightning-layout>
+			</template>
+		</lightning-layout-item>
+		<lightning-layout-item size="3" padding="around-small">
+			<!-- Parent Chart -->
+            <template if:true={parentTable}>
+                <c-common-chart chart-datas={parentTable} is-parent-chart="true" chart-title="Event Series Chart"></c-common-chart>
+            </template>
+		</lightning-layout-item>
+	</lightning-layout>
+
+
+	
+</template>

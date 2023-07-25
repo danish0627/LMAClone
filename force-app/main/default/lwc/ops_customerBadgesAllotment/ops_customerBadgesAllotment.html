@@ -1,0 +1,190 @@
+<template>
+
+    <lightning-layout multiple-rows="true">
+        <template if:true={BoothAndMatchedShowStatus}>
+                <template if:true={conditionsValue} >
+                    <div class="slds-p-top_large">
+                            <c-events-list-custom-table button1-label="New Badge Setting" onopennewmodal={handleNewModal}  pagesize=20
+                            condition={conditionsValue}  fields="Name,Booth_Size_From__c,Booth_Size_To__c,Badges_Allowed__c" 
+                             fields-label="Title,Booth Size From,Booth Size To,Badges Allowed by Booth Size" 
+                              object-name="Booth_Size_Badge_Limit__c" is-show-action="true" is-hide-delete-action="false" 
+                              object-label="Badge allotment" onopeneditmodal={handleEditModal}>
+                    </c-events-list-custom-table>
+                    </div>
+                        
+                </template>
+            
+        </template>
+        <!-- this is for matched product table -->
+        <template if:false={BoothAndMatchedShowStatus}>
+                <template if:true={conditionsValue} >
+                    
+            <c-events-list-custom-table pagesize=20
+            condition={conditionsValue}  fields="Booth_Type__c,CheckBadgesAllotmentByBoothType__c" custom-label="-1,1"
+             fields-label="Matched Product Name,Badges Allowed" is-multi-language="false" object-name="Booth_Size_Badge_Limit__c" 
+             is-show-action="true" is-hide-delete-action="true" object-label="Badge allotment" onopeneditmodal={handleEditModalMatchedProduct}>
+            </c-events-list-custom-table>
+            </template>
+        </template> 
+
+
+        <template if:true={isOpenDeleteModal}>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button onclick={closeModal}
+                            class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close">
+                            <lightning-icon icon-name="utility:close" variant="bare" size="small"></lightning-icon>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Confirmation</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div class="slds-text-color_error slds-text-heading_small"> Do you realy want to delete record?
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={closeModal}>No</button>
+                        <button class="slds-button slds-button_brand" onclick={yesDeleteBadgeRecord}>Yes</button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+        <!-- open edit modal for Booth Type -->
+        <template if:true={openEditModal}>
+            <div class="demo-only" style="height: 80%; width:640px;">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={closeModal}>
+                                <lightning-icon icon-name="utility:close" size="medium">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Edit Badge
+                                Settings</h2>
+                                <p style="color:red;text-align: center;">
+                                        {errorMessage}
+                                    </p>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                            <lightning-record-edit-form object-api-name="Booth_Size_Badge_Limit__c"
+                                onsuccess={onSucessBadgeUpdated} onload={onLoad} onsubmit={submitFormEdit} record-id={recordId} class="globalEditForm">
+                                <lightning-input-field field-name="Name"></lightning-input-field>
+                                <lightning-input-field field-name="Booth_Size_From__c"></lightning-input-field>
+                                <lightning-input-field field-name="Booth_Size_To__c"></lightning-input-field>
+                                <lightning-input-field field-name="Badges_Allowed__c"></lightning-input-field>
+                                <lightning-button class="save slds-hide" type="submit" variant="brand" label="Save">
+                                </lightning-button>
+                            </lightning-record-edit-form>
+                        </div>
+                        <footer class="slds-modal__footer" style="margin-top:0px;">
+                            <lightning-button label="Cancel" variant="neutral" onclick={closeModal}></lightning-button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <lightning-button onclick={callSaveBtn} variant="brand" label="Save" disabled={saveDisable}>
+                            </lightning-button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+        </template>
+        <!-- open edit modal for Matched product                       -->
+        <template if:true={openEditModalMatched}>
+            <div class="demo-only" style="height: 80%; width:640px;">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={closeModal}>
+                                <lightning-icon icon-name="utility:close" size="small" variant="bare">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-023" class="slds-text-heading_medium slds-hyphenate">Define Badges
+                                Settings</h2>
+                                <p style="color:red;text-align: center;">
+                                    {errorMessage}
+                                </p>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium modal" id="modal-content-id-23">
+                            <lightning-record-edit-form object-api-name="Booth_Size_Badge_Limit__c"
+                                onsuccess={onSucessBadgeUpdated} onsubmit={submitFormMatchedProduct} record-id={recordId} class="globalEditFormMatched" >
+                                
+                                <span class="slds-align_absolute-center slds-m-bottom_medium">
+                                    <lightning-output-field class="slds-text-heading_medium" variant="label-hidden"
+                                        field-name="Name">
+                                    </lightning-output-field>
+                                </span>
+
+                                <lightning-input-field field-name="Match_Product_Entry_Type__c" onchange={onTypeChange}></lightning-input-field>
+                                <lightning-input-field if:true={isFixed} field-name="Badges_Allowed_by_Booth_Type__c"></lightning-input-field>
+                                
+                                <span class="formulaText" if:true={isFormula}>L + W / 2</span>
+                                <lightning-input-field if:true={isDefault} field-name="CheckBadgesAllotmentByBoothType__c"></lightning-input-field>
+
+                                <lightning-button class="save slds-hide" type="submit" variant="brand" label="Save">
+                                </lightning-button>
+                            </lightning-record-edit-form>
+                        </div>
+                        <footer class="slds-modal__footer" style="margin-top:0px;">
+                            <lightning-button label="Cancel" variant="neutral" onclick={closeModal}></lightning-button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <lightning-button onclick={callSaveBtn} variant="brand" label="Save">
+                            </lightning-button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+        </template>
+        <!-- open add new row modal -->
+        <template if:true={openNewModal}>
+            <div class="slds-p-bottom_xx-large">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={closeModal}>
+                                <lightning-icon icon-name="utility:close" size="small" variant="bare">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-012" class="slds-text-heading_medium slds-hyphenate"> Define Badges
+                                Setting</h2>
+                                <p style="color:red;text-align: center;">
+                                        {errorMessage}
+                                    </p>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-12">
+                            <lightning-record-edit-form object-api-name="Booth_Size_Badge_Limit__c"
+                                onsubmit={submitForm} onsuccess={onSucessBadgeCreated} class="globalForm">
+                                <lightning-messages></lightning-messages>
+                                <lightning-input-field field-name="Name"></lightning-input-field>
+                                <lightning-input-field field-name="Booth_Size_From__c"></lightning-input-field>
+                                <lightning-input-field field-name="Booth_Size_To__c"></lightning-input-field>
+                                <lightning-input-field field-name="Badges_Allowed__c"></lightning-input-field>
+                                <lightning-button class="save slds-hide" type="submit" variant="brand" label="Save">
+                                </lightning-button>
+                            </lightning-record-edit-form>
+                            <br>
+                        </div>
+                        <footer class="slds-modal__footer" style="margin-top:0px;">
+                            <lightning-button label="Cancel" variant="neutral" onclick={closeModal}></lightning-button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <lightning-button onclick={callSaveBtn} variant="brand" label="Save" >
+                            </lightning-button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+        </template>
+    </lightning-layout>
+</template>

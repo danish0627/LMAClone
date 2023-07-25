@@ -1,0 +1,45 @@
+<!--
+Created By		: Girikon(Garima[STL-231])
+Created On	 : September 26, 2019
+@description : This component is use to show Stand Contractor General Settings page at Ops Admin Side.
+
+Modification log --
+Modified By	: 
+-->
+<template>
+    <article class="slds-card " if:true={esId}>
+                    <div if:true={isLoading} class="slds-is-relative">
+                                    <lightning-spinner variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
+                                </div>
+                                <lightning-layout multiple-rows="true" class="slds-p-right_x-small slds-p-left_x-small">
+                                            <lightning-layout-item size="12">
+            <lightning-record-edit-form layout-type="Full" density="compact" record-id={esId}
+                    object-api-name="Event_Settings__c" onload={onLoad} onerror={onError} onsubmit={onSubmit} onsuccess={handleSuccess} class="globalForm">
+                    <template if:true={renderedComponent}>
+                            <lightning-input-field field-name="Welcome_Stand_Contractor__c"></lightning-input-field>
+
+                    </template>
+                    <div class="slds-form-element slds-form-element_horizontal">
+                        <label class="slds-form-element__label" for="horizontal-input-id-01">Refine Customer Visibility</label>
+                        <div class="slds-form-element__control">
+                            <lightning-dual-listbox name="Industries" label=""
+                            options={matchProductOptions} 
+                            value={selectedMatchProductNew}
+                            onchange={handleChangeMatchProductNew}>
+                        </lightning-dual-listbox>
+                        </div>
+                      </div>
+                    <lightning-input-field field-name="Is_Build_my_own_stand_Visible__c"></lightning-input-field>
+                    <lightning-input-field field-name="Stand_Contractor_notification_recipient__c">
+                    </lightning-input-field>
+                    <div class="slds-p-left_small slds-p-top_xx-large">
+                            <lightning-button label="Save" variant="brand" type="submit"></lightning-button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <lightning-button label="Cancel" variant="neutral" onclick={cancelForm}>
+                            </lightning-button>
+                    </div>
+            </lightning-record-edit-form>
+            </lightning-layout-item>
+            </lightning-layout>
+   </article>
+</template>

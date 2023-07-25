@@ -1,0 +1,75 @@
+<!-- Updating Api Version for ticket no: EMEA-200 -->
+<template>
+    <template if:true={relatedRecordId}>        
+    	<lightning-tabset>
+            <lightning-tab label="Opportunity Details" id="1">        
+            	<lightning-record-view-form density="comfy" record-id={relatedRecordId} object-api-name="Opportunity">
+                    <!--<c-forms-placeholder is-show={spinner}></c-forms-placeholder>-->
+                    <div class="">
+                        <lightning-layout multiple-rows="true">
+                            <lightning-layout-item size="6" padding="around-small">
+                                <lightning-output-field field-name="Name" class="form_element_border"></lightning-output-field>
+                                <div class="form_element_border">
+                                    <label class="slds-form-element__label">Account Name</label>
+                                    <lightning-output-field field-name="AccountId" variant="label-hidden"></lightning-output-field>
+                                </div>
+                                <lightning-output-field field-name="Opportunity_Contact__c" class="form_element_border"></lightning-output-field>
+                                <lightning-output-field field-name="Billing_Contact__c" class="form_element_border"></lightning-output-field>
+                                <lightning-output-field field-name="Agreement_Contact__c" class="form_element_border"></lightning-output-field>
+                                <lightning-output-field field-name="User_Type__c" class="form_element_border"></lightning-output-field>
+                                <div class="form_element_border">
+                                    <label class="slds-form-element__label">Partner Account</label>
+                                    <lightning-output-field field-name="PartnerAccountId" variant="label-hidden"></lightning-output-field>
+                                </div>
+                                <lightning-output-field field-name="Parent_Opportunity__c" class="form_element_border"></lightning-output-field>
+                                <lightning-output-field field-name="StageName" class="form_element_border"></lightning-output-field>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" padding="around-small">
+                                <lightning-output-field field-name="Status__c" class="form_element_border"></lightning-output-field>
+                                <lightning-output-field field-name="CloseDate" class="form_element_border"></lightning-output-field>
+                                <lightning-output-field field-name="Probability" class="form_element_border"></lightning-output-field>
+                                <lightning-output-field field-name="Amount" class="form_element_border"></lightning-output-field>
+                                <lightning-output-field field-name="Revenue_Estimate__c" class="form_element_border"></lightning-output-field>
+                                <lightning-output-field field-name="Booth_ID__c" class="form_element_border"></lightning-output-field>
+                                <lightning-output-field field-name="Booth_Status__c" class="form_element_border"></lightning-output-field>
+                                <lightning-output-field field-name="Is_Barter_Opportunity__c" class="form_element_border"></lightning-output-field>
+                                <div  class="form_element_border slds-form-element slds-form-element_stacked">
+                                    <span class="slds-form-element__label">Test Amount</span>
+                                    <div class="slds-form-element__control">
+                                        <template if:true={testAmount}>
+                                            <lightning-formatted-number value={testAmount} maximum-fraction-digits="2"></lightning-formatted-number>
+                                        </template>
+                                        <template if:false={testAmount}>
+                                            0.0
+                                        </template>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                </lightning-record-view-form>
+            </lightning-tab>
+            <lightning-tab label="Quotes" id="2">
+                <div class="default-height">
+                    <c-common-table condition={condition1} 
+                    fields="Name,CreatedDate,SBQQ__NetAmount__c,SBQQ__Status__c,SBQQ__Primary__c"
+                    object-name="SBQQ__Quote__c" object-label="Quote"></c-common-table>
+                </div>
+            </lightning-tab>
+            <lightning-tab label="Quote Documents" id="3">
+                <div class="default-height">
+                    <c-common-table condition={condition2} 
+                    fields="Name,CreatedDate,SBQQ__Quote__r.Name,SBQQ__CustomerAmount__c,Primary_Contact_Email__c"
+                    object-name="SBQQ__QuoteDocument__c" object-label="Quote Document" fields-label="Document Name,Created Date,Quote,Customer Amount,Primary Contact Email"></c-common-table>
+                </div>
+            </lightning-tab>
+            <lightning-tab label="Documents Turn-Around-Time" id="4">
+                <div class="default-height">
+                    <c-common-table condition={condition3} 
+                    fields="Name,Document_Sent_Date__c,Document_Status__c,TAT_Calcualted__c"
+                    object-name="Quote_Template_TAT__c" object-label="Quote Document TAT"></c-common-table>
+                </div>
+            </lightning-tab>
+        </lightning-tabset>
+    </template>
+</template>

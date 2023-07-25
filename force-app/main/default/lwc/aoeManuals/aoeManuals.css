@@ -1,0 +1,35 @@
+/** 
+* Created By: {Girikon(Abhishek)}
+* Created On: 29/07/2019
+* Description/Purpose: Why and where it is used [ticket No]  
+*/
+
+.customModal {
+  max-width: 80%;
+  margin-left: 10% !important;
+}
+
+.CustomMarginBtn {
+  margin-top: 10px;
+}
+
+.custom-small-font-size {
+  font-size: 0.7em;
+}
+
+.wrap-text {
+  overflow-wrap: break-word;
+}
+
+.tablecls {
+  width: 25%;
+}
+.tabHeader {
+  color: #024886;
+  background-color: #f2f2f2;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.tableHeader{
+  background-color: green;
+}

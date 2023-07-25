@@ -1,0 +1,47 @@
+<!-- Created By		: Girikon(Sunil[STL-138])
+Created On		: Sep 10 2019
+@description 	: This LWC is used for home page setting from operation admin.
+
+Modification log --
+Modified By		: Girikon() 
+Updating Api Version for ticket no: EMEA-200
+-->
+<template>
+	<article class="slds-card slds-p-around_medium">
+		<lightning-layout multiple-rows="false">
+			<lightning-layout-item size="12" class="slds-p-horizontal_medium slds-p-bottom_medium ">
+				<span class="slds-text-heading_medium" style="font-weight: bold;">{eventEditionName}</span>
+				<lightning-breadcrumbs>
+					<lightning-breadcrumb label="Customer Centre" onclick={ccUrl}>
+					</lightning-breadcrumb>
+					<lightning-breadcrumb label="Customer Centre Setting" onclick={ccsettingUrl}>
+					</lightning-breadcrumb>
+					<lightning-breadcrumb label="Home">
+					</lightning-breadcrumb>
+				</lightning-breadcrumbs>
+			</lightning-layout-item>
+			<lightning-layout-item size="12" class="slds-p-horizontal_medium">
+				<lightning-tabset>
+					<lightning-tab label="GENERAL" value="t1" onactive={tabSelect}>
+						<c-ops_home-general> </c-ops_home-general>
+					</lightning-tab>
+					<lightning-tab label="NAVIGATION" value="t2" onactive={tabSelect}>
+						<c-ops_home-navigation></c-ops_home-navigation>
+					</lightning-tab>
+					<lightning-tab label="ANNOUNCEMENTS" value="t3" onactive={tabSelect}>
+						<c-ops_home-announcements></c-ops_home-announcements>
+					</lightning-tab>
+					<lightning-tab label="RIGHT PANEL SECTIONS" value="t4" onactive={tabSelect}>
+						<c-ops_home-panel></c-ops_home-panel>
+					</lightning-tab> 
+					<lightning-tab label="USER" value="t5" onactive={tabSelect}>
+						<c-ops_home-user></c-ops_home-user>
+					</lightning-tab>
+					<lightning-tab label="GREETING POP UP" value="t6" onactive={tabSelect}>
+						<c-ops_greeting-popup> </c-ops_greeting-popup>
+					</lightning-tab>
+				</lightning-tabset>
+			</lightning-layout-item>
+		</lightning-layout>
+	</article>
+</template>

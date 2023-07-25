@@ -1,0 +1,190 @@
+<template>
+    <div class="slds-m-around_small">
+        <lightning-layout class="slds-m-bottom_small common-table">
+            <lightning-layout-item size="2" padding="horizontal-small">&nbsp;</lightning-layout-item>
+            <lightning-layout-item size="10" padding="horizontal-small" class="slds-clearfix">
+                <div class="slds-float_right">    
+                    <lightning-combobox options={agentList} onchange={handleAgentChange} variant="label-hidden" value=""></lightning-combobox>&nbsp;&nbsp;
+                    <lightning-input type="search" value={searchValue} label="Search" placeholder="Search" variant="label-hidden" class="search-box" onchange={reloadData}></lightning-input>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    
+        <c-table-placeholder is-show={isShow}></c-table-placeholder>
+        <template if:true={isTrue}>
+            <lightning-spinner variant="brand" size="small" title="Loading..."></lightning-spinner>
+        </template>
+    
+        <table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="slds-text-align_right" scope="col" style="width: 3.25rem;"></th>					
+                    <th aria-label="Name" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                        <a id="Name" class="slds-th__action slds-text-link_reset" onclick={sortTable} href="javascript:void(0);" role="button" tabindex="-1">
+                            <div class="slds-grid slds-grid_vertical-align-center">
+                                <span class="slds-truncate" title="COMPANY">COMPANY</span>
+                                <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                    <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                                </span>
+                            </div>
+                        </a>
+                    </th>
+                    <th aria-sort="none" class="slds-is-resizable slds-is-sortable slds-has-focus" scope="col">
+                        <a id="User_Type__c" class="slds-th__action slds-text-link_reset" onclick={sortTable} href="javascript:void(0);" role="button" tabindex="-1">					          	
+                            <div class="slds-grid slds-truncate slds-grid_vertical-align-center" title="ACTOR TYPE">
+                                <span class="slds-truncate" title="ACTOR TYPE">ACTOR TYPE</span>
+                                <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                    <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                                </span>
+                            </div>
+                        </a>
+                    </th>	
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={tableData} for:item="item" for:index="ind">
+                    <tr key={item.Id} aria-selected="false" class="slds-hint-parent">
+                        <td class="slds-text-align_right" role="gridcell">
+                            <lightning-button-icon icon-name="utility:new_window" alternative-text="View Record Details" variant="bare" value={ind} onclick={toggleDetail}></lightning-button-icon>                        
+                        </td>
+                        <td tabindex="0">
+                            <div class="slds-truncate" title={item.Name} style="white-space: normal">
+                                {item.Name}
+                            </div>
+                        </td>
+                        <td tabindex="0">
+                            <div class="slds-truncate" title={item.User_Type__c} style="white-space: normal">        
+                                {item.User_Type__c}
+                            </div>
+                        </td>
+                    </tr>                    
+                </template>
+            </tbody>    
+        </table>
+            
+        <template if:true={error}>
+            <div class="slds-align_absolute-center">No {objectLabel} to Display</div>
+        </template>
+            
+        <template if:true={pageList}>
+            <lightning-layout multiple-rows="true" class="slds-m-around_small slds-clearfix">
+                <lightning-layout-item size="4" padding="horizontal_small">
+                    <div>
+                        Show                
+                        <lightning-combobox options={pagesizeList} value={pasesizeVisible} label="Page Size" variant="label-hidden" placeholder="Page Size" onchange={onPageSizeChange} class="pagesize"></lightning-combobox>
+                        {objectLabel} per page.
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="8" class="slds-float_right" padding="horizontal_small">
+                    <div class="slds-float_right">
+                    {showPageView} of &nbsp;
+                    <template if:true={isMoreThan2000}>2000+</template>
+                    <template if:false={isMoreThan2000}>{totalRows}</template>&nbsp;
+                    <lightning-button-icon class="prev-btn" size="medium" icon-name="utility:chevronleft" onclick={getPrevData} variant="bare"></lightning-button-icon>&nbsp;
+                        <span class="slds-p-horizontal_x-small">
+                            <a href="javascript:void(0);" id="first" onclick={processMe} name="1" class={firstActiveClass}>1</a>
+                        </span>
+                        <span class="slds-p-horizontal_xxx-small">
+                            <a href="javascript:void(0);" id="none1">...</a>
+                        </span>
+                        <template for:each={pageList} for:item="item" for:index="ind">
+                            <span key={item} id={item} class="slds-p-horizontal_x-small">
+                                <a href="javascript:void(0);" id={item} onclick={processMe} name={item} class="">{item}</a>
+                            </span>
+                        </template>
+                        <span class="slds-p-horizontal_xxx-small">
+                            <a href="javascript:void(0);" id="none2">...</a>
+                        </span>
+                        <span key={item} id={item} class="slds-p-horizontal_x-small">
+                            <a href="javascript:void(0);" id="last" onclick={processMe} name={totalPage} class={lastActiveClass}>{totalPage}</a>
+                        </span>
+                    <lightning-button-icon class="next-btn" size="medium" icon-name="utility:chevronright" onclick={getNextData} variant="bare"></lightning-button-icon>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+    </div>
+
+    <!-- Modal open user click on row action icon-->
+    <template if:true={isModalOpen}>
+        <template if:true={eventObj}>            
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button onclick={closeModal} class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                            <lightning-icon icon-name="utility:close" size="small" variant="bare"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">View Reports</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <lightning-tabset>
+                            <lightning-tab label="Customer Profile">
+                                <lightning-layout multiple-rows="true">
+                                    <lightning-layout-item size="6">
+                                        <div class="slds-form-element slds-form-element_horizontal">
+                                            <label class="slds-form-element__label" for="horizontal-input-id-01">Settings for:</label>
+                                            <div class="slds-form-element__control">
+                                                <template if:true={options}>
+                                                    <lightning-combobox label="Settings for:" class="boothlist" options={options} onchange={boothChange} value={selectedBooth} variant="label-hidden"></lightning-combobox>
+                                                </template>
+                                                <template if:false={options}>
+                                                    <lightning-combobox label="Settings for:" class="boothlist" options={options} onchange={boothChange} value={selectedBooth} variant="label-hidden"></lightning-combobox>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                                <template if:true={selectedBooth}>
+                                    <c-ops-exhibitor-profile-reports selected-booth={selectedBooth} account-id={accountId} user-type-id={userTyperId} event-id={recordId} event-code={eventObj.Event_Code__c}></c-ops-exhibitor-profile-reports>
+                                </template>
+                                <template if:false={selectedBooth}>
+                                    <c-ops-exhibitor-profile-reports selected-booth="" account-id={accountId} user-type-id={userTyperId} event-id={recordId} event-code={eventObj.Event_Code__c}></c-ops-exhibitor-profile-reports>
+                                </template>
+                            </lightning-tab>
+                            
+                            <lightning-tab label="Account Details">
+                                <template if:true={accountId}>
+                                    <c-ops-customer-list-account-detail-tab account-id={accountId} event-id={recordId} event-code={eventCode}></c-ops-customer-list-account-detail-tab>
+                                </template>
+                            </lightning-tab>
+                            <lightning-tab label="Account Contact">
+                                <iframe src={accountContactURL} style="width:100%; height:561px;border:0px;"></iframe>
+                            </lightning-tab>
+                            <lightning-tab label="Forms">
+                                
+                                <template if:true={qryCondition}>
+                                    <c-ops-customer-list-form-tab object-name="User_Form_Action__c" condition={qryCondition} 
+                                    lsteventsetting={lstEventSetting} formtype='Required' event-edition-code={eventCode} account-id={accountId}
+                                    sort-by-name="Form_Permission__r.Event_Edition_Form__r.Forms__r.Name" sort-type="asc" ></c-ops-customer-list-form-tab>
+                                </template>
+                                
+                                <div class="slds-m-top_medium">
+                                    <template if:true={qryConditionAddtional}>
+                                        <c-ops-customer-list-form-tab object-name="User_Form_Action__c" condition={qryConditionAddtional} 
+                                        lsteventsetting={lstEventSetting} formtype='Addtional'  event-edition-code={eventCode} account-id={accountId}
+                                        sort-by-name="Form_Permission__r.Event_Edition_Form__r.Forms__r.Name" sort-type="asc"></c-ops-customer-list-form-tab>
+                                    </template>
+                                </div>
+                            </lightning-tab>
+                            <lightning-tab label="Manuals">                                                       
+                                <template if:true={condition1}>                                    
+                                    <c-ops-customer-list-manual-tab event-edition-code={eventCode} condition={condition1} manualtype="Required"></c-ops-customer-list-manual-tab> 
+                                </template>
+                                <template if:true={condition2}>
+                                    <c-ops-customer-list-manual-tab event-edition-code={eventCode} condition={condition2} manualtype="Additional"></c-ops-customer-list-manual-tab>
+                                </template>
+                            </lightning-tab>
+                            <lightning-tab label="Badges/Registration">
+                                <template if:true={badgesURL}>
+                                   <iframe src={badgesURL} style="width:100%; height:561px;border:0px;"></iframe>
+                                </template>
+                            </lightning-tab>
+                        </lightning-tabset>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </template>
+</template>

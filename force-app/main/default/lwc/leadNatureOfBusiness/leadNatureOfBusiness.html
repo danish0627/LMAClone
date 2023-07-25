@@ -1,0 +1,138 @@
+<template>
+    <template if:true={showHeader}>
+        <p><span style="font-size:20px;">{Nature_of_Business} :</span></p><br/>
+    </template>
+    <template if:true={isVisible}>
+        <template if:true={spinner}>
+            <lightning-spinner variant="brand" size="small"></lightning-spinner>
+        </template>
+        <div class="slds-p-around_small">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th style="width:23px"></th>
+                        <th>{Nature_of_Business}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={interestLevel} for:item="item" for:index="ind">
+                        <tr class="slds-hint-parent" key={item.index}>
+                            <td style="text-align: right">
+                                <template if:false={isOnlyOneRow}>
+                                    <lightning-button-icon onclick={removeRow} value={ind} icon-name="utility:close" variant="bare"></lightning-button-icon>
+                                </template>
+                            </td>                        
+                            <td>
+                                <c-common-lookup condition="GroupType__c='NATURE_OF_BUSINESS' " index={ind} selected-item-id={item.fieldValue} onhandlelookup={setLookupField} help-text="" label="" object-label="General Master" object-name="General_Master__c" name-field-api="Value__c" field-name="Value__c" search-placeholder="Search General Masters"></c-common-lookup>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <div class="slds-align_absolute-center slds-m-top_small">
+                <lightning-button label="Cancel" onclick={cancelForm} variant="destructive" icon-name="utility:close"></lightning-button>&nbsp;&nbsp;
+                <lightning-button label="Submit" onclick={submitData} variant="brand" icon-name="utility:check"></lightning-button>
+            </div>
+        </div>
+    </template>
+    <!-- Edit Modal-->
+    <template if:true={openEditModal}>
+        <lightning-record-edit-form class="edit_single_record" record-id={selectedId} object-api-name="Lead_Nature_Of_Business_Mapping__c" onsubmit={handleSubmit} onsuccess={handleSuccess} onerror={handleError}>
+            <section role="dialog" tabindex="-1" aria-labelledby="edit-form-heading" aria-modal="true" aria-describedby="modal-content-edit-form" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button type="button" onclick={closeModal} class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                            <lightning-icon icon-name="utility:close" variant="bare" size="small"></lightning-icon>
+                        </button>
+                        <h2 id="edit-form-heading" class="slds-text-heading_medium slds-hyphenate">Edit Record</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-edit-form" style="min-height:450px;max-height:auto">
+                        <template if:true={spinner}>
+                            <lightning-spinner size="small" variant="brand"></lightning-spinner>
+                        </template>
+                        <lightning-layout multiple-rows="true">
+                            <!-- col 1 -->
+                            <lightning-layout-item size="6" padding="around-small">
+                                <template if:true={selectedRecord}>
+                                    <c-common-lookup condition="GroupType__c='NATURE_OF_BUSINESS' " selected-item-id={selectedRecord.General_Master__c} index="-1" onhandlelookup={setLookupField} help-text="" label="Nature of Business" object-label="General Master" object-name="General_Master__c" name-field-api="Value__c" field-name="Value__c" search-placeholder="Search General Masters"></c-common-lookup>
+                                </template>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button icon-name="utility:close" variant="destructive" onclick={closeModal} label="Cancel"></lightning-button>&nbsp;&nbsp;
+                        <lightning-button type="submit" icon-name="utility:check" variant="brand" label="Update"></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </lightning-record-edit-form>
+    </template>
+    
+    <template if:true={condition}>
+        <div class="nob">
+            <template if:true={isUpdateableRecord}>
+                <c-common-table hide-checkbox-column="false" onopenmassupdate={massUpdateFormOpener} onrecordedit={handleEditModal} condition={condition} onopennewmodal={addRow} is-show-action="true" button1-label={Add_Nature_of_Business} object-label={Nature_of_Business} object-name="Lead_Nature_Of_Business_Mapping__c" fields="General_Master__r.Value__c" fields-label="Nature of Business"></c-common-table>
+            </template>
+            <template if:false={isUpdateableRecord}>                
+                <template if:true={isCreateableRecord}>
+                    <c-common-table button1-label={Add_Nature_of_Business} onopennewmodal={addRow} condition={condition} object-label={Nature_of_Business} object-name="Lead_Nature_Of_Business_Mapping__c" fields="General_Master__r.Value__c" fields-label="Nature of Business"></c-common-table>
+                </template>
+                <template if:false={isCreateableRecord}>
+                    <c-common-table condition={condition} object-label={Nature_of_Business} object-name="Lead_Nature_Of_Business_Mapping__c" fields="General_Master__r.Value__c" fields-label="Nature of Business"></c-common-table>
+                </template>
+            </template>
+        </div>
+    </template>
+    
+
+    <template if:true={massUpdateModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="edit-form-heading" aria-modal="true" aria-describedby="modal-content-edit-form" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button type="button" onclick={cancelForm} class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                        <lightning-icon icon-name="utility:close" variant="bare" size="small"></lightning-icon>
+                    </button>
+                    <h2 id="edit-form-heading2" class="slds-text-heading_medium slds-hyphenate">Mass Update</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-edit-form2" style="min-height:450px;max-height:auto">
+                    <template if:true={spinner}>
+                        <lightning-spinner size="small" variant="brand"></lightning-spinner>
+                    </template>
+                    <lightning-layout multiple-rows="true">
+                        <!-- col 1 -->
+                        <lightning-layout-item size="12" padding="around-small">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th style="width:23px"></th>
+                                        <th>{Nature_of_Business}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={interestLevel} for:item="item" for:index="ind">
+                                        <tr class="slds-hint-parent" key={item.index}>
+                                            <td style="text-align: right">
+                                                <template if:false={isOnlyOneRow}>
+                                                    <lightning-button-icon onclick={removeRow} value={ind} icon-name="utility:close" variant="bare"></lightning-button-icon>
+                                                </template>
+                                            </td>                        
+                                            <td>
+                                                <c-common-lookup condition="GroupType__c='NATURE_OF_BUSINESS' " index={ind} selected-item-id={item.fieldValue} onhandlelookup={setLookupField} help-text="" label="" object-label="General Master" object-name="General_Master__c" name-field-api="Value__c" field-name="Value__c" search-placeholder="Search General Masters"></c-common-lookup>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button icon-name="utility:close" variant="destructive" onclick={cancelForm} label="Cancel"></lightning-button>&nbsp;&nbsp;
+                    <lightning-button icon-name="utility:check" variant="brand" onclick={updateBulkData} label="Update"></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

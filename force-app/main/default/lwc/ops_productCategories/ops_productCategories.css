@@ -1,0 +1,46 @@
+.slds-modal__container{
+    width: 80% !important;
+    max-width: 80% !important;
+}
+.middle-text{
+    color: #c0c0c0;
+    font-size: 18px;
+
+}
+.label-width{
+    font-size: 15px;
+    font-weight: bold;
+}
+.bottom-bold {
+    font-weight: 600;
+    font-style: italic;
+    font-size: 18px;
+}
+.bottom-normal {
+    font-size: 18px;
+    font-style: italic;
+    color: #c0c0c0;
+}
+.Save-btn{background:#095c7d; color:#fff; border:none; font-weight: 600; float: right; margin-right: 10px; margin-top: 15px;cursor: pointer;}
+.top-heading {
+    font-size: 24px;
+    font-weight: 600;
+    color: #003b69;
+}
+.showCategory{
+    border : 1px solid #ccc;
+    border-radius: 4px;
+    position:absolute;
+    width:300px;
+}
+.clear{
+    clear:both;
+}
+.searchshow{ position: relative;}
+.searchCatlabel{float:left;width: 40%;}
+.searchCatArea{float:left;width: 60%;}
+.search-box{
+    width:300px;
+}
+.chkboxlabel{float:left;width: 40%;}
+.chkboxArea{float:left;width: 60%;}

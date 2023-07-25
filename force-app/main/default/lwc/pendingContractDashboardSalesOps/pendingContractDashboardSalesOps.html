@@ -1,0 +1,18 @@
+<!--
+    Created By		: Girikon( Yash Gupta )
+    Created On		: 8/2/2019
+    @description 	: This component is used show the list of pending contracts.
+    Modified By		: Girikon( Yash Gupta 11/9/2019 ]
+-->
+<template>
+    <template if:true={oppFields}>
+        <c-common-table filter1-label="Event Edition" filter-field1="EventEdition__r.Name" condition={pendingContractCond} filter-delegate-opp="Pending Contracts" condition-delegate={toggleDelegateOppCon}
+            fields={oppFields}
+            fields-label={oppFieldsLabels} is-multi-language="true" custom-label="-1,0,1,3,5,8,11"
+            object-name="Opportunity" modal-icon-name1="View Record Details" object-label="Opportunity" is-support-new-record="false" onopenactionmodal={handleActionModal} is-show-action="false" show-action-button="true" is-view-file="false">
+            <div slot="actionRecordModal">
+                <c-pending-contract-modal onrefreshpendingcontract={handleRefreshPendingContract} is-open-action-modal={openActionModal} record-id={recordId} object-name="Opportunity" operation-type='SalesOps' is-sales-ops-team-member={isSalesOpsTeamMember}></c-pending-contract-modal>
+            </div>
+        </c-common-table>
+    </template>
+</template>

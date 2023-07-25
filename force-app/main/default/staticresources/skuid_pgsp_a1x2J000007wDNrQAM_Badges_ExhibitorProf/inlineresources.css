@@ -1,0 +1,192 @@
+#div.nx-basicfieldeditor-section-body>div.nx-basicfieldeditor-item>.nx-field, div.nx-basicfieldeditor-item>.nx-field {
+    width: 70%;
+    /* margin: 0px; */
+}
+
+#FieldEditor{
+    font-weight:bold;
+    line-height:2.2em;
+    font-size:15px;
+}
+
+#FieldEditor.nx-field{
+ margin-top:13px;   
+}
+
+#FieldEditor1{
+    font-weight:bold;
+    line-height:2.2em;
+    font-size:15px;
+}
+
+#FieldEditor1.nx-field{
+ margin-top:13px;   
+}
+.Co_ExhibitorBadgeLimit .nx-field select{
+     width:65px !important;
+}
+
+.nx-basicfieldeditor-item.MainCSS{
+ margin-top:16px !important;   
+}
+
+#fe01.nx-basicfieldeditor.clearfix.nx-editor{
+  line-height:2.2em !important;   
+}
+.nx-basicfieldeditor-section-body.nx-basicfieldeditor-item.nx-field, .nx-basicfieldeditor-item.nx-field {
+    margin-left:-30px !important;
+}
+#sk-32_P-2104
+{
+    margin-left: -8px;
+}
+.cke_chrome {
+    display: block;
+    padding: 0;
+    border: 1px solid #a1a1a1;
+    box-shadow: none;
+}
+#sk-zM-1291
+{
+    color:white;
+}
+.Co_ExhibitorBadgeLimit .nx-basicfieldeditor-item-label-editing.required:before
+{
+    display:none;
+}
+.bradcom {
+    margin: 0px !important;
+
+background-image: url("../resource/bredcom_arrow") !important;
+background-repeat: no-repeat !important;
+background-position: right !important;
+color: #000 !important;
+border : none !important;
+padding: 0px !important;
+background-color: transparent !important;
+}
+
+.bradcom:hover {
+    background-image: url("../resource/bredcom_arrow_hover") !important;
+    background-repeat: no-repeat !important;
+    background-position: right !important;
+    background-color: transparent !important;
+}
+
+.bradcom span{
+line-height: 40px !important;
+width: auto !important;
+font-weight: 400 !important;
+}
+.BradComBorder {
+    border-top : 1px solid #ccc !important;
+    border-bottom : 1px solid #ccc !important;
+}
+
+.BradComBorder .sk-button-action{
+    margin-top : 0px !important;
+}
+.approved {
+    background: lightgreen;
+}
+.rejected
+{
+    background: red;
+}
+.yesButton .sk-button-action{
+    margin-top:14px;
+
+}
+.yesColor  {
+    background: gray !important;
+    
+}
+.approveColor{
+    background: lightgreen !important;
+}
+.rejectColor{
+    background: red !important;
+}
+.cancelColor{
+    background: gray !important;
+}
+.appRejColor{
+    background: lightgray !important;
+}
+.height
+{
+    height:25px;
+}
+
+.tableFooter .nx-list-footer .nx-list-footer-center {
+    visibility: hidden;
+}
+.ui-dialog .ui-dialog-titlebar .ui-button.ui-dialog-titlebar-close .ui-icon  {
+  
+    visibility: hidden;
+}
+.nx-conditioncontainer
+{
+    float:left;
+}
+.nx-basicfieldeditor-section-header{
+        padding-left: 0;
+}
+
+.badgeData .nx-basicfieldeditor-item-label {
+    display :none;
+}
+
+.templateHeader{
+    font-size:16px;
+    font-weight: bold;
+  
+}
+
+.badgeDataLabel{
+    font-weight :400;
+}
+.ui-dialog{
+    font-size:.75em!important;
+    font-weight:300!important;
+}
+.nx-basicfieldeditor-item-label{
+    padding: .5rem .5rem .5rem 0!important;
+}
+.nx-editor input[type=checkbox]{
+    margin-top: 0!important;
+}
+/*Adjust search placeholder text size*/
+.nx-editor-header input.searchbox {
+        font-size: .90em !important;
+}
+.nx-pagebuilder-component.nx-pagebuilder-component-showwrapper.ui-draggable.ui-draggable-handle.ui-dialog-content.ui-widget-content{
+    font-weight:bold !important;
+}
+.ui-dialog-title{
+    font-weight:bold !important;
+}
+.cancelBtnCss{
+    margin-left: 10px !important;
+    border: 2px solid !important;
+    background-color: grey !important;
+}
+.saveBtnCss{
+    border: 2px solid !important;
+}
+.closeWindowBtn{
+    margin-top: 20px !important;
+    font-size: 16px !important;
+}
+/* removing the 'none' from the picklist */
+.nx-fieldtext .nx-radiowrapper:first-child{
+    display:none;
+}
+/* Adding padding to radio button for badges allotmnet*/
+.nx-checkboxlabel, .nx-radiolabel {
+    padding: 12px;
+}
+/* removing the space taken by label on Booth type- badge setting model window */
+.entryLabel .nx-basicfieldeditor-item-label {
+    box-sizing: content-box;
+}

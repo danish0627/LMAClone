@@ -1,0 +1,13 @@
+<template>
+    <template if:true={oppFields}>
+        <c-common-table filter1-label="Event Edition" filter-field1="EventEdition__r.Name" condition={rejectedContractCond} filter-delegate-opp="Delegate Opportunity" condition-delegate={toggleDelegateOppCon}
+            fields={oppFields}
+            object-name="Opportunity" object-label="Opportunity"
+            fields-label={oppFieldsLabels}  is-multi-language="true" custom-label="-1,0,1,4,7,8,10,11,12"
+            is-show-action="false" modal-icon-name1="View Details" show-action-button="true" is-view-file="false" onopenactionmodal={handleActionModal}>
+            <div slot="actionRecordModal">    
+                <c-rejected-contract-model record-id={recordId} is-open-action-modal={openActionModal} object-name="Agreement__c"></c-rejected-contract-model>
+            </div>
+        </c-common-table>
+    </template>
+</template>

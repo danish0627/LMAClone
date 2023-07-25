@@ -1,0 +1,104 @@
+lightning-tab {
+    padding: 0!important; 
+}
+lightning-icon
+{
+    position: absolute;
+}
+.activeTiles,.coming-soon-inner
+{
+    display: flex;
+    flex-wrap: wrap;
+}
+.activeTiles .supply-box:nth-child(odd)
+{
+    border-right: 1px dotted #000;
+}
+.coming-soon-inner .supply-box:nth-child(odd)  
+{ 
+    border-right: 1px dotted #000;
+}
+.supply-box
+{
+    padding: 12px;
+    min-height: unset; 
+    /* width: 50%; */
+}
+.supply-text-normal {
+    padding-bottom: 4px;
+    hyphens: auto;
+}
+.supply-text-heading {
+   padding-bottom: 0;
+}
+.question-area {
+    padding: 0px 20px;
+}
+.StandSummary
+{
+    background-color: #ebebeb;
+}
+.rightPanelInner 
+{
+    margin: 16px 0 20px 20px; padding-right: 0;
+}
+.summaryHeader {
+    font-size: 22px;color: #000; font-weight: 700; padding: 15px 15px 10px 15px;
+}
+.summaryBody{
+    padding-left: 15px; max-height: 300px;    overflow-y: scroll;
+}
+.summaryBody table
+{
+    margin-bottom: 14px;
+}
+.summaryBody table a
+{
+    color: rgb(37, 116, 169);font-weight: normal;
+}
+.summaryBody table tr td:nth-child(even) {
+    padding-left: 10px;width: 50%;
+}
+.summaryBody table tr th:nth-child(even) {
+    padding-left: 10px;width: 50%;
+}
+.coming-soon div{
+    opacity: 0.6;
+}
+.coming-soon .text-divider{
+    border-bottom: 1px dotted black;
+}
+.question-area-heading {
+    font-size: 22px;
+    padding-bottom: 10px;
+}
+.announcement {
+    padding-top: 14px;
+}
+.supply-text {
+    padding-left: 60px;
+}
+lightning-button-icon {
+    position: absolute;
+    top: 38px;
+    left: 6px;
+}
+.eventNotLive{
+    text-align: center;
+    font-weight: bold;
+    height: 40vh;
+    display: table-cell;
+    vertical-align: middle;
+    width: 1%;
+}
+.summaryHeaderSubtext
+{
+    padding: 0px 15px 15px;
+}
+.summaryHeaderSubtext span{
+    text-transform: lowercase;
+}
+.modal
+{
+    z-index: 5;
+}

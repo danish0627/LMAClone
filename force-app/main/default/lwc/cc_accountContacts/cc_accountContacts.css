@@ -1,0 +1,285 @@
+.cc-templateContainer {
+    padding-bottom: 14px;
+    padding-top: 9px;
+    padding-left: 0;
+    font-size: 14px;
+    color: #000000;
+}
+hr { 
+    border-bottom: 3px;
+    border-bottom-style: inset;
+    border-bottom-color: darkgray;
+} 
+.inputField:disabled{
+    cursor: context-menu;
+}
+.slds-input {
+    border-radius: 0rem !important; 
+}
+.cc-account-contacts .nx-basicfieldeditor-item-label {
+    width: 11%;
+    padding-right:20px;
+    text-align:right;
+}
+.cc-account-contacts .nx-field {
+    width: 86% !important;
+}
+
+.cc-account-contactsFName .nx-basicfieldeditor-item-label {
+    width: 22%;
+    padding-right:120px!important;
+    text-align:right;
+}
+.cc-account-contactsFName .slds-input {
+    width: 72% !important;
+}
+
+.cc-account-City .nx-basicfieldeditor-item-label {
+    width: 22%;
+    padding-right:20px;
+    text-align:right;
+}
+.cc-account-City .nx-field {
+    width: 72% !important;
+}
+
+.cc-account-State .nx-basicfieldeditor-item-label {
+    width: 24%;
+    padding-right:20px;
+    text-align:right;
+}
+.cc-account-State .nx-field {
+    width: 63% !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.cc-account-Zip .nx-basicfieldeditor-item-label {
+    width: 20%;
+    padding-right:20px;
+    text-align:right;
+}
+.cc-account-Zip .nx-field {
+    width: 68% !important;
+}
+
+.cc-acccountContactButtonBorderDetailPage
+{
+    padding-top:5px;
+    border-bottom: 4px;
+    border-bottom-style: inset;
+    border-bottom-color: darkgray;
+}
+
+.cc-WrapperUserCre
+{
+    
+    background-color: #ebebeb;
+}
+
+.cc-fieldEditorbackgroundColor {
+    background-color: #ebebeb;
+}
+
+.cc-customerCenterLoginTitle{
+    padding-right:5px;
+}
+
+.cc-username  {
+    padding-left:0 !important;
+    padding-bottom:-0 !important;
+}
+
+.cc-username .nx-basicfieldeditor-item-label {
+    width: 16%;
+    padding-right:20px;
+    text-align:right;
+}
+.cc-leftPadding  {
+    padding-left:0 !important;
+    padding-right:0 !important;
+}
+
+.cc-fieldBorder .nx-fieldtext {
+    border-style: groove !important;
+    border-width: thin;
+    border-color: #cccccc !important;
+}
+.login{
+    padding:10px;
+    box-sizing: border-box;
+    margin-bottom: 14px;
+}
+.slds-form-element__label {
+    text-align:right!important;
+    padding-right:0px !important;
+    padding-left:0px !important;  
+}
+/* .slds-text-title_caps, .slds-text-title--caps {
+    font-size: 13px;
+    line-height: 1.25;
+    color:#448CCB;
+    text-decoration: none !important;
+    font-weight: bold !important;
+    text-transform: none!important;
+    letter-spacing: 0.0625rem;
+} */
+.cc-acccountContactButtonBorder
+{
+    border-bottom: 1px;
+    border-bottom-style: inset;
+    border-bottom-color: darkgray;
+    
+  
+}
+.cc-acccountContactButtonBorderSAfety
+{
+    border-bottom: 3px;
+    border-bottom-style: inset;
+    border-bottom-color: darkgray;
+  
+}
+.cc-acccountContact .nx-basicfieldeditor-item-label
+{
+    color: black;
+}
+.cc-acccountContactLabel .nx-basicfieldeditor-item-label .nx-template {
+    display: inline;
+    color: black;
+    font-weight: bold;
+}
+.cc-acccountContactLabel {
+    padding-left: 0;
+   
+   
+}
+.cc-acccountContactfield .nx-template {
+    color: black;
+}
+
+.nx-page .nx-page-content {
+    z-index: 1;
+    padding-top: 6px;
+    padding-right: 10px;
+    padding-bottom: 6px;
+    padding-left: 10px;
+    background: #555 !important;
+    position: relative;
+}
+
+.cc-accountContactBooth
+{
+    font-weight: bold;
+    color: black;
+}
+
+.cc-boothFfieldEditor {
+        margin-top: 0 !important;
+    
+}
+
+.cc-paddingTemplate{
+    
+    padding-bottom:10px;
+}
+.cc-templateContainer{
+    padding-bottom: 14px;
+    padding-top: 9px;
+    padding-left: 0;
+    font-size:14px;
+    color:#000000;
+}
+.breadCrum1{
+    font-weight: bold !important;
+    font-size: 13px;
+    color: #448CCB!important;
+    text-transform: none!important;
+}
+.breadCrum1::after{
+    font-weight: bold !important;
+    font-size: 13px;
+    color: #000000!important;
+    text-transform: none!important;
+}
+.breadCrum2{
+    font-weight: bold !important;
+    font-size: 13px;
+    color: #000000!important;
+    text-transform: none!important;
+}
+.nx-pagetitle-maintitle {
+    color: rgb(51, 51, 51);
+    text-transform: none;
+    font-weight: 700;
+    font-size: 30px;
+    padding: 0px 6px 4px 0px;
+}
+.nx-basicfieldeditor-column {
+    vertical-align: top;
+    display: inline-block;
+}
+.nx-basicfieldeditor-item {
+    padding: 0 8px;
+    border-bottom: 0 none transparent;
+    background: #fff;
+    font-style: normal;
+    font-weight: 400;
+}
+.nx-basicfieldeditor-item-label {
+    vertical-align: top;
+    word-wrap: break-word;
+    font-weight: bold;
+    color:black;
+    padding: 10px 0 10px 0;
+    font-size: 14px;
+}
+.nx-basicfieldeditor-item-label-extended{
+    text-align: right;
+}
+.nx-basicfieldeditor .nx-fieldtext {
+    padding: 7px 5px 5px 6px;
+    min-height: 11px;
+    outline: 0;
+    color: #bbb;
+}
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-style: normal;
+    font-variant-ligatures: normal;
+    font-variant-caps: normal;
+    font-variant-numeric: normal;
+    font-variant-east-asian: normal;
+    font-weight: normal;
+    font-stretch: normal;
+    font-size: inherit;
+    line-height: 1;
+    font-family: FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.username{
+    color: #cccccc !important;
+}
+.welcome-note-p{
+color: #555;
+padding:0px !important;
+}
+.buttonClass{
+    text-align: center;
+
+    padding-left: 5px;
+    padding-right: 5px;
+    background: #49a7fa;
+    border-color: #49a7fa;
+    color: #ffffff;
+}
+.nx-basicfieldeditor-item-label-extended2 {
+    vertical-align: top;
+    word-wrap: break-word;
+    color:#555;
+    padding: 10px 0 10px 0;
+    font-size: 14px;
+}

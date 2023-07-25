@@ -1,0 +1,21 @@
+.divider
+{
+    width: 100%;
+    display: block;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid gray;
+} 
+.subtitle
+{
+    font-size: 10px;
+    font-style: italic;
+    float: left;
+    margin-top: -178px;
+    margin-left: 4px;
+}
+.message{
+    margin-bottom: 10px;
+    text-align: right;
+    display: block;
+}

@@ -1,0 +1,9 @@
+<template>
+    <lightning-card>
+    <h2> User Information Details</h2><br/><br/>
+    <template if:true={UserInfoList}>
+        <lightning-datatable data={UserInfoList} columns={columns} key-field="Id">
+        </lightning-datatable>
+    </template>
+</lightning-card>
+</template>

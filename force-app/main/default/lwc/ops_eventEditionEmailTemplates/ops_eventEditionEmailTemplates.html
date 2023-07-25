@@ -1,0 +1,561 @@
+<template>
+   <article class="slds-card slds-p-around_medium">
+   <lightning-layout multiple-rows="false">
+      <lightning-layout-item size="12" class="slds-p-horizontal_medium slds-p-bottom_medium ">
+         <span class="slds-text-heading_medium" style="font-weight: bold;">{selectedEventName}</span>
+         <lightning-breadcrumbs>
+            <lightning-breadcrumb label="Customer Centre" onclick={goToCustomerCenter}>
+            </lightning-breadcrumb>
+            <lightning-breadcrumb label="Customer Centre Settings" onclick={goToCustomerCenterSetting}>
+            </lightning-breadcrumb>
+            <lightning-breadcrumb label="Email Templates">
+            </lightning-breadcrumb>
+         </lightning-breadcrumbs>
+      </lightning-layout-item>
+      <lightning-layout-item>
+      <template if:true={tempCondition}>
+         <c-events-list-custom-table pagesize=30 condition={tempCondition} filter1-label="Select Group Name"
+            filter-field1="Email_Template__r.Group_Name__c" is-multi-picklist-filter1="true"
+            object-name="Event_Edition_Email_Template__c" fields-label="GROUP NAME,TITLE,SUBJECT,TEMPLATE CODE"
+            fields='Email_Template__r.Group_Name__c,Name,Subject__c,Email_Template_Code__c'
+            object-label="Event Edition Email Templates" profile="System Administrator" is-support-new-record="true"
+            onopennewmodal={handleNewModal} onopenformlink={handleNewModal1} toggle-filter-condition="Name!=''"
+            onopeneditmodal={handleEditModal} is-show-action="true" is-hide-delete-action="true">
+         </c-events-list-custom-table>
+      </template>
+      </lightning-layout-item>
+      <!--  edit pop up starts-->
+      <template if:true={openEditModal}>
+         <div class="demo-only" >
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+               aria-describedby="modal-content-id-1" class="slds-modal slds-modal_medium slds-fade-in-open">
+               <div class="slds-modal__container">
+                  <header class="slds-modal__header">
+                     <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" size="small" variant="bare">
+                        </lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                     </button>
+                     <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Editing Email Template
+                     </h2>
+                  </header>
+                  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                     <template if:true={spinner}>
+                        <lightning-spinner variant="brand" size="small"></lightning-spinner>
+                     </template>
+                     <P style="font-weight: 500;font-size: 20px;text-align:center"> Event Edition Email
+                        Template:{TEMPLATETITLE} </P>
+
+                     <template if:true={refreshEditForm}>
+                     <lightning-record-edit-form object-api-name={emailTemplateObject} onsuccess={handleformCreated}
+                        onsubmit={checkvalidation} onerror={handleError} record-id={recordId} onload={handleLoad} class="globalForm">
+                        <lightning-messages></lightning-messages>
+
+                        <div class="slds-p-top_xx-small">
+                           <p class="slds-p-top_large">
+                              <span style="color:red;">*</span><span>Email Template</span><span
+                                 style="margin-left:17%;"><a>{TEMPLATETITLE}</a></span>
+                           </p>
+                           <p class="slds-p-top_large slds-p-bottom_large">
+                              <span class="slds-nubbin_left">Group Name</span>
+                              <span style="margin-left:5px;">
+                                 <lightning-helptext icon-name="utility:info"
+                                    content="Define template for particular group type "></lightning-helptext>
+                              </span>
+                              <span style="margin-left:17%;">{GROUPNAME}</span>
+                           </P>
+
+                        </div>
+                        <lightning-combobox name="From" label="From" value={value} placeholder="Select Email"
+                           options={options} onchange={handleChange}>
+                        </lightning-combobox>
+
+                        <lightning-input-field field-name={templatetitle} value={TEMPLATETITLE}></lightning-input-field>
+                        <lightning-input-field field-name={subject} value={SUBJECT}></lightning-input-field>
+                        
+                        <lightning-input-rich-text value={CONTENT} formats={formats} onchange={fetchContentData}>
+                           
+                        </lightning-input-rich-text>
+
+                        <!--<lightning-input-field class="content" field-name={content} value={CONTENT} onchange={fetchContentData}>
+                        </lightning-input-field>-->
+
+                        <div class="slds-float_right slds-p-top_large slds-p-right_large">
+                           <lightning-button variant="brand" label="View Source Code" onclick={viewsourceCode}>
+                           </lightning-button>
+                        </div>
+                        <div class="slds-p-top_large">
+                           <h1><b>Placeholder</b> </h1>
+                           <br>
+                           <template if:true={showFormPlaceHolder}>
+                              <span class="forms-Placeholder">
+                                 <a onclick={appendPlaceholder} name='Event_Edition__c.Name'>
+                                    {opnebraces}Event_Edition__c.Name{closebraces} - Event Name </a></br>
+                                 <a onclick={appendPlaceholder} name='Event_Edition__c.Event_Code__c'>
+                                    {opnebraces}Event_Edition__c.Event_Code__c{closebraces} - Event Code </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Event_Edition_Form__c.Name'>{opnebraces}Event_Edition_Form__c.Name{closebraces}
+                                    - Form Name </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Event_Edition_Form__c.Deadline__c'>{opnebraces}Event_Edition_Form__c.Deadline__c{closebraces}
+                                    - Form DeadLine </a></br>
+                                 <a onclick={appendPlaceholder} name=' Contact.Phone'>
+                                    {opnebraces}Contact.Phone{closebraces} - Contact Phone </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Contact.Title'>{opnebraces}Contact.Title{closebraces} - Contact Title
+                                 </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Contact.MobilePhone'>{opnebraces}Contact.MobilePhone{closebraces} - Contact
+                                    MobilePhone </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Contact.Alternate_Email_Address__c'>{opnebraces}Contact.Alternate_Email_Address__c
+                                    {closebraces}- Contact Alternate Email-addres </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Name'>{opnebraces}Account.Name{closebraces} - Account Name</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Phone'>{opnebraces}Account.Phone{closebraces} - Account Phone</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Type'>{opnebraces}Account.Type{closebraces} - Account Type</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Website'>{opnebraces}Account.Website{closebraces} - Account Website
+                                 </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Organization.Name'>{opnebraces}Organization.Name{closebraces} - Organization
+                                 </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Number_of_Filled'>{opnebraces}Number_of_Filled{closebraces} - Number of Filled
+                                    Forms </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Number_of_Assigned'>{opnebraces}Number_of_Assigned{closebraces} - Number of
+                                    Assigned Forms </a></br>
+                              </span>
+                           </template>
+
+                           <template if:true={showManualPlaceHolder}>
+                              <span class="manuals-Placeholder">
+                                 <a onclick={appendPlaceholder} name='Event_Edition__c.Name'>
+                                    {opnebraces}Event_Edition__c.Name{closebraces} - Event Name </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Event_Edition__c.Event_Code__c'>{opnebraces}Event_Edition__c.Event_Code__c{closebraces}
+                                    - Event Code </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Manual__c.Name'>{opnebraces}Manual__c.Name{closebraces} - Manual Name
+                                 </a></br>
+                                 <a onclick={appendPlaceholder} name='Contact.Phone'>
+                                    {opnebraces}Contact.Phone{closebraces} - Contact Phone </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Contact.Title'>{opnebraces}Contact.Title{closebraces} - Contact Title
+                                 </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Contact.MobilePhone'>{opnebraces}Contact.MobilePhone{closebraces} - Contact
+                                    MobilePhone </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Contact.Alternate_Email_Address__c'>{opnebraces}Contact.Alternate_Email_Address__c
+                                    {closebraces}- Contact Alternate Email-addres </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Name'>{opnebraces}Account.Name{closebraces} - Account Name</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Phone'>{opnebraces}Account.Phone{closebraces} - Account Phone</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Type'>{opnebraces}Account.Type{closebraces} - Account Type</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Website'>{opnebraces}Account.Website{closebraces} - Account Website
+                                 </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Organization.Name'>{opnebraces}Organization.Name{closebraces} - Organization
+                                 </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Number_of_agreed'>{opnebraces}Number_of_agreed{closebraces} - Number of Agreed
+                                    Manuals </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Number_of_Assigned'>{opnebraces}Number_of_Assigned{closebraces} - Number of
+                                    Assigned Manuals </a></br>
+                              </span>
+                           </template>
+
+                           <template if:true={showExhibitorBadges}>
+                              <span class="exhibitorBadge-Placeholder">
+                                 <a onclick={appendPlaceholder} name='Event_Edition__c.Name'>
+                                    {opnebraces}Event_Edition__c.Name{closebraces} - Event Name </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Event_Edition__c.Event_Code__c'>{opnebraces}Event_Edition__c.Event_Code__c{closebraces}
+                                    - Event Code </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Contact.Phone'>{opnebraces}Contact.Phone{closebraces} - Contact Phone
+                                 </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Contact.Title'>{opnebraces}Contact.Title{closebraces} - Contact Title
+                                 </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Contact.MobilePhone'>{opnebraces}Contact.MobilePhone{closebraces} - Contact
+                                    MobilePhone </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Contact.Alternate_Email_Address__c'>{opnebraces}Contact.Alternate_Email_Address__c{closebraces}
+                                    - Contact Alternate Email-addres </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Name'>{opnebraces}Account.Name{closebraces} - Account Name</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Phone'>{opnebraces}Account.Phone{closebraces} - Account Phone</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Website'>{opnebraces}Account.Website{closebraces} - Account
+                                    Website</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Organization.Name'>{opnebraces}Organization.Name{closebraces} -
+                                    Organization</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Exhibitor_Badge__c.Name'>{opnebraces}Exhibitor_Badge__c.Name{closebraces} -
+                                    Badge Name </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Exhibitor_Badge__c.First_Name__c'>{opnebraces}Exhibitor_Badge__c.First_Name__c{closebraces}
+                                    - First Name </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Exhibitor_Badge__c.Last_Name__c'>{opnebraces}Exhibitor_Badge__c.Last_Name__c{closebraces}
+                                    - Last Name </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Exhibitor_Badge__c.Email__c'>{opnebraces}Exhibitor_Badge__c.Email__c{closebraces}
+                                    - Badger -Email-Address </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Organization.Name'>{opnebraces}Organization.Name{closebraces} - Sender Company
+                                    Name</a></br>
+                              </span>
+                           </template>
+
+                           <template if:true={showExhibitorProfile}>
+                              <span class="exhibitor-Placeholder">
+                                 <a onclick={appendPlaceholder} name='Event_Edition__c.Name'>
+                                    {opnebraces}Event_Edition__c.Name{closebraces} - Event Name </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Event_Edition__c.Event_Code__c'>{opnebraces}Event_Edition__c.Event_Code__c{closebraces}
+                                    - Event Code </a></br>
+                                 <a onclick={appendPlaceholder} name='User.Name'>{opnebraces}User.Name{closebraces} -
+                                    User's Contact Name </a></br>
+                                 <a onclick={appendPlaceholder} name='User.Email'>{opnebraces}User.Email{closebraces}-
+                                    User's Contact Email address </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Name'>{opnebraces}Account.Name{closebraces} - Account Name</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='User__r.Contact__r.Type__c'>{opnebraces}User__r.Contact__r.Type__c{closebraces}
+                                    - Exhibitor Type</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Operation_Admin_Name'>{opnebraces}Operation_Admin_Name{closebraces} -
+                                    Operation Admin Name</a></br>
+                                 <a onclick={appendPlaceholder} name='Doc_URL'>{opnebraces}Doc_URL{closebraces} -
+                                    Record/Uploaded document URL</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Organization.Name'>{opnebraces}Organization.Name{closebraces} - Sender Company
+                                    Name</a></br>
+                              </span>
+                           </template>
+
+                           <template if:true={showExhibitorProfileEPSR}>
+                              <span class="exhibitor-Placeholder">
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Name'>{opnebraces}Account.Name{closebraces} - Account Name</a></br>
+                                 <a onclick={appendPlaceholder} name='Event_Edition__c.Name'>
+                                    {opnebraces}Event_Edition__c.Name{closebraces} - Event Name </a></br>
+                                 <a onclick={appendPlaceholder} name='Event_Edition__c.Name'>
+                                    {opnebraces}Event_Edition__c.Name{closebraces} - Event Name </a></br>
+                                 <a onclick={appendPlaceholder} name='Contractor : # booth'> {opnebraces}Contractor : #
+                                    booth{closebraces} - # Booth Number</a></br>
+                              </span>
+                           </template>
+                           <template if:true={showExhibitorProfileEWC}>
+                              <span class="exhibitor-Placeholder">
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Name'>{opnebraces}Account.Name{closebraces} - Account Name</a></br>
+                                 <a onclick={appendPlaceholder} name='Contractor : # booth'> {opnebraces}Contractor : #
+                                    booth{closebraces} - # Booth Number</a></br>
+                              </span>
+                           </template>
+
+                           <template if:true={showstandContractor}>
+                              <span class="standContractor-Placeholder">
+                                 <a onclick={appendPlaceholder} name='Event_Edition__c.Name'>
+                                    {opnebraces}Event_Edition__c.Name{closebraces} - Event Name </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Event_Edition__c.Event_Code__c'>{opnebraces}Event_Edition__c.Event_Code__c{closebraces}
+                                    - Event Code </a></br>
+                                 <a onclick={appendPlaceholder} name='Contact.Name'>
+                                    {opnebraces}Contact.Name{closebraces} - Contact Name </a></br>
+                                 <a onclick={appendPlaceholder} name='Contact.Email'>
+                                    {opnebraces}Contact.Email{closebraces} - Contact Email </a></br>
+                                 <a onclick={appendPlaceholder} name='Contact.Phone'>
+                                    {opnebraces}Contact.Phone{closebraces} - Contact Phone </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Contact.Title'>{opnebraces}Contact.Title{closebraces} - Contact Title
+                                 </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Contact.MobilePhone'>{opnebraces}Contact.MobilePhone{closebraces} - Contact
+                                    MobilePhone </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Contact.Alternate_Email_Address__c'>{opnebraces}Contact.Alternate_Email_Address__c
+                                    {closebraces}- Contact Alternate Email-address </a></br>
+                                 <a onclick={appendPlaceholder} name='Contact.Type__c'>
+                                    {opnebraces}Contact.Type__c{closebraces} - Contact Type </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Name'>{opnebraces}Account.Name{closebraces} - Account Name </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Phone'>{opnebraces}Account.Phone{closebraces}-Account Phone </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Type'>{opnebraces}Account.Type{closebraces} - Account Type</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Website'>{opnebraces}Account.Website{closebraces} - Account
+                                    Website</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Stand_Design__c.Booth_Design_Status__c'>{opnebraces}Stand_Design__c.Booth_Design_Status__c{closebraces}
+                                    - Booth Design Status</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Stand_Design__c.Booth_Design_Submitted_On__c'>{opnebraces}Stand_Design__c.Booth_Design_Submitted_On__c{closebraces}
+                                    - Booth Design Submitted date</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Stand_Design__c.Submitted_to_Venue_On__c'>{opnebraces}Stand_Design__c.Submitted_to_Venue_On__c{closebraces}
+                                    - Booth Design Venue Submitted date</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Upload_Center__c.Name'>{opnebraces}Upload_Center__c.Name{closebraces} - Booth
+                                    Detail Status</a></br>
+                                 <a onclick={appendPlaceholder} name='Stand_Detail__c.Amount__c'>
+                                    {opnebraces}Stand_Detail__c.Amount__c{closebraces} - Performance Bond Amount
+                                 </a></br>
+                                 <a onclick={appendPlaceholder} name='Stand_Detail__c.IsDoubleDecker__c'>
+                                    {opnebraces}Stand_Detail__c.IsDoubleDecker__c{closebraces} - Is DoubleDecker
+                                 </a></br>
+                                 <a onclick={appendPlaceholder} name='Stand_Detail__c.Is_Heavy_Machinery__c'>
+                                    {opnebraces}Stand_Detail__c.Is_Heavy_Machinery__c{closebraces} - Is Heavy_Machinery
+                                 </a></br>
+                                 <a onclick={appendPlaceholder} name='Stand_Detail__c.Island_Booth_4_sides__c'>
+                                    {opnebraces}Stand_Detail__c.Island_Booth_4_sides__c{closebraces} - Is Island
+                                    Booth(4sides) </a></br>
+                                 <a onclick={appendPlaceholder} name='Stand_Detail__c.Is_One_side_open_stand__c'>
+                                    {opnebraces}Stand_Detail__c.Is_One_side_open_stand__c{closebraces} -Is One Side Open
+                                 </a></br>
+                                 <a onclick={appendPlaceholder} name='Stand_Detail__c.IsRigging__c'>
+                                    {opnebraces}Stand_Detail__c.IsRigging__c{closebraces} -Is Rigging Height </a></br>
+                                 <a onclick={appendPlaceholder} name='Stand_Detail__c.Rigging_Height__c'>
+                                    {opnebraces}Stand_Detail__c.Rigging_Height__c{closebraces} - Rigging Height
+                                 </a></br>
+                                 <a onclick={appendPlaceholder} name='Stand_Detail__c.Is_Three_side_open_stand__c'>
+                                    {opnebraces}Stand_Detail__c.Is_Three_side_open_stand__c{closebraces} - Is three side
+                                    open </a></br>
+                                 <a onclick={appendPlaceholder} name='Stand_Detail__c.Is_Two_side_open_stand__c'>
+                                    {opnebraces}Stand_Detail__c.Is_Two_side_open_stand__c{closebraces} - Is two side
+                                    open </a></br>
+                                 <a onclick={appendPlaceholder} name='Stand_Detail__c.Stand_Height__c'>
+                                    {opnebraces}Stand_Detail__c.Stand_Height__c{closebraces} - -Stand Height </a></br>
+                                 <a onclick={appendPlaceholder} name='ExpocadBooth__c.Booth_Type__c'>
+                                    {opnebraces}ExpocadBooth__c.Booth_Type__c{closebraces} Booth Type </a></br>
+                                 <a onclick={appendPlaceholder} name='ExpocadBooth__c.Area__c'>
+                                    {opnebraces}ExpocadBooth__c.Area__c{closebraces} Booth Area </a></br>
+                                 <a onclick={appendPlaceholder} name='ExpocadBooth__c.Booth_Number__c'>
+                                    {opnebraces}ExpocadBooth__c.Booth_Number__c{closebraces} -Booth Number </a></br>
+                                 <a onclick={appendPlaceholder} name='ExpocadBooth__c.Booth_Classes__c'>
+                                    {opnebraces}ExpocadBooth__c.Booth_Classes__c{closebraces} - Booth Classes </a></br>
+                                 <a onclick={appendPlaceholder} name='ExpocadBooth__c.Display_Name__c'>
+                                    {opnebraces}ExpocadBooth__c.Display_Name__c{closebraces} -Booth Display Name
+                                 </a></br>
+                                 <a onclick={appendPlaceholder} name='Designating-Exhibitor.Account.Name'>
+                                    {opnebraces}Designating-Exhibitor.Account.Name{closebraces} - Account Name </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Designating-Exhibitor.ExpocadBooth__c.Booth_Number__c'>
+                                    {opnebraces}Designating-Exhibitor.ExpocadBooth__c.Booth_Number__c{closebraces} Booth
+                                    Number </a></br>
+
+                              </span>
+                           </template>
+
+                           <template if:true={showUploadcenter}>
+                              <span class="uploadcenter-Placeholder">
+                                 <a onclick={appendPlaceholder} name='Event_Edition__c.Name'>
+                                    {opnebraces}Event_Edition__c.Name{closebraces} - Event Name </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Event_Edition__c.Event_Code__c'>{opnebraces}Event_Edition__c.Event_Code__c{closebraces}
+                                    - Event Code </a></br>
+                                 <a onclick={appendPlaceholder} name='Contact.Name'>
+                                    {opnebraces}Contact.Name{closebraces} - Contact Name </a></br>
+                                 <a onclick={appendPlaceholder} name='Contact.Email'>
+                                    {opnebraces}Contact.Email{closebraces} - Contact Email </a></br>
+                                 <a onclick={appendPlaceholder} name='Contact.Phone'>
+                                    {opnebraces}Contact.Phone{closebraces} - Contact Phone </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Contact.Title'>{opnebraces}Contact.Title{closebraces} - Contact Title
+                                 </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Contact.MobilePhone'>{opnebraces}Contact.MobilePhone{closebraces} - Contact
+                                    MobilePhone </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Contact.Alternate_Email_Address__c'>{opnebraces}Contact.Alternate_Email_Address__c
+                                    {closebraces}- Contact Alternate Email-address </a></br>
+                                 <a onclick={appendPlaceholder} name='Contact.Type__c'>
+                                    {opnebraces}Contact.Type__c{closebraces} - Contact Type </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Name'>{opnebraces}Account.Name{closebraces} - Account Name </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Phone'>{opnebraces}Account.Phone{closebraces}-Account Phone </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Type'>{opnebraces}Account.Type{closebraces} - Account Type</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Website'>{opnebraces}Account.Website{closebraces} - Account
+                                    Website</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Upload_Center__c.Name'>{opnebraces}Upload_Center__c.Name{closebraces} -Upload
+                                    Center Title </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Upload_Center__c.Document_Type__c'>{opnebraces}Upload_Center__c.Document_Type__c{closebraces}
+                                    -Upload Center Document Type </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Upload_Center__c.Notes__c'>{opnebraces}Upload_Center__c.Notes__c{closebraces}
+                                    - Upload Center Note </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Upload_Center__c.Status__c'>{opnebraces}Upload_Center__c.Status__c{closebraces}
+                                    - Upload Center Status </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Organization.Name'>{opnebraces}Organization.Name{closebraces} - Sender Company
+                                    Name</a></br>
+                              </span>
+                           </template>
+                           <template if:true={showAccountsAndBilling}>
+                              <span class="AccountandBilling-Placeholder">
+                                 <a onclick={appendPlaceholder} name='Event_Edition__c.Name'>
+                                    {opnebraces}Event_Edition__c.Name{closebraces} - Event Name </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Event_Edition__c.Event_Code__c'>{opnebraces}Event_Edition__c.Event_Code__c{closebraces}
+                                    - Event Code </a></br>
+                                 <a onclick={appendPlaceholder} name='Contact.Name'>
+                                    {opnebraces}Contact.Name{closebraces} - Contact Name </a></br>
+                                 <a onclick={appendPlaceholder} name='Contact.Email'>
+                                    {opnebraces}Contact.Email{closebraces} - Contact Email </a></br>
+                                 <a onclick={appendPlaceholder} name='Contact.Phone'>
+                                    {opnebraces}Contact.Phone{closebraces} - Contact Phone </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Contact.Title'>{opnebraces}Contact.Title{closebraces} - Contact Title
+                                 </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Contact.MobilePhone'>{opnebraces}Contact.MobilePhone{closebraces} - Contact
+                                    MobilePhone </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Contact.Alternate_Email_Address__c'>{opnebraces}Contact.Alternate_Email_Address__c
+                                    {closebraces}- Contact Alternate Email-address </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Phone'>{opnebraces}Account.Phone{closebraces}-Account Phone </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Phone'>{opnebraces}Account.Phone{closebraces}-Account Phone </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Account.Website'>{opnebraces}Account.Website{closebraces} - Account
+                                    Website</a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Organization.Name'>{opnebraces}Organization.Name{closebraces} - Sender Company
+                                    Name</a></br>
+                              </span>
+                           </template>
+                           <template if:true={showCPBR}>
+                              <span class="CPBR-Placeholder">
+                                 <a onclick={appendPlaceholder} name='Account.Name'>
+                                    {opnebraces}Account.Name{closebraces} - Account Name </a></br>
+                                 <a onclick={appendPlaceholder} name='Amount'>{opnebraces}Amount{closebraces} -
+                                    Performance Bond Amount </a></br>
+                                 <a onclick={appendPlaceholder} name='Receipt'> {opnebraces}Receipt{closebraces}
+                                    -Receipt </a></br>
+                                 <a onclick={appendPlaceholder} name='Performance_Bond'>
+                                    {opnebraces}Performance_Bond{closebraces} - Performance Bond </a></br>
+                              </span>
+                           </template>
+
+                           <template if:true={showCPSR}>
+                              <span class="CPSR-Placeholder">
+                                 <a onclick={appendPlaceholder} name='Account.Name'>
+                                    {opnebraces}Account.Name{closebraces} - Account Name </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Event_Edition__c.Name'>{opnebraces}Event_Edition__c.Name{closebraces} -Event
+                                    Name </a></br>
+                                 <a onclick={appendPlaceholder} name='ExpocadBooth__c.Booth_Number__c'>
+                                    {opnebraces}ExpocadBooth__c.Booth_Number__c{closebraces} -Booth Number </a></br>
+                                 <a onclick={appendPlaceholder} name='Stand_Detail__c.Amount__c'>
+                                    {opnebraces}Stand_Detail__c.Amount__c{closebraces} - Performance Bond Amount
+                                 </a></br>
+                              </span>
+                           </template>
+
+                           <template if:true={showBDSR}>
+                              <span class="BDSR-Placeholder">
+                                 <a onclick={appendPlaceholder} name='Account.Name'>
+                                    {opnebraces}Account.Name{closebraces} - Account Name </a></br>
+                                 <a onclick={appendPlaceholder} name='ExpocadBooth__c.Booth_Number__c'>
+                                    {opnebraces}ExpocadBooth__c.Booth_Number__c{closebraces} -Booth Number </a></br>
+                                 <a onclick={appendPlaceholder}
+                                    name='Stand_Design__c.Booth_Design_Status__c'>{opnebraces}Stand_Design__c.Booth_Design_Status__c{closebraces}
+                                    -Booth Design Status </a></br>
+                                 <a onclick={appendPlaceholder} name='Stand_Detail__c.Amount__c'>
+                                    {opnebraces}Stand_Detail__c.Amount__c{closebraces} - Performance Bond Amount
+                                 </a></br>
+                              </span>
+                           </template>
+
+                           <template if:true={showEPSR}>
+                              <span class="EPSR-Placeholder">
+                                 <a onclick={appendPlaceholder} name='Account.Name'>
+                                    {opnebraces}Account.Name{closebraces} - Account Name </a></br>
+                                 <a onclick={appendPlaceholder} name='Event_Edition__c.Name'>
+                                    {opnebraces}Event_Edition__c.Name{closebraces} - Event Name </a></br>
+                                 <a onclick={appendPlaceholder} name='Contractor : # booth'> {opnebraces}Contractor : #
+                                    booth{closebraces} - Contractor : # Booth Number </a></br>
+                              </span>
+                           </template>
+                           <template if:true={showEWC}>
+                              <span class="EWC-Placeholder">
+                                 <a onclick={appendPlaceholder} name='Account.Name'>
+                                    {opnebraces}Account.Name{closebraces} - Account Name </a></br>
+                                 <a onclick={appendPlaceholder} name='ExpocadBooth__c.Booth_Number__c'>
+                                    {opnebraces}ExpocadBooth__c.Booth_Number__c{closebraces} -Booth Number </a></br>
+                              </span>
+                           </template>
+
+                        </div>
+                        <div class="slds-float_right  slds-p-top_large">
+                           <lightning-button type="submit" variant="brand" label="Submit"></lightning-button>
+                        </div>
+                     </lightning-record-edit-form>
+                  </template>
+                  </div>
+               </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+         </div>
+      </template>
+      <!--  edit pop up ends-->
+      <!-- open source code pop up-->
+      <template if:true={openSourceContentModal}>
+         <div class="slds-p-bottom_xx-large popup-background" style="height:100%;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+               aria-describedby="modal-content-id-1" class="slds-modal slds-modal_medium slds-fade-in-open">
+               <div class="slds-modal__container popup-background">
+                  <header class="slds-modal__header">
+                     <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeSourceCodeModal}>
+                        <lightning-icon icon-name="utility:close" size="small" variant="bare">
+                        </lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                     </button>
+                     <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate"> View Source Content
+                     </h2>
+                  </header>
+                  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                     <lightning-record-edit-form object-api-name={emailTemplateObject} onsuccess={savetextAreaContent}
+                        record-id={recordId}>
+                        <div class="slds-float_right">
+                           <lightning-button type="submit" variant="brand" label="Save"></lightning-button>
+                        </div>
+                        <br>
+                        <span>HTML Content</span>
+                        <lightning-input value={textAreaContent} onchange={mapData}></lightning-input>
+                        <lightning-input-field value={CONTENT2} style="display:none;"></lightning-input-field>
+                     </lightning-record-edit-form>
+                  </div>
+               </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+         </div>
+      </template>
+      <!-- pop up ends -->
+   </lightning-layout>
+</article>
+</template>

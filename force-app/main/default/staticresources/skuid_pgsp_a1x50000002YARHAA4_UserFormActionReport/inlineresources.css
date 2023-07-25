@@ -1,0 +1,31 @@
+.approved {
+    background: lightgreen;
+}
+.rejected
+{
+    background: red;
+}
+.yesButton .sk-button-action{
+    margin-top:14px;
+
+}
+.yesColor  {
+    background: gray !important;
+    
+}
+.approveColor{
+    background: lightgreen !important;
+}
+.rejectColor{
+    background: red !important;
+}
+.cancelColor{
+    background: gray !important;
+}
+.appRejColor{
+    background: lightgray !important;
+}
+.height
+{
+    height:25px;
+}

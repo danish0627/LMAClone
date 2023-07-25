@@ -1,0 +1,357 @@
+<template>
+            <lightning-tabset>
+                <lightning-tab icon-name="utility:cart" label="Order Details">
+                    <template if:true={orderId}>
+
+                        <template if:false={showEdit}>
+                            <template if:true={orderDetails}>
+                                <lightning-record-view-form record-id={orderId} object-api-name="Order">
+                                    <lightning-layout multiple-rows=true>
+                                        <lightning-layout-item size='4'>
+                                            <p class="form-heading slds-p-left_medium">Account Detail :</p>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">{ACCOUNTNAME}</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <p>{orderDetails.Account.Name}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">Opportunity</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <p>{orderDetails.Opportunity.Name}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">{QUOTENAME}</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <lightning-output-field ondblclick={showEditForm}
+                                                                field-name="SBQQ__Quote__c" variant="label-hidden">
+                                                            </lightning-output-field>
+                                                            <lightning-button-icon icon-name="utility:edit" class="edit"
+                                                                icon-class="slds-button__icon_hint" variant="bare"
+                                                                alternative-text="Edit Record" onclick={showEditForm}>
+                                                            </lightning-button-icon>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size='4'>
+                                            <p class="form-heading slds-p-left_medium">Pricebook Detail:</p>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">{PRICEBOOKNAME}</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <p>{orderDetails.Pricebook2.Name}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">Tax Amount (With Tax)</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <lightning-output-field field-name="SBQQ__TotalAmount__c"
+                                                                variant="label-hidden">
+                                                            </lightning-output-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">{VATNUMBER}</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <lightning-output-field field-name="VAT_Number__c"
+                                                                variant="label-hidden">
+                                                            </lightning-output-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">{FULLNAME}</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <p>{orderDetails.BillToContact.Name}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">{ESTIMATEDTAX}</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <lightning-output-field field-name="SBQQ__TaxAmount__c"
+                                                                variant="label-hidden">
+                                                            </lightning-output-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size='4'>
+                                            <p class="form-heading slds-p-left_medium ">Date:</p>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">{ACTIVATEDDATE}</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <lightning-output-field ondblclick={showEditForm}
+                                                                field-name="ActivatedDate" variant="label-hidden">
+                                                            </lightning-output-field>
+                                                            <lightning-button-icon icon-name="utility:edit" class="edit"
+                                                                icon-class="slds-button__icon_hint" variant="bare"
+                                                                alternative-text="Edit Record" onclick={showEditForm}>
+                                                            </lightning-button-icon>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">{CREATEDDATE}</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <lightning-output-field field-name="CreatedDate"
+                                                                variant="label-hidden">
+                                                            </lightning-output-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">{PRICECALCULATIONSTATUS}</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <lightning-output-field ondblclick={showEditForm}
+                                                                field-name="SBQQ__PriceCalcStatus__c"
+                                                                variant="label-hidden">
+                                                            </lightning-output-field>
+                                                            <lightning-button-icon icon-name="utility:edit" class="edit"
+                                                                icon-class="slds-button__icon_hint" variant="bare"
+                                                                alternative-text="Edit Record" onclick={showEditForm}>
+                                                            </lightning-button-icon>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">{ORDERTYPE}</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <lightning-output-field ondblclick={showEditForm}
+                                                                field-name="Type" variant="label-hidden">
+                                                            </lightning-output-field>
+                                                            <lightning-button-icon icon-name="utility:edit" class="edit"
+                                                                icon-class="slds-button__icon_hint" variant="bare"
+                                                                alternative-text="Edit Record" onclick={showEditForm}>
+                                                            </lightning-button-icon>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </lightning-layout-item>
+
+                                    </lightning-layout>
+                                </lightning-record-view-form>
+                            </template>
+                        </template>
+
+                        <template if:true={showSpinner}>
+                            <lightning-spinner variant="brand" size="small" title="Loading..."></lightning-spinner>
+                        </template>
+
+                        <template if:true={showEdit}>
+                            <template if:true={orderDetails}>
+                                <lightning-record-edit-form object-api-name="Order" record-id={orderId}
+                                    onsubmit={handleSubmit} onsuccess={handleSuccess}>
+
+                                    <lightning-layout multiple-rows=true>
+                                        <lightning-layout-item size='4'>
+                                            <p class="form-heading">Account Detail :</p>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">{ACCOUNTNAME}</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <p>{orderDetails.Account.Name}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">Opportunity</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <p>{orderDetails.Opportunity.Name}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element__static">
+                                                    <lightning-input-field field-name="SBQQ__Quote__c">
+                                                    </lightning-input-field>
+
+                                                </div>
+
+                                            </div>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size='4'>
+                                            <p class="form-heading">Pricebook Detail:</p>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">{PRICEBOOKNAME}</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <p>{orderDetails.Pricebook2.Name}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">Tax Amount (With Tax)</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <lightning-output-field field-name="SBQQ__TotalAmount__c"
+                                                                variant="label-hidden">
+                                                            </lightning-output-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">{VATNUMBER}</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <lightning-output-field field-name="VAT_Number__c"
+                                                                variant="label-hidden">
+                                                            </lightning-output-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">{FULLNAME}</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <p>{orderDetails.BillToContact.Name}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">{ESTIMATEDTAX}</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <lightning-output-field field-name="SBQQ__TaxAmount__c"
+                                                                variant="label-hidden">
+                                                            </lightning-output-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size='4'>
+                                            <p class="form-heading">Date:</p>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element__static">
+                                                    <lightning-input-field field-name="ActivatedDate">
+                                                    </lightning-input-field>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div
+                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">{CREATEDDATE}</span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <lightning-output-field field-name="CreatedDate"
+                                                                variant="label-hidden">
+                                                            </lightning-output-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element__static">
+                                                    <lightning-input-field field-name="SBQQ__PriceCalcStatus__c">
+                                                    </lightning-input-field>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element__static">
+                                                    <lightning-input-field field-name="Type"></lightning-input-field>
+                                                </div>
+                                            </div>
+                                        </lightning-layout-item>
+
+                                    </lightning-layout>
+                                    <div class="slds-m-top_medium slds-align_absolute-center sticky ">
+                                        <lightning-button label='Cancel'
+                                            class="buttonClass slds-m-left_x-small slds-m-right_x-small"
+                                            onclick={showEditForm}>
+                                        </lightning-button>
+                                        <lightning-button label='Save' variant='brand' type='submit'
+                                            class="buttonClass slds-m-left_x-small slds-m-right_x-small">
+                                        </lightning-button>
+                                    </div>
+                                </lightning-record-edit-form>
+                            </template>
+                        </template>
+                    </template>
+                </lightning-tab>
+                <lightning-tab icon-name="utility:home" label="Invoices">
+                    <template if:true={invoiceCond}>
+                        <c-common-table condition={invoiceCond}
+                            fields="Name,blng__InvoiceDate__c,blng__Payments__c,blng__Balance__c,blng__InvoiceStatus__c,blng__DueDate__c,Invoice_Processed__c,blng__TotalAmount__c,LastModifiedDate"
+                            object-name="blng__Invoice__c" object-label="Invoice" hide-per-page
+                            fields-label="Name,Invoice Date,Payments,Balance,Status,Due Date,Invoice Processed,total Amount (With TAX),Last Modified Date">
+                        </c-common-table>
+                    </template>
+                </lightning-tab>
+            </lightning-tabset>
+    <div class="slds-clearfix"></div>
+</template>

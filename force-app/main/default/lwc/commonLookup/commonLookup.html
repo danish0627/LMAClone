@@ -1,0 +1,119 @@
+<!--
+Created By		: Girikon(Mukesh Gupta[STL-24])
+Created On	 : September 26, 2019
+@description : This component is use to show Look up .
+
+Modification log --
+Modified By	: 
+-->
+
+<template>
+    <div class="slds-form-element">
+        <template if:true={showLabel}>
+            <label class="slds-form-element__label">
+                <span>
+                    <template if:true={isRequired}><abbr title="required" class="slds-required">*</abbr></template>
+                    {label}
+                </span> 
+            </label>
+        </template>
+        <template if:true={helpText}> 
+            <lightning-helpText content={helpText}></lightning-helpText>
+        </template>
+      
+        <div class="slds-form-element__control">
+            <template if:false={isHide}>
+                <div class="slds-combobox_container">
+                    <div class="searchLookup slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                            <template if:true={isDisabled}>
+                                <lightning-input class="slds-combobox__input" type="search" label="Search" variant="label-hidden" value="" disabled></lightning-input>
+                            </template>
+                            <template if:false={isDisabled}>
+                                <lightning-input class="slds-combobox__input lookupField" is-loading={isLoading} type="search" label="Search" variant="label-hidden" value="" required={isRequired} onfocus={loadDefault} onchange={searchDatas} onblur={handleBlur} placeholder={searchPlaceholder}></lightning-input>
+                            </template>
+                            <template if:true={lookupData}>
+                                <div id="listbox-unique-id" role="listbox">
+                                    <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid"
+                                        role="presentation" style="max-width:99.9%">                                    
+                                        <template if:false={recordFound}>
+                                            <li role="presentation" class="slds-listbox__item">
+                                                <div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                                                    <span class="slds-media__figure slds-listbox__option-icon">
+                                                        <span class="slds-icon_container">
+                                                            <lightning-icon icon-name="utility:search" size="small"></lightning-icon>
+                                                        </span>
+                                                    </span>
+                                                    <span class="slds-media__body">
+                                                        <span class="slds-listbox__option-text slds-listbox__option-text_entity">No record found!</span>
+                                                    </span>
+                                                </div>
+                                            </li>
+                                        </template>
+                                        <template for:each={lookupData} for:item="option">
+                                            <li key={option.Id} role="presentation" class="slds-listbox__item"
+                                                onclick={handleSelect} data-value1={option.Id} data-name4={option.Value__c} data-name1={option.Name} data-name2={option.OrderNumber} data-name3={option.LevelValue__c}>
+                                                <div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                                                    <span class="slds-media__figure slds-listbox__option-icon">
+                                                        <span class="slds-icon_container slds-icon-standard-account">
+                                                            <lightning-icon icon-name={iconName} size="small"></lightning-icon>
+                                                        </span>
+                                                    </span>
+                                                    <span class="slds-media__body">
+                                                        <span class="slds-listbox__option-text slds-listbox__option-text_entity">{option.Value__c} {option.Name} {option.OrderNumber} {option.LevelValue__c}</span>
+                                                    </span>
+                                                </div>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <!-- item selected -->
+            <template if:true={isHide}>
+                <div class="slds-combobox_container">
+                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left-right" role="none">
+                            <span class="slds-icon_container" title={objectName}><lightning-icon class="slds-combobox__input-entity-icon" icon-name={iconName} size="xx-small"></lightning-icon><span class="slds-assistive-text">{objectName}</span>
+                            </span>
+                            <input disabled={isDisabled} class="slds-input slds-combobox__input slds-combobox__input-value" role="textbox" type="text" readonly value={selectedItem.Name}></input>
+                            <button type="button" disabled={isDisabled} onclick={clearSelected} class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" title="Remove selected option">
+                                <lightning-icon icon-name="utility:close" size="xx-small"></lightning-icon>
+                                <span class="slds-assistive-text">Remove selected option</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <template if:true={isOpenModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-modal_medium slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                <button onclick={hideModal} class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                    <lightning-icon icon-name="utility:close" size="x-small" variant="bare"></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Select {objectLabel}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <p>Sit nulla est ex deserunt exercitation anim occaecat. Nostrud ullamco deserunt aute id consequat veniam incididunt duis in sint irure nisi. Mollit officia cillum Lorem ullamco minim nostrud elit officia tempor esse quis. Cillum sunt ad dolore
+                  quis aute consequat ipsum magna exercitation reprehenderit magna. Tempor cupidatat consequat elit dolor adipisicing.</p>
+                <p>Dolor eiusmod sunt ex incididunt cillum quis nostrud velit duis sit officia. Lorem aliqua enim laboris do dolor eiusmod officia. Mollit incididunt nisi consectetur esse laborum eiusmod pariatur proident. Eiusmod et adipisicing culpa deserunt nostrud
+                  ad veniam nulla aute est. Labore esse esse cupidatat amet velit id elit consequat minim ullamco mollit enim excepteur ea.</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={hideModal}>Close</button>
+                    <button class="slds-button slds-button_brand">Select</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+</template>

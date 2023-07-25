@@ -1,0 +1,48 @@
+.selected{
+    color:orange;
+}
+.detail-rows{    height: auto;    display: inline-block;}
+.slds-hide{
+    display:none;
+}
+.slds-card__body{
+    border-top: 1px solid #e1e1e1;
+}
+
+.pagesize-btn-container{
+    width: 100px;
+    display: inline-block;
+    margin: 0px 10px;
+}
+.slds-modal:focus {
+    border: 0px;
+    outline: 0px;
+}
+.search-box{width: 85%;display: inline-block;}
+.slds-th__action .slds-icon-text-default {
+    fill: rgb(0, 112, 210);
+}
+/*.THIS .slds-no-flex{width: 100%}*/
+.slds-th__action:hover svg{fill: rgb(0, 112, 210)}
+.pagesize{
+    width: 80px;
+    display: inline-block;
+    margin: 0px 2px;
+}
+.slds-modal__footer
+{
+    margin-top: 0px;
+}
+
+.slds-truncate{
+    text-overflow: inherit !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+}
+.req-bold-text{
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #555;
+}

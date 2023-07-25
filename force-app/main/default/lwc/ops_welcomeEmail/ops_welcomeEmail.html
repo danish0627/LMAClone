@@ -1,0 +1,429 @@
+<!-- Created By		: Girikon(Sunil[STL-])
+Created On		: August 14 2019
+@description 	: This LWC is for Welcome Email in CC.
+
+Modification log --
+Modified By		: Girikon() -->
+
+
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+    <div class="slds-card slds-p-around_medium">
+        <template if:false={showSpinner}>
+            <lightning-layout multiple-rows="false">
+                <lightning-layout-item size="12" class="slds-p-horizontal_medium slds-p-bottom_medium ">
+                    <span class="slds-text-heading_medium" style="font-weight: bold;">{eventEdition.Name}</span>
+                    <lightning-breadcrumbs>
+                        <lightning-breadcrumb label="Customer Centre" onclick={navigateTo} name='cc'>
+                        </lightning-breadcrumb>
+                        <lightning-breadcrumb label="Customer Centre Settings" onclick={navigateTo} name='ccs'>
+                        </lightning-breadcrumb>
+                        <lightning-breadcrumb label="Welcome Email">
+                        </lightning-breadcrumb>
+                    </lightning-breadcrumbs>
+                </lightning-layout-item>
+            </lightning-layout>
+            <div class="slds-p-horizontal_medium">
+                <lightning-tabset class="slds-p-horizontal_medium">
+                    <lightning-tab label={label.Setting} title={label.Setting}>
+                        <lightning-layout multiple-rows="true">
+                            <lightning-layout-item size="2">
+                                <div class="nx-pagetitle-subtitle">
+                                    <p>{label.Banner}&nbsp;{label.Image}</p>
+                                </div>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="8">
+                                <template if:true={imageUrlOk}>
+                                    <img src={imageUrl} />
+                                </template>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2">
+                                <div class="nx-pagetitle-subtitle">
+                                    <p>Please format the banner so it's no wider than 600 pixels, saved in RGB format
+                                        and
+                                        does
+                                        not exceed 150KB.</p>
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <div class="slds-m-bottom_medium">
+                            <lightning-layout>
+                                <lightning-layout-item size="3">
+                                    <lightning-input type="file" onchange={handleFilesChange}
+                                        accept="image/png/jpg/jpeg">
+                                    </lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="2" class="slds-m-top_medium">
+                                    <lightning-button label='Delete Image' class="slds-m-top_medium"
+                                        onclick={onImageDelete} variant='brand'></lightning-button>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </div>
+                        <lightning-tabset variant="scoped" class="slds-m-top_small">
+                            <lightning-tab label={label.Exhibitor} title={label.Exhibitor} onactive={onTabSelection}>
+                                <lightning-layout multiple-rows=true>
+                                    <lightning-layout-item size="4" class="slds-m-top_small">
+                                        {label.BodyText1}
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="8" class="slds-m-top_small">
+                                        <lightning-input-rich-text id={label.Exhibitor} formats="'font', 'size', 'bold', 'italic', 'underline', 'strike', 'list', 'indent', 'align', 'link', 'image', 'clean', 'table', 'header','background ','color','code','script'" title='boxType1Value' onchange={onRichTextChange}
+                                            value={boxType1Value}>
+                                        </lightning-input-rich-text>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="4" class="slds-m-top_small">
+                                        {label.BodyText2}
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="8" class="slds-m-top_small">
+                                        <lightning-input-rich-text id={label.Exhibitor} formats="'font', 'size', 'bold', 'italic', 'underline', 'strike', 'list', 'indent', 'align', 'link', 'image', 'clean', 'table', 'header','background ','color','code','script'" title='boxType2Value' onchange={onRichTextChange}
+                                            value={boxType2Value}>
+                                        </lightning-input-rich-text>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" class="slds-m-top_small">
+                                        <lightning-button variant='brand' class="slds-m-right_small slds-m-top_small" label='Save'
+                                            onclick={onSave}>
+                                        </lightning-button>
+                                        <lightning-button label='Cancel' class="slds-m-right_small slds-m-top_small" onclick={onCancel}></lightning-button>
+                                        <lightning-button class="slds-m-right_small slds-m-top_small" variant='brand' onclick={sendEmail}
+                                            label='Send Test Email'>
+                                        </lightning-button>
+                                        <lightning-button class='slds-m-top_small' variant='brand' onclick={showIframe} label='Preview Email'>
+                                        </lightning-button>
+
+                                    </lightning-layout-item>
+
+                                </lightning-layout>
+                            </lightning-tab>
+                            <lightning-tab label={label.StandContractor} title={label.StandContractor}
+                                onactive={onTabSelection}>
+                                <lightning-layout multiple-rows=true>
+                                    
+                                    <lightning-layout-item size="4" class="slds-m-top_small">
+                                        {label.BodyText1}
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="8" class="slds-m-top_small">
+                                        <lightning-input-rich-text id={label.StandContractor} formats="'font', 'size', 'bold', 'italic', 'underline', 'strike', 'list', 'indent', 'align', 'link', 'image', 'clean', 'table', 'header','background ','color','code','script'" onchange={onRichTextChange} title='boxType1Value'
+                                            value={boxType1Value}>
+                                        </lightning-input-rich-text>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="4" class="slds-m-top_small">
+                                        {label.BodyText2}
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="8" class="slds-m-top_small">
+                                        <lightning-input-rich-text formats="'font', 'size', 'bold', 'italic', 'underline', 'strike', 'list', 'indent', 'align', 'link', 'image', 'clean', 'table', 'header','background ','color','code','script'" id={label.StandContractor} onchange={onRichTextChange} title='boxType2Value'
+                                            value={boxType2Value}>
+                                        </lightning-input-rich-text>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" class="slds-m-top_small">
+                                        <lightning-button variant='brand' class="slds-m-right_small slds-m-top_small" label='Save'
+                                            onclick={onSave}>
+                                        </lightning-button>
+                                        <lightning-button label='Cancel' class="slds-m-right_small slds-m-top_small" onclick={onCancel}></lightning-button>
+                                        <lightning-button class="slds-m-right_small slds-m-top_small" variant='brand' onclick={sendEmail}
+                                            label='Send Test Email'>
+                                        </lightning-button>
+                                        <lightning-button class="slds-m-top_small" variant='brand' onclick={showIframe} label='Preview Email'>
+                                        </lightning-button>
+
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </lightning-tab>
+                            <lightning-tab label={label.Agent} title={label.Agent} onactive={onTabSelection}>
+                                <lightning-layout multiple-rows=true>
+                                    
+                                    <lightning-layout-item size="4" class="slds-m-top_small">
+                                        {label.BodyText1}
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="8" class="slds-m-top_small">
+                                        <lightning-input-rich-text id={label.Agent} formats="'font', 'size', 'bold', 'italic', 'underline', 'strike', 'list', 'indent', 'align', 'link', 'image', 'clean', 'table', 'header','background ','color','code','script'" onchange={onRichTextChange} title='boxType1Value'
+                                            value={boxType1Value}>
+                                        </lightning-input-rich-text>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="4" class="slds-m-top_small">
+                                        {label.BodyText2}
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="8" class="slds-m-top_small">
+                                        <lightning-input-rich-text id={label.Agent} formats="'font', 'size', 'bold', 'italic', 'underline', 'strike', 'list', 'indent', 'align', 'link', 'image', 'clean', 'table', 'header','background ','color','code','script'" onchange={onRichTextChange} title='boxType2Value'
+                                            value={boxType2Value}>
+                                        </lightning-input-rich-text>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" class="slds-m-top_small">
+                                        <lightning-button variant='brand' class="slds-m-right_small slds-m-top_small" label='Save'
+                                            onclick={onSave}>
+                                        </lightning-button>
+                                        <lightning-button label='Cancel' class="slds-m-right_small slds-m-top_small" onclick={onCancel}></lightning-button>
+                                        <lightning-button class="slds-m-right_small slds-m-top_small" variant='brand' onclick={sendEmail}
+                                            label='Send Test Email'>
+                                        </lightning-button>
+                                        <lightning-button variant='brand' class="slds-m-top_small" onclick={showIframe} label='Preview Email'>
+                                        </lightning-button>
+
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </lightning-tab>
+                            <lightning-tab label={label.Co_Exhibitor} title={label.Co_Exhibitor}
+                                onactive={onTabSelection}>
+                                <lightning-layout multiple-rows=true>
+                                    
+                                    <lightning-layout-item size="4" class="slds-m-top_small">
+                                        {label.BodyText1}
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="8" class="slds-m-top_small">
+                                        <lightning-input-rich-text id={label.Co_Exhibitor} formats="'font', 'size', 'bold', 'italic', 'underline', 'strike', 'list', 'indent', 'align', 'link', 'image', 'clean', 'table', 'header','background ','color','code','script'" onchange={onRichTextChange} title='boxType1Value'
+                                            value={boxType1Value}>
+                                        </lightning-input-rich-text>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="4" class="slds-m-top_small">
+                                        {label.BodyText2}
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="8" class="slds-m-top_small">
+                                        <lightning-input-rich-text id={label.Co_Exhibitor} formats="'font', 'size', 'bold', 'italic', 'underline', 'strike', 'list', 'indent', 'align', 'link', 'image', 'clean', 'table', 'header','background ','color','code','script'" onchange={onRichTextChange} title='boxType2Value'
+                                            value={boxType2Value}>
+                                        </lightning-input-rich-text>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" class="slds-m-top_small">
+                                        <lightning-button variant='brand' class="slds-m-right_small slds-m-top_small" label='Save'
+                                        onclick={onSave}>
+                                    </lightning-button>
+                                    <lightning-button label='Cancel' class="slds-m-right_small slds-m-top_small" onclick={onCancel}></lightning-button>
+                                        <lightning-button class="slds-m-right_small slds-m-top_small" variant='brand' onclick={sendEmail}
+                                            label='Send Test Email'>
+                                        </lightning-button>
+                                        <lightning-button variant='brand' class="slds-m-top_small" onclick={showIframe} label='Preview Email'>
+                                        </lightning-button>
+
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </lightning-tab>
+                            <lightning-tab label={label.Contractor} title={label.Contractor} onactive={onTabSelection}>
+                                <lightning-layout multiple-rows=true>
+                                    
+                                    <lightning-layout-item size="4" class="slds-m-top_small">
+                                        {label.BodyText1}
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="8" class="slds-m-top_small">
+                                        <lightning-input-rich-text id={label.Contractor} formats="'font', 'size', 'bold', 'italic', 'underline', 'strike', 'list', 'indent', 'align', 'link', 'image', 'clean', 'table', 'header','background ','color','code','script'" onchange={onRichTextChange} title='boxType1Value'
+                                            value={boxType1Value}>
+                                        </lightning-input-rich-text>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="4" class="slds-m-top_small">
+                                        {label.BodyText2}
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="8" class="slds-m-top_small">
+                                        <lightning-input-rich-text id={label.Contractor} formats="'font', 'size', 'bold', 'italic', 'underline', 'strike', 'list', 'indent', 'align', 'link', 'image', 'clean', 'table', 'header','background ','color','code','script'" onchange={onRichTextChange} title='boxType2Value'
+                                            value={boxType2Value}>
+                                        </lightning-input-rich-text> 
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" class="slds-m-top_small">
+                                        <lightning-button variant='brand' class="slds-m-right_small slds-m-top_small" label='Save'
+                                        onclick={onSave}>
+                                    </lightning-button>
+                                    <lightning-button label='Cancel' class="slds-m-right_small slds-m-top_small" onclick={onCancel}></lightning-button>
+                                        <lightning-button class="slds-m-right_small slds-m-top_small" variant='brand' onclick={sendEmail}
+                                            label='Send Test Email'>
+                                        </lightning-button>
+                                        <lightning-button variant='brand' class="slds-m-top_small" onclick={showIframe} label='Preview Email'>
+                                        </lightning-button>
+
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </lightning-tab>
+                        </lightning-tabset>
+                    </lightning-tab>
+                    <!-- <lightning-tab label={label.Reports} title={label.Reports}>
+                    Two Content !
+                </lightning-tab> -->
+                </lightning-tabset>
+            </div>
+            <template if:true={showFrame}>
+                <template if:true={showEmailPreview}>
+                    <div>
+                        <section style='width:90%' role="dialog" tabindex="-1" aria-labelledby="modal-heading-01"
+                            aria-modal="true" aria-describedby="modal-content-id-1"
+                            class="slds-modal slds-fade-in-open ">
+                            <div class="slds-modal__container previewEmailDiv">
+                                <header class="slds-modal__header">
+                                    <button
+                                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                        title="Close" onclick={showIframe}>
+                                        <lightning-icon icon-name="utility:close" variant='inverse'></lightning-icon>
+                                        <span class="slds-assistive-text">Close</span>
+                                    </button>
+                                    <h2 class="slds-text-heading_medium slds-hyphenate">Email Preview</h2>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                    <div>
+                                        <table class="slds-align_absolute-center" border="0">
+                                            <tr>
+                                                <td>
+                                                    <img src={imageUrl}>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table align="center">
+                                                        <tr>
+                                                            <td>&nbsp;</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="TdBody1">
+                                                                <lightning-formatted-rich-text
+                                                                    class="slds-m-bottom_medium" value={boxType1Value}>
+                                                                </lightning-formatted-rich-text>
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>&nbsp;</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="TdCutomerDetails">
+                                                                <p class='slds-m-bottom_small TdDetails'>
+                                                                    <strong>Customer Centre Details:</strong>
+                                                                </p>
+                                                                <table class="tableBGC">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <table align="center">
+                                                                                <tr>
+                                                                                    <td>&nbsp;</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td
+                                                                                        class=' slds-p-left_small slds-p-right_small TdDetails'>
+                                                                                        <p>
+                                                                                            <strong>Company Name:
+                                                                                            </strong>
+                                                                                        </p>
+                                                                                        <p>
+                                                                                            <strong>Stand Number(s):
+                                                                                            </strong></p>
+                                                                                        <p>
+                                                                                            <strong>Username:</strong>
+                                                                                        </p>
+                                                                                        <p>
+                                                                                            <strong>URL:</strong>
+
+                                                                                        </p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>&nbsp;</td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>&nbsp;</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="TdDetails">
+                                                                <p class="slds-m-bottom_large TdDetails">
+                                                                    <strong>Customer Centre Login Instructions:</strong>
+                                                                </p>
+                                                                <table class="tableBGC">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <table align="left">
+                                                                                <tr>
+                                                                                    <td>&nbsp;</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <ol
+                                                                                            class="slds-p-left_small slds-p-right_small TdDetails slds-list_ordered">
+                                                                                            <li>
+                                                                                                Click on the URL above.
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                Enter a new password of
+                                                                                                your
+                                                                                                choice.</li>
+                                                                                            <li>
+                                                                                                After creating your new
+                                                                                                password, you will be
+                                                                                                redirected to Customer
+                                                                                                Centre login page.</li>
+                                                                                            <li>
+                                                                                                Enter your Username
+                                                                                                (mentioned above) and
+                                                                                                the
+                                                                                                new password and click
+                                                                                                "Sign
+                                                                                                in".</li>
+                                                                                        </ol>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>&nbsp;</td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>&nbsp;</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="TdBody1">
+                                                                <lightning-formatted-rich-text
+                                                                    class="slds-m-bottom_xx-large"
+                                                                    value={boxType2Value}>
+                                                                </lightning-formatted-rich-text>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>&nbsp;</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <footer class="slds-modal__footer">
+                                    <lightning-button onclick={showIframe} variant='brand' label='Okay'>
+                                    </lightning-button>
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </div>
+                </template>
+                <template if:true={showEmailSent}>
+                    <div>
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <button
+                                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                        title="Close" onclick={showIframe}>
+                                        <lightning-icon icon-name="utility:close" variant='inverse'></lightning-icon>
+                                        <span class="slds-assistive-text">Close</span>
+                                    </button>
+                                    <h2 class="slds-text-heading_medium slds-hyphenate ">Email Sent</h2>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium">
+                                    <h3 class="dialogContent">Email Sent to {currentUserEmail}</h3>
+                                </div>
+                                <footer class="slds-modal__footer">
+                                    <lightning-button onclick={showIframe} variant='brand' label='Okay'>
+                                    </lightning-button>
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </div>
+
+                </template>
+            </template>
+        </template>
+    </div>
+</template>

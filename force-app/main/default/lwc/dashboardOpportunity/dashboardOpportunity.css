@@ -1,0 +1,7 @@
+.form_element_border {
+    flex-basis: 0%;
+    border-bottom: 1px solid rgb(221, 219, 218);
+    margin-bottom: 0;
+    padding-bottom: .125rem;
+}
+.default-height{min-height: 200px; max-height: auto;}

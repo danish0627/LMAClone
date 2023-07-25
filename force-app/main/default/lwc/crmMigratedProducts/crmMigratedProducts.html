@@ -1,0 +1,11 @@
+<!-- Updating Api Version for ticket no: EMEA-200 -->
+<template>
+    <div class="slds-p-around_medium">
+        <template if:true={conditions}>
+            <c-common-table condition={conditions} fields="x_Product_Name__c,x_Product_Code__c,x_Event_Product_Type__c,Quantity,x_UnitPrice__c,x_Total__c" 
+            object-name="OpportunityLineItem" object-label="Migrated Products" is-multi-language="true" custom-label="-1" 
+            fields-label="Migration Product Name,Migration Product Code,Migration Event Product Type,Quantity,Migration Sales Price,Migration Total">
+            </c-common-table>
+        </template>
+    </div>
+</template>

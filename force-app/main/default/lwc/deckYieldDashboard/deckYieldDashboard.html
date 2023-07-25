@@ -1,0 +1,193 @@
+<!--
+    Created By		: Girikon( Yash Gupta [STL-227] )
+    Created On		: 9/26/2019
+    @description 	: This component is used to fetch the quote line object data based on selected event edition. 
+    Modified By		: Yash Gupta [STL-227 9/26/2019]
+-->
+
+<template>
+    
+    <lightning-layout class="slds-m-bottom_small common-table">
+        <lightning-layout-item size="2" padding="horizontal-small">                    
+            <template if:true={showNewButton}>
+                <lightning-button icon-name="utility:add" icon-position="left" label="Add New" variant="brand" onclick={openNewRecordModal}></lightning-button>
+            </template>
+        </lightning-layout-item>
+		
+        <lightning-layout-item class="slds-clearfix" size="10" padding="horizontal-small">
+            <div class="slds-float_right">                                    
+                <template if:true={filterField3}>
+                    <template if:true={isMultiPicklistFilter3}>
+                        <c-multi-picklist placeholder={filter3Label} options={filterField3Options} selected-options={filterField3Value} onmultipicklistselect={handleMultipicklistChange} filter-name="3"></c-multi-picklist>
+                    </template>
+                    <template if:false={isMultiPicklistFilter3}>
+                        <lightning-combobox options={filterField3Options} class="filter3" value={filterField3Value} label="filter-1" variant="label-hidden" onchange={handleFilterChange}></lightning-combobox>
+                    </template>     
+                </template>
+            
+                <template if:true={filterField2}>
+                    <template if:true={isMultiPicklistFilter2}>
+                        <c-multi-picklist placeholder={filter2Label} options={filterField2Options} selected-options={filterField2Value} onmultipicklistselect={handleMultipicklistChange} filter-name="2"></c-multi-picklist>                            
+                    </template>
+                    <template if:false={isMultiPicklistFilter2}>
+                        <lightning-combobox options={filterField2Options} class="filter2" value={filterField2Value} label="filter-2" variant="label-hidden" onchange={handleFilterChange}></lightning-combobox>
+                    </template>
+                </template>
+            
+                <template if:true={filterField1}>
+                    <template if:true={isMultiPicklistFilter1}>
+                        <c-multi-picklist placeholder={filter1Label} options={filterField1Options} selected-options={filterField1Value} onmultipicklistselect={handleMultipicklistChange} filter-name="1"></c-multi-picklist>                            
+                    </template>
+                    <template if:false={isMultiPicklistFilter1}>
+                        <lightning-combobox options={filterField1Options} class="filter1" value={filterField1Value} label="filter-3" variant="label-hidden" onchange={handleFilterChange}></lightning-combobox>
+                    </template>
+                </template>
+                <template if:true={isFilterByOwner}>
+                    <lightning-combobox options={ownerOptions} class="ownerfilter" value={selectedOwner} label="filter-4" variant="label-hidden" onchange={handleFilterChange}></lightning-combobox>
+                </template>
+            
+                <lightning-input type="search" value={searchValue} label="Search" placeholder="Search" variant="label-hidden" class="search-box" onchange={reloadData}></lightning-input>
+                <button style="display: inline-block;margin-top: -2px;margin-left: -5px;" class="slds-button slds-button_icon slds-button_icon-brand" title="Search" onclick={searchData}>
+                    <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+                </button>
+            </div>
+        </lightning-layout-item>
+    </lightning-layout>
+
+    <c-table-placeholder is-show={isShow}></c-table-placeholder>
+    <template if:true={isTrue}>
+        <lightning-spinner variant="brand" size="small" title="Loading..."></lightning-spinner>
+    </template>
+
+    <table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid">
+        <thead>
+            <tr class="slds-line-height_reset">
+                <th aria-label={PRODUCTNAME} aria-sort="none" class="slds-is-resizable" scope="col">
+                    <a id="SBQQ__Product__r.Name"  class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">					          	
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <span class="slds-truncate" title={PRODUCTNAME}>{PRODUCTNAME}</span>
+                            <span class="slds-icon_container slds-icon-utility-arrowdown">
+                            <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                            </span>
+                        </div>
+                    </a>
+                </th>
+                <th aria-label="Event Product Type" aria-sort="none" class="slds-is-resizable" scope="col">
+                    <a id="SBQQ__Product__r.Event_Product_Type__c"  class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">					          	
+                        <div class="slds-grid slds-truncate slds-grid_vertical-align-center" title="Event Product Type">
+                            <span class="slds-truncate" title="Event Product Type">Event Product Type</span>
+                            <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                            </span>
+                        </div>
+                    </a>
+                </th>
+                 <th aria-label="Total Rented Area" aria-sort="none" class="slds-is-resizable" scope="col">
+                    <a id="SBQQ__Quantity__c"  class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">					          	
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <span class="slds-truncate" title="Total Rented Area">Total Rented Area</span>
+                            <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                            </span>
+                        </div>
+                    </a>
+                </th>
+                <th aria-label="Yield" aria-sort="none" class="slds-is-resizable" scope="col">
+                    <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">					          	
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <span class="slds-truncate" title="Yield">Yield</span>
+                            <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                            </span>
+                        </div>
+                    </a>
+                </th>
+                <th aria-label="Total Amount Sold" aria-sort="none" class="slds-is-resizable" scope="col">
+                    <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <span class="slds-truncate" title="Total Amount Sold">Total Amount Sold</span>
+                            <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon"></lightning-icon>
+                            </span>
+                        </div>
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={tableData} for:item="item" for:index="ind">
+                <tr key={item.Id} aria-selected="false" class="slds-hint-parent">
+                    <td tabindex="0">
+                        <div class="slds-truncate" title={item.Name} style="white-space: normal">
+                            {item.Name}
+                        </div>
+                    </td>
+                    <td tabindex="0">
+                        <div class="slds-truncate" title={item.Event_Product_Type__c} style="white-space: normal">
+                            {item.Event_Product_Type__c}
+                        </div>
+                    </td>
+                    <td tabindex="0">
+                        <div class="slds-truncate" title={item.expr1} style="white-space: normal">
+                            <lightning-formatted-number value={item.expr1} format-style="decimal" minimum-fraction-digits="2"></lightning-formatted-number>
+                        </div>
+                    </td>
+                    <td tabindex="0">
+                        <div class="slds-truncate" title="Yield" style="white-space: normal">
+                            <lightning-formatted-number value={item.yield} format-style="decimal" minimum-fraction-digits="2"></lightning-formatted-number> {item.CurrencyIsoCode}
+                        </div>
+                    </td>
+                    <td tabindex="0">
+                        <div class="slds-truncate" style="white-space: normal">
+                            {item.CurrencyIsoCode} <lightning-formatted-number value={item.expr0} format-style="decimal" minimum-fraction-digits="2"></lightning-formatted-number>
+                        </div>
+                    </td>
+                </tr>
+            </template>
+        </tbody>
+
+    </table>
+    
+    <template if:true={error}>
+        <div class="slds-align_absolute-center">No {objectLabel} to Display</div>
+    </template>
+        
+    <template if:true={pageList}>
+        <lightning-layout multiple-rows="true" class="slds-m-around_small slds-clearfix">
+            <lightning-layout-item size="4" padding="horizontal_small">
+                <div>
+                    Show                
+                    <lightning-combobox options={pagesizeList} value={pasesizeVisible} label="Page Size" variant="label-hidden" placeholder="Page Size" onchange={onPageSizeChange} class="pagesize"></lightning-combobox>
+                    {objectLabel} per page.
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="8" class="slds-float_right" padding="horizontal_small">
+                <div class="slds-float_right">
+                {showPageView} of &nbsp;
+                <template if:true={isMoreThan2000}>2000+</template>
+                <template if:false={isMoreThan2000}>{totalRows}</template>&nbsp;
+                <lightning-button-icon class="prev-btn" size="medium" icon-name="utility:chevronleft" onclick={getPrevData} variant="bare"></lightning-button-icon>&nbsp;
+                    <span class="slds-p-horizontal_x-small">
+                        <a href="javascript:void(0);" id="first" onclick={processMe} name="1" class={firstActiveClass}>1</a>
+                    </span>
+                    <span class="slds-p-horizontal_xxx-small">
+                        <a href="javascript:void(0);" id="none1">...</a>
+                    </span>
+                    <template for:each={pageList} for:item="item" for:index="ind">
+                        <span key={item} id={item} class="slds-p-horizontal_x-small">
+                            <a href="javascript:void(0);" id={item} onclick={processMe} name={item} class="">{item}</a>
+                        </span>
+                    </template>
+                    <span class="slds-p-horizontal_xxx-small">
+                        <a href="javascript:void(0);" id="none2">...</a>
+                    </span>
+                    <span key={item} id={item} class="slds-p-horizontal_x-small">
+                        <a href="javascript:void(0);" id="last" onclick={processMe} name={totalPage} class={lastActiveClass}>{totalPage}</a>
+                    </span>
+                <lightning-button-icon class="next-btn" size="medium" icon-name="utility:chevronright" onclick={getNextData} variant="bare"></lightning-button-icon>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+	
+</template>

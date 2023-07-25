@@ -1,0 +1,81 @@
+body                                        {padding-bottom: 50px;     color: rgb(62, 62, 60);}
+body td                                       {color: rgb(62, 62, 60);}
+.slds-context-bar                               {height: 3.5rem;}
+
+.slds-context-bar__item.slds-is-active          {border-left: 1px solid #00a1df;   border-right: 1px solid #00a1df;  border-bottom: 3px solid #f3f2f2; margin-bottom: -3px;}
+
+.slds-context-bar__secondary                    {height: 2.5rem;}
+.slds-icon--small                               {width: 0.8rem; height: 0.8rem;}
+.slds-table .slds-icon_container                {padding: 3px 5px;}
+.rk-copy-right                                  {background: #e26b2b; color: #fff;}
+
+.show                                           {display: block !important; animation: ease;}
+.border0                                        {border:none !important;}
+.padding0                                       {padding: 0;}
+.paddingL0                                      {padding-left: 0;}
+.paddingR0                                      {padding-right: 0;}
+.marginB12                                      {margin-bottom: 12px;}
+.marginT10                                      {margin-top: 10px;}
+.libraryList 
+
+.libraryList-item                 {float: left !important; margin-bottom: 10px !important;}
+.libraryList .slds-checkbox_faux                {float: left; margin-right:  5px; }
+.libraryList dd  .slds-form-element__label      {float: left; width: 94%; margin-right: 0; }
+.right0                                         {right:0;}
+.questionBuilder 								{overflow:visible !important; }
+.questionBuilder .slds-media__figure                             {margin-left: 0; margin-right: 0;}
+
+.questionBuilder .slds-box                      {padding: 0;}
+.align-self                                     {align-self:auto !important;}
+.qf-text p                                      {float: left;     padding-right: 25px; text-align: justify;}
+/*.qf-text .slds-icon_container                   {position: absolute;right: 6px; top: 2px;}*/
+.qf-text .slds-icon_container .slds-icon--small {    width: 1rem;     height: 1rem; fill:#32af5c;}
+.slds-form-element .slds-form-element__label 	{
+    font-weight: 700;
+}
+.slds-scope .slds-table th, .slds-scope .slds-table td{padding: .25rem .5rem;}
+/*.ui-draggable-dragging									{width:300px;}*/
+
+@media (max-width: 767px)                       {
+                                                    .slds-context-bar__item{position: absolute; right: 10px; top: 10px;}
+                                                    .slds-context-bar__secondary{
+                                                    position: absolute;
+                                                    z-index: 9999;
+                                                    left: 0;
+                                                    width: 100%;
+                                                    top: 56px;
+                                                    height: auto;
+                                                    float: left;
+                                                    background: #fff;
+                                                    } 
+
+                                                    .slds-context-bar__secondary ul{
+                                                            width: 100%;
+                                                            display: block;
+                                                            float: left;
+                                                     }
+
+                                                    .slds-context-bar__secondary ul li{
+                                                        position: relative;
+                                                        width: 100% !important;
+                                                        max-width: 100%;
+                                                        clear: both;
+                                                        right:0;
+                                                        top:0;
+                                                        padding-top: 10px; padding-bottom: 10px;
+
+                                                    }
+                                                    .slds-context-bar__item.slds-is-active:before{
+                                                        display: none;
+                                                    }
+                                                    .slds-context-bar__item.slds-is-active{border: none;}
+
+                                                    .slds-context-bar__secondary{display:none;} 
+                                                    .slds-context-bar__item{display:block;}
+                                                    .slds-col{width: 100%; clear: both;}
+                                                    .slds-grid{display: inherit;}
+                                                    
+                                                    
+                                                }
+
+

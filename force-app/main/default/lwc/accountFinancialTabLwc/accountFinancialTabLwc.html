@@ -1,0 +1,52 @@
+<!--
+Created By	 : Girikon(Mukesh)
+Created On	 : July 30, 2019
+@description : This component is used for Account financialTab Section On CRM Side.
+
+Modification log 
+Modified By	: Mukesh Gupta[STL-16 fixed sorting(12 Aug, 2019)] 
+-->
+
+
+<template>
+    <div class="slds-card slds-p-around_small" style="min-height:500px;max-height:auto;">
+        <lightning-tabset>
+            <lightning-tab icon-name="utility:cart" label="Order" onactive={handleTabClick}>
+                <c-common-table condition={orderCond} 
+                fields="OrderNumber,Main_Order__c,ActivatedDate,TotalAmount,SBQQ__Quote__r.Name,Status,Account.Name,Opportunity.Name" 
+                object-name="Order" object-label="Order" 
+                fields-label="Order Number,Main Order,Activated Date,Order Amount,Quote,Status,Account,Opportunity">
+                </c-common-table>
+            </lightning-tab>        
+            <lightning-tab icon-name="utility:home" label="Final Invoices" onactive={handleTabClick}>
+                <template if:true={finalInvoiceCondition}>
+                    <c-account-final-invoice object-name="blng__Invoice__c" record-id={recordId} condition={finalInvoiceCondition} object-label="Final Invoice"></c-account-final-invoice>
+                </template>
+            </lightning-tab>
+            <lightning-tab icon-name="utility:moneybag" label="Payments" onactive={handleTabClick}>
+                <c-common-table condition={paymentModelCond} 
+                fields="Name,blng__PaymentType__c,blng__Invoice__r.blng__Order__r.OrderNumber,blng__Invoice__r.Name,blng__Amount__c,blng__Invoice__r.blng__Order__r.Opportunity.Name,CreatedDate,LastModifiedDate" 
+                object-name="blng__Payment__c" object-label="Payment" 
+                fields-label="Payment Number,Payment Type,Order Number,Invoice,Amount,Opportunity,Created Date,Last Modified Date">
+                </c-common-table>
+            </lightning-tab>
+            <lightning-tab icon-name="utility:shopping_bag" label="Product History" onactive={handleTabClick}>
+                <c-common-table condition={productHistoryCond} 
+                fields="SBQQ__Quote__r.Name,SBQQ__Product__r.Name,SBQQ__Quantity__c,SBQQ__NetPrice__c,SBQQ__NetTotal__c,SBQQ__ListPrice__c,SBQQ__ListTotal__c,LastModifiedDate" 
+                object-name="SBQQ__QuoteLine__c" object-label="Quote Line" 
+                fields-label="QUOTE,PRODUCT NAME,QUANTITY,NET UNIT PRICE,NET TOTAL,LIST UNIT PRICE,LIST TOTAL,LAST MODIFIED DATE">
+                </c-common-table>
+            </lightning-tab>
+            <lightning-tab icon-name="utility:custom_apps" label="Contract" onactive={handleTabClick}>
+                <c-common-table condition={contractCond} 
+                fields="ContractNumber,StartDate,EndDate,ActivatedDate,LastModifiedDate,SBQQ__Opportunity__r.Name" 
+                object-name="Contract" object-label="Contract" 
+                fields-label="Contract Number,Contract Start Date,Contract End Date,Activated Date,Last Modified Date,Opportunity">
+                </c-common-table>
+            </lightning-tab>
+            <lightning-tab icon-name="utility:home" label="Invoice History" onactive={handleTabClick}>
+                    <c-invoice-history object-name="blng__Invoice__c" record-id={recordId} condition={invHistoryCond} object-label="Invoice"></c-invoice-history>
+            </lightning-tab>
+        </lightning-tabset>
+        </div>
+</template>

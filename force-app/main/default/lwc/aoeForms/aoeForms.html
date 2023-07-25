@@ -1,0 +1,247 @@
+<!-- 
+    Created By : {Girikon(Prashant)}
+    Created On : 26 Aug 2019
+    @description : [C2E-13] - It is used to display forms tab of Agent Owned Exhibitor to Agent.
+-->
+<template>
+    
+        <lightning-card title={label.ReqForms} style="font-weight: bold;">
+            <div style="overflow: auto;">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                
+                                <th class="tabHeader" data-fieldname="FName" data-index="1" onclick={sortReqData} style="width:40%;background-color: #ebebeb; cursor: pointer;">
+                                    {label.formName}
+                                </th>
+                                <th class="tabHeader" data-fieldname="Provider" data-index="2" onclick={sortReqData} scope="col" style="width:20%;background-color: #ebebeb; cursor: pointer;">
+                                    {label.Provider}
+                                </th>
+                                <th class="tabHeader" data-fieldname="Type" data-index="3" onclick={sortReqData} scope="col" style="background-color: #ebebeb; cursor: pointer;">
+                                    {label.Type}
+                                </th>
+                                <th class="tabHeader" data-fieldname="DeadLine" data-index="4" onclick={sortReqData} scope="col" style ="background-color: #ebebeb; cursor: pointer;">
+                                    {label.Deadline}
+                                </th>
+                                <th class="tabHeader" data-fieldname="Status" data-index="5" onclick={sortReqData} scope="col" style ="background-color: #ebebeb; cursor: pointer;">
+                                    {label.Status}
+                                </th>
+                                <th class="" scope="col" style ="background-color: #ebebeb;">
+                                </th>
+        
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            <template if:true={requiredForms}>
+                            <template for:each={requiredForms} for:item="so" for:index="ind">
+                                <tr class="slds-hint-parent" key={so.id} style="font-weight: 500;">
+                                        <td data-label="Name" >
+                                        <template if:true={isReadOnly} >
+                                            <template if:true={so.isOnline} >
+                                                <p style="color: GRAY;">{so.formsName}</p>
+                                            </template>
+                                            <template if:false={so.isOnline} > 
+                                                <a href="#" onclick={handleClick} style="text-decoration: none; font-weight:500;"  data-target-type ={so.Form_Permission__r.Event_Edition_Form__r.FormType__c} 
+                                                data-target-url ={so.Form_Permission__r.Event_Edition_Form__r.Forms__r.Url__c} 
+                                                data-target-attchid ={so.Form_Permission__r.Event_Edition_Form__r.Forms__r.Uploaded_Attachment_Id__c} 
+                                                data-target-id={so.Form_Permission__r.Event_Edition_Form__r.Template_Form__c}
+                                                data-endeddate={so.Form_Permission__r.Event_Edition_Form__r.Deadline__c}
+                                                data-target-object={so.Id}
+                                                data-deadline={so.Form_Permission__r.Event_Edition_Form__r.Allow_Submit_After_Deadline__c}
+                                                data-isfilled = {so.Is_Filled_Up__c} > {so.formsName}</a>      
+                                            </template>
+                                        </template>
+                                        <template if:false={isReadOnly}>
+                                                <a href="#" onclick={handleClick} style="text-decoration: none; font-weight:500;"  data-target-type ={so.Form_Permission__r.Event_Edition_Form__r.FormType__c} 
+                                                data-target-url ={so.Form_Permission__r.Event_Edition_Form__r.Forms__r.Url__c} 
+                                                data-target-attchid ={so.Form_Permission__r.Event_Edition_Form__r.Forms__r.Uploaded_Attachment_Id__c} 
+                                                data-target-id={so.Form_Permission__r.Event_Edition_Form__r.Template_Form__c}
+                                                data-endeddate={so.Form_Permission__r.Event_Edition_Form__r.Deadline__c}
+                                                data-target-object={so.Id}
+                                                data-deadline={so.Form_Permission__r.Event_Edition_Form__r.Allow_Submit_After_Deadline__c}
+                                                data-isfilled = {so.Is_Filled_Up__c}> {so.formsName}</a>
+                                        </template>
+                                        </td>
+                                    <td data-label="Provider">{so.provider}</td>
+                                    <td data-label="Type"> {so.formType}</td>
+                                    <td data-label="DeadLine"><lightning-formatted-date-time
+                                        value={so.deadLine}
+                                        year="2-digit"
+                                        month="2-digit"
+                                        day="2-digit">
+                                    </lightning-formatted-date-time></td>
+                                    <td data-label="Status"> {so.status} </td>
+                                    <td data-label="Submitted">
+                                        <template if:true={so.updatedBy}>
+                                            <i style="color:grey;">{lastUpdatedBy} {so.updatedBy} (<lightning-formatted-date-time
+                                                value={so.updatedDate}
+                                                year="2-digit"
+                                                month="2-digit"
+                                                day="2-digit">
+                                            </lightning-formatted-date-time>)</i>
+                                        </template>
+                                    </td>
+                                </tr>
+                            </template>
+                            </template>
+                        </tbody>
+                    </table>
+            </div>
+        </lightning-card>
+
+    <br></br>
+    <template if:true={addSize}>   
+        <lightning-card title={addForms} style="font-weight: bold;">
+            <div style="overflow: auto;">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered ">
+                        <thead >
+                            <tr class="slds-line-height_reset ">
+                                
+                                <th class="tabHeader" data-fieldname="FName" data-index="1" onclick={sortAdditionalData} style="width:40%; background-color: #ebebeb; cursor: pointer;">
+                                    {label.formName}
+                                </th>
+                                <th class="tabHeader" data-fieldname="Provider" data-index="2" onclick={sortAdditionalData} scope="col" style="width:20%; background-color: #ebebeb; cursor: pointer;" >
+                                    {label.Provider}
+                                </th>
+                                <th class="tabHeader" data-fieldname="Type" data-index="3" onclick={sortAdditionalData} scope="col" style ="background-color: #ebebeb; cursor: pointer;">
+                                    {label.Type}
+                                </th>
+                                <th class="tabHeader" data-fieldname="DeadLine" data-index="4" onclick={sortAdditionalData} scope="col" style ="background-color: #ebebeb; cursor: pointer;">
+                                    {label.Deadline}
+                                </th>
+                                <th class="tabHeader" data-fieldname="Status" data-index="5" onclick={sortAdditionalData} scope="col" style ="background-color: #ebebeb; cursor: pointer;">
+                                    {label.Status}
+                                </th>
+                                <th class="" scope="col" style ="background-color: #ebebeb;">
+                                </th>
+        
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            <template for:each={additionalForms} for:item="so">
+                                <tr class="slds-hint-parent" key={so.id} style="font-weight: 500;">
+                                    <td data-label="Name">
+                                    <template if:true={isReadOnly} >
+                                        <template if:true={so.isOnline} > 
+                                            <p style="color: GRAY;">{so.formsName}</p>      
+                                        </template>
+                                        <template if:false={so.isOnline} > 
+                                            <a href="#" onclick={handleClick} style="text-decoration: none; font-weight:500;" data-target-type ={so.Form_Permission__r.Event_Edition_Form__r.FormType__c}
+                                            data-target-url ={so.Form_Permission__r.Event_Edition_Form__r.Forms__r.Url__c} 
+                                            data-target-attchid ={so.Form_Permission__r.Event_Edition_Form__r.Forms__r.Uploaded_Attachment_Id__c} 
+                                            data-target-id={so.Form_Permission__r.Event_Edition_Form__r.Template_Form__c}
+                                            data-endeddate={so.Form_Permission__r.Event_Edition_Form__r.Deadline__c}
+                                            data-target-object={so.Id}
+                                            data-deadline={so.Form_Permission__r.Event_Edition_Form__r.Allow_Submit_After_Deadline__c}
+                                            data-isfilled = {so.Is_Filled_Up__c}> {so.formsName}</a>
+                                        </template>
+                                    </template>
+                                    <template if:false={isReadOnly} >
+                                        <a href="#" onclick={handleClick} style="text-decoration: none; font-weight:500;" data-target-type ={so.Form_Permission__r.Event_Edition_Form__r.FormType__c}
+                                        data-target-url ={so.Form_Permission__r.Event_Edition_Form__r.Forms__r.Url__c} 
+                                        data-target-attchid ={so.Form_Permission__r.Event_Edition_Form__r.Forms__r.Uploaded_Attachment_Id__c} 
+                                        data-target-id={so.Form_Permission__r.Event_Edition_Form__r.Template_Form__c}
+                                        data-endeddate={so.Form_Permission__r.Event_Edition_Form__r.Deadline__c}
+                                        data-target-object={so.Id}
+                                        data-deadline={so.Form_Permission__r.Event_Edition_Form__r.Allow_Submit_After_Deadline__c} data-isfilled = {so.Is_Filled_Up__c}> {so.formsName}</a>
+                                    </template>
+                                    </td>
+                                    <td data-label="Provider">{so.provider}</td>
+                                    <td data-label="Type"> {so.formType}</td>
+                                    <td data-label="DeadLine"><lightning-formatted-date-time
+                                        value={so.deadLine}
+                                        year="2-digit"
+                                        month="2-digit"
+                                        day="2-digit">
+                                    </lightning-formatted-date-time></td>
+                                    <td data-label="Type"> {so.status}</td>
+                                    <td data-label="Submitted">
+                                        <template if:true={so.updatedBy}>
+                                            <i style="color:grey;">{lastUpdatedBy} {so.updatedBy} (<lightning-formatted-date-time
+                                                value={so.updatedDate}
+                                                year="2-digit"
+                                                month="2-digit"
+                                                day="2-digit">
+                                            </lightning-formatted-date-time>)</i>
+                                        </template>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+            </div>
+        </lightning-card>
+    </template> 
+            <template if:true={bShowModal}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <!-- modal header start -->
+                        <header class="slds-modal__header">
+                            <h2
+                            id="modal-heading-01"
+                            class="slds-text-heading_medium slds-hyphenate">
+                            <span onclick={closeModal} class="close">&times;</span>
+                            </h2>
+                        </header>
+                        <!-- modal body start -->
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <p style="text-align: center; color: red;">{dataArr.deadlineMessage}
+                            </p>
+                        </div>
+                        <!-- modal footer start-->
+                        <footer class="slds-modal__footer">
+                            <lightning-button
+                            variant="brand"
+                            icon-name="utility:close"
+                            label={label.Close}
+                            onclick={closeModal}
+                            >
+                            </lightning-button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+
+        <template if:true={showLinkOrPdfDialog}>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- modal header start -->
+                    <header class="slds-modal__header">
+                        <h2
+                        id="mail-resend-header"
+                        class="slds-text-heading_medium slds-hyphenate">
+                        <span onclick={closeLinkPdfModal} class="close">&times;</span>
+                        <b>{label.FormAgreement}</b>
+                        </h2>
+                        
+                    </header>
+                    <!-- modal body start -->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                        <p>{label.LinkPdfFormAlert}</p>
+                        </div>
+                    <!-- modal footer start-->
+                    <footer class="slds-modal__footer">
+                        <lightning-button
+                            variant="brand"
+                            class="slds-float_left"
+                            icon-name="utility:check"
+                            label={label.Agree}
+                            onclick={handleLinkPdf}
+                            >
+                            </lightning-button>
+                            &nbsp;&nbsp;
+                        <lightning-button
+                            variant="brand"
+                            class="slds-float_left slds-m-left_small"
+                            icon-name="utility:close"
+                            label={label.Cancel}
+                            onclick={closeLinkPdfModal}
+                            >
+                        </lightning-button>
+                    </footer>
+                </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </template>

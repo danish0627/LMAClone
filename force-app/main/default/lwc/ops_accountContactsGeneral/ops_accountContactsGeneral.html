@@ -1,0 +1,34 @@
+<!--
+Created By	 : (SUNIL [STL-158])
+Created On	 : Sep 19, 2019
+@description : This component is use to show General section on  Account Contacts page in customer center settings ops admin side .
+
+Modification log --
+Modified By	: 
+-->
+
+<template>
+    <article class="slds-card " if:true={esId}>
+        <div if:true={isLoading} class="slds-is-relative">
+            <lightning-spinner variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+        <lightning-layout multiple-rows="true" >
+            <lightning-layout-item size="12">
+                <lightning-record-edit-form record-id={esId} onsuccess={onSuccess} onsubmit={onSubmit}
+                    onload={onLoad} onerror={onError} layout-type="Full" density="compact"
+                    object-api-name="Event_Settings__c">
+                    <lightning-messages></lightning-messages>
+                    <template if:true={renderedComponent}>
+                            <lightning-input-field field-name="Welcome_Text_Account_Contacts__c">
+                                </lightning-input-field>
+                    </template>
+                    <div class="slds-p-top_large">
+                        <lightning-button variant="brand" type="submit" name="Save" label="Save"></lightning-button>
+                        <lightning-button class="slds-m-left_x-small" variant="neutral" onclick={cancel} name="Cancel"
+                            label="Cancel"></lightning-button>
+                    </div>
+                </lightning-record-edit-form>
+            </lightning-layout-item>
+        </lightning-layout> 
+    </article>
+</template>

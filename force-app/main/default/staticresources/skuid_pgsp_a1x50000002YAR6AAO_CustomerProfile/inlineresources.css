@@ -1,0 +1,349 @@
+.ui-button.nx-button-secondary.ui-state-active, .ui-widget-content .ui-button.nx-button-secondary.ui-state-default.ui-state-active, .ui-button.nx-button-secondary.ui-state-hover, .ui-widget-content .ui-button.nx-button-secondary.ui-state-default.ui-state-hover, .ui-button.nx-button-secondary.ui-state-focus, .ui-widget-content .ui-button.nx-button-secondary.ui-state-default.ui-state-focus {
+    color:black;
+}
+
+/*@media screen and (min-width: 600px) {
+
+#sk-2RKpje-368 {display: block;}
+
+}*/
+@media screen and (max-width: 555px) {
+
+#sk-2RKpje-368 {display: none;}
+
+}
+
+/*@media screen and (max-width: 375px) {
+
+    #sk-2RKpje-368 { display: block !important; }
+    
+    .testMedia{ 
+        
+    }
+
+}*/
+
+.nx-pagetitle-subtitle {
+
+    line-height: inherit !important;
+}
+
+.cc-content-wrapper-footer {
+    margin: auto;
+    max-width: 1160px;
+}
+
+#sk-1_lA-2345{
+    height:800px;
+}
+.ext-webkit.ext-chrome
+{
+    padding:0px !important;
+}
+/*
+#sk-3xZ9cC-195 {
+    direction: rtl; 
+}
+#divTab{
+    border-width:4px;
+    border-color:#F0CB6E;
+    border-style: solid;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #fff;
+}
+
+.ui-helper-clearfix:after {
+    content:"";
+    display:none;
+}
+.ui-tabs .ui-tabs-nav li.ui-tabs-active, .ui-tabs .ui-tabs-nav li.ui-tabs-active.ui-state-hover{
+    border-bottom:5px solid #333;
+}
+.sk-footerwrapper {
+    position: relative;
+}
+
+
+#leftPanelDiv{
+    background-color: #36486b;
+    min-height:800px;
+    width:250px !important;
+}
+
+#sizeMain{
+    font-size: 20px ;
+    font-weight: bold;
+}
+#sizeRight{
+    font-size: 10px ;
+    font-weight: normal;
+}
+#sizeRight1{
+    font-size: 10px ;
+    font-weight: normal;
+    color:black;
+}
+.listButton  {
+    color: black;
+    background: burlywood !important;
+    padding: 10px 14px 5px 12px;
+}
+
+*/
+/*@media only screen and (max-width: 375px) {
+    #main-nav {
+        display:none;
+    }
+    #main-nav-mobile{
+        display: inline-block;
+    }
+}*/
+/*@media only screen and (min-width: 376px) {
+    #main-nav-mobile {
+        display:none;
+    }
+    #main-nav{
+        display: inline-block;
+    }
+}*/
+
+.sk-navigation.sk-navigation-dropdown.sk-dropnav.overflow{
+    border-top: 0px solid rgb(204, 204, 204) !important; 
+    border-bottom: 0px solid rgb(204, 204, 204) !important;
+    
+}
+.main-nav{
+    font-size:13px;
+}
+@media only screen and (max-width: 600px) {
+    .headerWrapper {
+        max-width:95%;
+    }
+    .headerGrid{
+        flex:0 1 auto!important;
+    }
+}
+#sk-lY2-1094 {
+    background-color: #ffffcc;
+}
+/*.sk-navigation-item > a {
+    margin: 0px 0px;
+    padding:  0 1.5rem 0 .6rem;
+    font-weight: 600;
+    background-image: url("../resource/bredcom_arrow");
+    background-repeat: no-repeat;
+    background-position: right;
+    font-size: 15px;
+    color: black;
+}
+
+.sk-navigation-item > a:hover {
+    background-image: url("../resource/bredcom_arrow_hover");
+    background-repeat: no-repeat;
+    background-position: right;
+    background-color: transparent;
+}
+
+.sk-navigation-item {
+    margin: 0px 3px;
+}
+
+.sk-navigation > .sk-navigation-item:hover, .sk-navigation > .sk-navigation-item:focus {
+    background:  none repeat scroll 0 0;
+}
+.sk-navigation-horizontal {
+    border-top: 0px solid #d8dde6; 
+    line-height: 30px !important;
+    border-bottom: 0px solid #0070d2; 
+}
+*/
+/*Product Listings Tab Styles*/
+.cc-product-listings-added {
+    padding:20px
+}
+.cc-product-listings-added-text {
+    text-align: center;
+    font-size: 1.3em;
+    padding-bottom: 20px;
+}
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+    margin-top:5px;
+    margin-bottom:5px;
+    margin-left:2px;
+    margin-right:2px;
+}
+.ui-tabs .ui-tabs-nav {
+    padding: 0 0 0 8px;
+}
+
+/*Style guid overide rules for tables*/
+.cc-profile-table thead {
+    display: none;
+}
+.cc-profile-table .nx-list-footer {
+    display: none;
+}
+.cc-profile-table tr {
+    width:100%;
+}
+.cc-profile-table td {
+    text-align: left;
+}
+.cc-profile-table td:first-child {
+    text-align: right;
+}
+/* Flip position of text and filter sets in tables*/
+.cc-profile-table { 
+    direction: rtl; 
+}
+.cc-profile-table > .nx-fieldtext { 
+    direction: ltr; 
+}
+.cc-profile-table .nx-fieldtext a,
+.cc-profile-table .nx-fieldtext a:hover{ 
+    text-decoration:none;
+    color: #000;
+    font-weight: bold;
+}
+/* Overide pop styles*/
+.ui-dialog .ui-dialog-titlebar {
+    background:#fff;
+}
+.ui-dialog .ui-dialog-titlebar .ui-button.ui-dialog-titlebar-close .ui-icon {
+    color:#000;
+}
+/* Overide pop up feild editor styles*/
+.cc-popup-field-editor .nx-basicfieldeditor-item-label {
+    width:10%;
+    padding-right:10px;
+    text-align: right;
+}
+.cc-popup-field-editor .nx-basicfieldeditor-item {
+    padding: 0;
+}
+.cc-popup-field-editor div.nx-basicfieldeditor-section-body>div.nx-basicfieldeditor-item>.nx-field, div.nx-basicfieldeditor-item>.nx-field {
+    width:88%;
+}
+/*force align columns to align with titles in Company Info feild editor */
+.cc-profile-company-info .nx-basicfieldeditor-item {
+    padding:0px;
+}
+/* Overide pop up title bar styles*/
+.ui-dialog .ui-dialog-titlebar {
+    margin: 30px;
+    position: relative;
+    color: #333333;
+    font-weight:bold;
+    font-size: 22px;
+    padding-bottom:12px;
+    padding-left:0px;
+    padding-top:0px;
+    border-bottom: 3px solid rgb(153, 153, 153)
+}
+.ui-dialog .ui-dialog-titlebar .ui-button.ui-dialog-titlebar-close .ui-icon {
+    color: #999999;
+}
+.ui-dialog .ui-dialog-titlebar .ui-button.ui-dialog-titlebar-close {
+    margin: 0.4em -0.1em;
+    padding:0;
+}
+.cc-profile-popup-wrapper {
+    padding-top:30px;
+    padding-right:20px;
+    padding-left:20px;
+}
+/* Overide rich text editor heights*/
+.cc-profile-rich-text .nx-richtext-input {
+    height: 183px;
+}
+/*Overide built in CKEDITOR styles*/
+.cke_chrome {
+    display: block;
+    padding: 0;
+    border: 1px solid #a1a1a1;
+    box-shadow: none;
+}
+i.nx-skootable-buttonicon-visible {
+    color: #555;
+}
+.cke_toolbar_break {
+    clear:none;
+}
+
+.nx-field{
+    width: 50%;
+    margin-left: -49px;
+}
+#sk-1UWCu4-2140{
+    display:none;
+}
+#sk-3BzlaB-4474{
+    display:none;
+}
+
+
+
+.ui-button.ui-dialog-titlebar-close .sk-icon {
+color:#000 !important;
+	}
+
+.ui-dialog .ui-dialog-titlebar .ui-button.ui-dialog-titlebar-close:focus{
+  background: #fff !important;
+  outline: none!important;
+	}
+
+.ui-dialog .ui-dialog-titlebar .ui-button.ui-dialog-titlebar-close:hover{
+  background: #fff !important;
+}
+/*Product Category Tab Styles*/
+
+#sk-68vyM-1167 div.nx-fieldtext{
+    color:#A1A1A1;;
+    font-weight:normal;
+}
+
+
+div.nx-skootable-buttonicon {
+/*  display:none;  */
+}
+
+div.sk-drawer-handle{
+    display:none;
+}
+button.nx-button-list-config{  
+    display:none;
+}
+#sk-66SXK-1088.td{
+    background-color:white;
+}
+
+
+table.nx-skootable-data tbody tr td.nx-item-drawer{background-color:white; color:grey;}
+
+table.nx-skootable-data tbody tr.nx-item-has-drawer td{border-top:4px solid white;background-color:white; color: grey;}
+
+table.nx-skootable-data tbody td, table.nx-skootable-data thead td {
+    border-bottom: 0px solid white;
+}
+
+i.sk-icon.sk-icon-tasks-open.inline.nx-skootable-buttonicon-visible{
+    color:white;
+}
+.cc-proCat-table .nx-fieldtext {
+    font-weight: bolder;
+}
+@media screen and (min-width:660px) and (max-width:1260px){
+    #sk-jbHrx-1564{
+    height:620px;
+}
+}
+
+@media screen and (min-width:660px) and (max-width:1260px){
+    #sk-36mJdP-869{
+    height:610px;
+}
+}
+
+#sk-pPVYe-930 {
+    height: 560px !important;
+}

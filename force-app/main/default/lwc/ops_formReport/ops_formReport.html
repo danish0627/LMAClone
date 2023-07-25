@@ -1,0 +1,142 @@
+<!-- Updating Api Version for ticket no: EMEA-200 -->
+<template>
+        <lightning-card>
+                <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-2">
+
+                                        <article class="slds-card slds-p-around_medium">
+          
+                                                        <lightning-layout class="slds-m-bottom_small common-table">
+                                                            <lightning-layout-item size="3" padding="horizontal-small action-buttons">
+                                                                <div  style="float:left;text-align:left;" >
+                                                                    <button class="slds-button slds-button_brand">Export Marketing</button>
+                                                            </div>
+                                                            </lightning-layout-item>
+                                                            <lightning-layout-item size="9" padding="horizontal-small" class="slds-clearfix">
+                                                                <div style="float: right;text-align: right;">
+                                              
+                                                                    <lightning-input type="search" value={searchValue} label="Search" placeholder="Search"
+                                                                        variant="label-hidden" class="search-box" onchange={searchData}></lightning-input>
+                                                                </div>
+                                                            </lightning-layout-item>
+                                                        </lightning-layout>
+                                                
+                                                        <table aria-multiselectable="true"
+                                                            class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid">
+                                                            <thead>
+                                                                <tr class="slds-line-height_reset">
+                                                                    <th aria-label="Account Name" aria-sort="none" class="slds-is-resizable slds-is-sortable"
+                                                                        scope="col">
+                                                                        <a id="Name" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+                                                                            href="javascript:void(0);" role="button" tabindex="-1">
+                                                                            <div class="slds-grid slds-truncate slds-grid_vertical-align-center">
+                                                                                <span class="slds-truncate" >EVENT EDITION FORM NAME</span>
+                                                                                <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                                                                    <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                                                                        class="slds-is-sortable__icon"></lightning-icon>
+                                                                                </span>
+                                                                            </div>
+                                                                        </a>
+                                                                    </th>
+                                                                    <th aria-label="StageName" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                                                                        <a id="Form_Group__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+                                                                            href="javascript:void(0);" role="button" tabindex="-1">
+                                                                            <div class="slds-grid slds-grid_vertical-align-center">
+                                                                                <span class="slds-truncate">REQUIRED</span>
+                                                                                <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                                                                    <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                                                                        class="slds-is-sortable__icon"></lightning-icon>
+                                                                                </span>
+                                                                            </div>
+                                                                        </a>
+                                                                    </th>
+                                                                    <th aria-label="Status" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                                                                        <a id="Business_Unit__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+                                                                            href="javascript:void(0);" role="button" tabindex="-1">
+                                                                            <div class="slds-grid slds-grid_vertical-align-center">
+                                                                                <span class="slds-truncate">TYPE</span>
+                                                                                <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                                                                    <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                                                                        class="slds-is-sortable__icon"></lightning-icon>
+                                                                                </span>
+                                                                            </div>
+                                                                        </a>
+                                                                    </th>
+                                                
+                                                                    <th aria-label="Amount" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                                                                        <a id="Doc_Type__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+                                                                            href="javascript:void(0);" role="button" tabindex="-1">
+                                                                            <div class="slds-grid slds-grid_vertical-align-center">
+                                                                                <span class="slds-truncate">VIEWED</span>
+                                                                                <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                                                                    <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                                                                        class="slds-is-sortable__icon"></lightning-icon>
+                                                                                </span>
+                                                                            </div>
+                                                                        </a>
+                                                                    </th>
+                                                
+                                                                    <th aria-label="Amount" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                                                                         <a id="Template_Form__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+                                                                             href="javascript:void(0);" role="button" tabindex="-1">
+                                                                             <div class="slds-grid slds-grid_vertical-align-center">
+                                                                                 <span class="slds-truncate">SUBMITTED</span>
+                                                                                 <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                                                                     <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                                                                         class="slds-is-sortable__icon"></lightning-icon>
+                                                                                 </span>
+                                                                             </div>
+                                                                         </a>
+                                                                     </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <template for:each={tableData} for:item="item" for:index="ind">
+                                                                    <tr key={item.Id} aria-selected="false" class="slds-hint-parent">
+                                                                        
+                                                                        <td tabindex="0">
+                                                                            <div class="slds-truncate" title={item.Event_Edition_Form__r.Name}>
+                                                                                {item.Event_Edition_Form__r.Name}
+                                                                            </div>
+                                                                        </td>
+                                                                        <td tabindex="0">
+                                                                            <div class="slds-truncate">
+                                                                                        <lightning-input type="checkbox" checked={item.Event_Edition_Form__r.Mandatory__c} disabled={inputDisabled}></lightning-input>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td tabindex="0">
+                                                                            <div class="slds-truncate" title={item.Event_Edition_Form__r.FormType__c}>
+                                                                                {item.Event_Edition_Form__r.FormType__c}
+                                                                            </div>
+                                                                        </td>
+                                                                        <td tabindex="0">
+                                                                            <div class="slds-truncate">
+                                                                                        <a href="javascript:void(0);" data-record-id={item.Id} onclick={clickOnViewed}
+                                                                                        tabindex="-1"  data-id={ind}>
+                                                                               {item.Total_User_Viewed__c}/{item.Total_User_Count__c}
+                                                                               </a>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td tabindex="0">
+                                                                            <div class="slds-truncate">
+                                                                                        <a href="javascript:void(0);" data-record-id={item.Id} onclick={clickOnSubmitted}
+                                                                                        tabindex="-1"  data-id={ind}>
+                                                                                        {item.Total_User_Filled_Up__c}/{item.Total_User_Count__c}     
+                                                                               </a>
+                                                                            </div>
+                                                                        </td>
+                                                                      
+                                                                    </tr>
+                                                                </template>
+                                                            </tbody>
+                                                
+                                                        </table>
+                                                    
+                                                    </article>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                        </div>
+                    </div> 
+
+       </lightning-card>
+</template>

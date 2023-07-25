@@ -1,0 +1,87 @@
+<template>
+        <lightning-layout multiple-rows="true" class="slds-m-top_large">
+                Please add the all Stand Design Attachment labels that you'd like customers to flag their Designs with.
+                            <div class="slds-p-top_large">
+                                <c-events-list-custom-table button1-label="Add New Stand Design Attachment" onopennewmodal={handleNewModal}  pagesize=10
+                                condition=""  fields="Name,Design_Category__c" is-multi-language="false" custom-label="-1"
+                                    fields-label="STAND DESIGN ATTACHMENTS,DESIGN CATEGORY"
+                                    object-name="Stand_Design_Attachments__c" is-show-action="true" is-hide-delete-action="false" 
+                                    object-label="Stand Design Attachment" onopeneditmodal={handleEditModal}>
+                                </c-events-list-custom-table>
+                            </div>
+                                
+                            <template if:true={openEditModal}>
+                                    <div class="demo-only" style="height: 80%; width:640px;">
+                                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                                            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                            <div class="slds-modal__container">
+                                                <header class="slds-modal__header">
+                                                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                                        title="Close" onclick={closeModal}>
+                                                        <lightning-icon icon-name="utility:close" size="medium">
+                                                        </lightning-icon>
+                                                        <span class="slds-assistive-text">Close</span>
+                                                    </button>
+                                                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Edit Stand Design Attachment</h2>
+                                                </header>
+                                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                                                    <lightning-record-edit-form object-api-name="Stand_Design_Attachments__c"
+                                                        onsuccess={onSucessBadgeUpdated} record-id={recordId} class="globalEditForm">
+                                                        <lightning-input-field field-name="Name"></lightning-input-field>
+                                                        <lightning-input-field field-name="Design_Category__c"></lightning-input-field>
+                                                        <lightning-button class="save slds-hide" type="submit" variant="brand" label="Save">
+                                                        </lightning-button>
+                                                    </lightning-record-edit-form>
+                                                </div>
+                                                <footer class="slds-modal__footer" style="margin-top:0px;">
+                                                    <lightning-button label="Cancel" variant="neutral" onclick={closeModal}></lightning-button>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <lightning-button onclick={callSaveBtn} variant="brand" label="Save" disabled={saveDisable}>
+                                                    </lightning-button>
+                                                </footer>
+                                            </div>
+                                        </section>
+                                        <div class="slds-backdrop slds-backdrop_open"></div>
+                                    </div>
+                                </template>
+                                <!-- open add new row modal -->
+        <template if:true={openNewModal}>
+                <div class="slds-p-bottom_xx-large">
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                        aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                            <header class="slds-modal__header">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                    title="Close" onclick={closeModal}>
+                                    <lightning-icon icon-name="utility:close" size="small" variant="bare">
+                                    </lightning-icon>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <h2 id="modal-heading-012" class="slds-text-heading_medium slds-hyphenate">New Stand Design Attachment</h2>
+    
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-12">
+                                <lightning-record-edit-form object-api-name="Stand_Design_Attachments__c"
+                                    onsubmit={submitForm} onsuccess={onSucessBadgeCreated} class="globalForm">
+                                    <lightning-messages></lightning-messages>
+                                    <lightning-input-field field-name="Name"></lightning-input-field>
+                                    <lightning-input-field field-name="Design_Category__c"></lightning-input-field>
+                                    <lightning-button class="save slds-hide" type="submit" variant="brand" label="Save">
+                                    </lightning-button>
+                                </lightning-record-edit-form>
+                                <br>
+                            </div>
+                            <footer class="slds-modal__footer" style="margin-top:0px;">
+                                <lightning-button label="Cancel" variant="neutral" onclick={closeModal}></lightning-button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <lightning-button onclick={callSaveBtn} variant="brand" label="Save" disabled={saveDisable}>
+                                </lightning-button>
+                            </footer>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </div>
+            </template>
+                </lightning-layout>
+                
+    </template>

@@ -1,0 +1,290 @@
+<!-- Updating Api Version for ticket no: EMEA-200 -->
+<template>
+    <div style="min-height:500px">
+        <lightning-tabset>
+            <lightning-tab label={LeadInfo_tab1}>
+                <div class="slds-p-around_small">
+                    <template if:true={recordId}>
+                        <c-crm-interest-level show-header record-id={recordId}></c-crm-interest-level>
+                    </template>
+                    <br/><br/><br/><br/>
+                    <template if:true={recordId}>
+                        <c-crm-nature-of-business show-header record-id={recordId}></c-crm-nature-of-business>
+                    </template>
+                </div>
+            </lightning-tab>
+            <lightning-tab label={LeadInfo_tab2}>
+                <div class="slds-p-around_small">
+                    <span style="font-size: 20px;">{Opportunity_Source}</span>
+                </div>
+                <c-forms-placeholder is-show={isShow}></c-forms-placeholder>
+                <!-- View form -->
+                <div class={viewForm}>                    
+                    <lightning-record-view-form object-api-name="Opportunity" record-id={recordId}>
+                        <lightning-layout multiple-rows="true">
+                            <lightning-layout-item size="4">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="LeadSource"></lightning-output-field>
+                                            </div>
+                                            <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" onclick={openEditForm}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="Source_Description__c"></lightning-output-field>                                                
+                                            </div>
+                                            <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" onclick={openEditForm}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="Specific_Source__c"></lightning-output-field>
+                                            </div>
+                                            <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" onclick={openEditForm}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="UTM_Source__c"></lightning-output-field>
+                                            </div>
+                                            <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" onclick={openEditForm}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="UTM_Campaign__c"></lightning-output-field>
+                                            </div>
+                                            <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" onclick={openEditForm}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="4">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="UTM__c"></lightning-output-field>
+                                            </div>
+                                            <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" onclick={openEditForm}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="UTM_Content__c"></lightning-output-field>
+                                            </div>
+                                            <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" onclick={openEditForm}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="UTM_Medium__c"></lightning-output-field>
+                                            </div>
+                                            <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" onclick={openEditForm}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="UTM_Parameters__c"></lightning-output-field>                 
+                                            </div>
+                                            <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" onclick={openEditForm}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="UTM_Term__c"></lightning-output-field>                                                
+                                            </div>
+                                            <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" onclick={openEditForm}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="4">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="Mapping_ID__c"></lightning-output-field>
+                                            </div>
+                                            <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" onclick={openEditForm}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="Referred_By__c"></lightning-output-field>
+                                            </div>
+                                            <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" onclick={openEditForm}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                                			
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-record-view-form>
+                </div>
+
+                <!-- edit form -->
+                <div class={editForm}>
+                    <template if:true={spinner}>
+                        <lightning-spinner size="small" variant="brand"></lightning-spinner>
+                    </template>
+                    <lightning-record-edit-form object-api-name="Opportunity" record-id={recordId} onload={handleLoad} onsubmit={handleSubmit} onsuccess={handleSuccess} onerror={handleError}>
+                        <lightning-layout multiple-rows="true">
+                            <lightning-layout-item size="4">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-input-field field-name="LeadSource"></lightning-input-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-input-field field-name="Source_Description__c"></lightning-input-field>							
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>	
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-input-field field-name="Specific_Source__c"></lightning-input-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-input-field field-name="UTM_Source__c"></lightning-input-field>							
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-input-field field-name="UTM_Campaign__c"></lightning-input-field>							
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </lightning-layout-item>
+                            <lightning-layout-item size="4">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-input-field field-name="UTM__c"></lightning-input-field>							
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-input-field field-name="UTM_Content__c"></lightning-input-field>							
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-input-field field-name="UTM_Medium__c"></lightning-input-field>							
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-input-field field-name="UTM_Parameters__c"></lightning-input-field>							
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-input-field field-name="UTM_Term__c"></lightning-input-field>							
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="4">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-input-field field-name="Mapping_ID__c"></lightning-input-field>							
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-input-field field-name="Referred_By__c"></lightning-input-field>							
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                			
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <!-- form buttons -->
+                        <div class="slds-docked-form-footer">
+                            <lightning-button onclick={openViewForm} icon-name="utility:close" variant="destructive" label="Cancel"></lightning-button>&nbsp;&nbsp;
+                            <lightning-button type="submit" variant="brand" icon-name="utility:check" label="Submit"></lightning-button>
+                        </div>
+                    </lightning-record-edit-form>
+                </div>
+            </lightning-tab>
+        </lightning-tabset>
+    </div>
+</template>

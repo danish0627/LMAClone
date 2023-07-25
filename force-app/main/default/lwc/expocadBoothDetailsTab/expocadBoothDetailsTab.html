@@ -1,0 +1,63 @@
+<!--
+    Created By		: Girikon( Yash Gupta [STL-227] )
+    Created On		: 10/10/2019
+    @description 	: This component is used show the Expocad Booth details records.
+    Modified By		: Girikon( Yash Gupta 10/10/2019 ]
+-->
+
+<template>
+    <lightning-layout multiple-rows="true">
+        <lightning-layout-item size="12" padding="around-small">
+            <lightning-datatable
+                key-field="myId" selected-rows={selectedTableRows} onrowselection={handleRowSelection}
+                data={mapBoothDetailsTempVar}
+                columns={tableColumns}>
+            </lightning-datatable>
+
+            <template if:true={pageList}>
+                <lightning-layout multiple-rows="true" class="slds-m-around_small slds-clearfix">
+                    <lightning-layout-item size="6" padding="horizontal_small">
+                        <div>
+                            <a onclick={downloadCSVFile} title="Export table data">
+                                <lightning-icon icon-name="doctype:excel" size="small" alternative-text="Export table data"> </lightning-icon>
+                            </a>&nbsp;&nbsp;
+                            <template if:true={rowsCount}>({rowsCount} Rows Selected)&nbsp;</template>
+                            <span class="record-per-page">
+                                Show <lightning-combobox options={pagesizeList} value={pasesizeVisible} label="Page Size" variant="label-hidden" placeholder="Page Size" onchange={onPageSizeChange} class="pagesize"></lightning-combobox> Expocad Booth per page
+                            </span>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-float_right" padding="horizontal_small">
+                        <div class="slds-float_right">
+                            {showPageView} of {totalRows} &nbsp;&nbsp;                            
+                        <lightning-button-icon class="prev-btn" size="medium" icon-name="utility:chevronleft" onclick={getPrevData} variant="bare"></lightning-button-icon>&nbsp;
+                            <span class="slds-p-horizontal_x-small">
+                                <a href="javascript:void(0);" id="first" onclick={processMe} name="1" class={firstActiveClass}>1</a>
+                            </span>
+                            <span class="slds-p-horizontal_xxx-small">
+                                <a href="javascript:void(0);" id="none1">...</a>
+                            </span>
+                            <template for:each={pageList} for:item="item" for:index="ind">
+                                <span key={item} id={item} class="slds-p-horizontal_x-small">
+                                    <a href="javascript:void(0);" id={item} onclick={processMe} name={item} class="">{item}</a>
+                                </span>
+                            </template>
+                            <span class="slds-p-horizontal_xxx-small">
+                                <a href="javascript:void(0);" id="none2">...</a>
+                            </span>
+                            <span key={item} id={item} class="slds-p-horizontal_x-small">
+                                <a href="javascript:void(0);" id="last" onclick={processMe} name={totalPage} class={lastActiveClass}>{totalPage}</a>
+                            </span>
+                        <lightning-button-icon class="next-btn" size="medium" icon-name="utility:chevronright" onclick={getNextData} variant="bare"></lightning-button-icon>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </template>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" padding="around-small">
+            <template if:true={chartData}>
+                <c-common-chart chart-width="1024px" chart-height="850px" is-parent-chart="false" chart-datas={chartData} chart-title="Expocad Booth"></c-common-chart>
+            </template>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

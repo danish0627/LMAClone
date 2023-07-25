@@ -1,0 +1,9 @@
+.inputfile{
+    width: 250px;
+    float: left;
+}
+.btnUpload
+{
+    margin-top: 20px;
+    display: block;
+}

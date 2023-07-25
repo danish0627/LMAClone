@@ -1,0 +1,78 @@
+#div.nx-basicfieldeditor-section-body>div.nx-basicfieldeditor-item>.nx-field, div.nx-basicfieldeditor-item>.nx-field {
+    width: 70%;
+    /* margin: 0px; */
+}
+
+#FieldEditor{
+    font-weight:bold;
+    line-height:2.2em;
+    font-size:15px;
+}
+
+#FieldEditor.nx-field{
+ margin-top:13px;   
+}
+
+#FieldEditor1{
+    font-weight:bold;
+    line-height:2.2em;
+    font-size:15px;
+}
+
+#FieldEditor1.nx-field{
+ margin-top:13px;   
+}
+
+.nx-basicfieldeditor-item.MainCSS{
+ margin-top:16px !important;   
+}
+
+.cke_inner {
+    position: relative;
+    /* margin-top: -200px;
+     width: 250px;*/
+     margin-top: -90px;
+    width: 450px
+}
+
+/*.ui-dialog .ui-dialog-titlebar .ui-button.ui-dialog-titlebar-close{
+    display:none;
+}*/
+.bradcom {
+    margin: 0px !important;
+
+background-image: url("../resource/bredcom_arrow") !important;
+background-repeat: no-repeat !important;
+background-position: right !important;
+color: #000 !important;
+border : none !important;
+padding: 0px !important;
+background-color: transparent !important;
+}
+
+.bradcom:hover {
+    background-image: url("../resource/bredcom_arrow_hover") !important;
+    background-repeat: no-repeat !important;
+    background-position: right !important;
+    background-color: transparent !important;
+}
+
+.bradcom span{
+line-height: 40px !important;
+width: auto !important;
+font-weight: 400 !important;
+}
+.BradComBorder {
+    border-top : 1px solid #ccc !important;
+    border-bottom : 1px solid #ccc !important;
+}
+
+.BradComBorder .sk-button-action{
+    margin-top : 0px !important;
+}
+.nx-basicfieldeditor-item-label{
+    padding: .5rem .5rem .5rem 0!important;
+}
+.nx-editor input[type=checkbox]{
+    margin-top: 0!important;
+}

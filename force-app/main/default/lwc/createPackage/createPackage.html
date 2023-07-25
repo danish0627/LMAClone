@@ -1,0 +1,60 @@
+<template>
+    <lightning-card title="Create Package">
+        <div class="slds-p-around_small">
+            <lightning-button if:true={packageId} icon-name="utility:add" label="Add New Package" onclick={reset}></lightning-button>
+        </div>
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="4" padding="around-small">
+                <div class="slds-p-around_xx-small">
+                    <lightning-input type="text" maxlength="80"
+                        label="Package name" 
+                        name="packageName" disabled={isDisabled}
+                        value={packageObj.Name}
+                        onchange={packageOnchange} required></lightning-input>
+                </div>
+                <div class="slds-p-around_xx-small">
+                    <lightning-textarea 
+                        label="Description" maxlength="255"
+                        name="description" disabled={isDisabled}
+                        value={packageObj.GKNRMA__Description__c} 
+                        onchange={packageOnchange}></lightning-textarea>
+                </div>
+                <div class="slds-p-around_xx-small">
+                    <lightning-input type="checkbox" 
+                        label="Is backup required?" checked={packageObj.GKNRMA__Is_Backup_Taken__c} 
+                        name="packageBackup" disabled={isDisabled}
+                        onchange={packageOnchange}>
+                    </lightning-input>
+                </div>                
+            </lightning-layout-item>
+            <lightning-layout-item size="4" padding="around-small">
+                <div class="slds-p-around_xx-small">
+                    <lightning-combobox
+                        label="Source Org Name"
+                        name="sourceOrgname"
+                        value={packageObj.GKNRMA__Source_SFDC_Org__c}
+                        placeholder="Select Source Org Name"
+                        options={orgOptions} disabled={isDisabled}
+                        onchange={packageOnchange} required>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-p-around_xx-small">
+                    <lightning-combobox
+                        label="Deployment Type"
+                        name="deploymenttype"
+                        value={packageObj.GKNRMA__Deployment_Type__c}
+                        placeholder="Select deployment type"
+                        options={deploymentType} disabled={isDisabled}
+                        onchange={packageOnchange} required>
+                    </lightning-combobox>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-small">
+                <div class="slds-p-around_xx-small">
+                    <lightning-button type="brand" disabled={isDisabled} label="Create Package" variant="brand" onclick={handleSubmit}></lightning-button>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>    
+        <lightning-spinner if:true={spinner} size="small" variant="brand"></lightning-spinner>                 
+    </lightning-card>
+</template>

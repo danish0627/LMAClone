@@ -1,0 +1,99 @@
+.nx-basicfieldeditor-section-body{
+    line-height: 3em;
+}
+.nx-template{
+        font-weight: bold;
+}
+
+ /* to disable table link*/
+.nx-fieldtext{
+        pointer-events: none;
+    cursor: default;
+}
+
+.ui-dialog .ui-dialog-titlebar .ui-button.ui-dialog-titlebar-close{
+    display:none;
+}
+
+x:-moz-any-link, .cke_inner {
+    position: relative;
+    /* margin-top: -200px;
+     width: 250px;*/
+    
+    margin-top: -150px;
+    width: 450px;
+    margin-left: -350px;
+
+}
+.cke_chrome {
+    display: block;
+    padding: 0;
+    border: 1px solid #a1a1a1;
+    box-shadow: none;
+}
+.bradcom {
+    margin: 0px !important;
+
+background-image: url("../resource/bredcom_arrow") !important;
+background-repeat: no-repeat !important;
+background-position: right !important;
+color: #000 !important;
+border : none !important;
+padding: 0px !important;
+background-color: transparent !important;
+}
+
+.bradcom:hover {
+    background-image: url("../resource/bredcom_arrow_hover") !important;
+    background-repeat: no-repeat !important;
+    background-position: right !important;
+    background-color: transparent !important;
+}
+
+.bradcom span{
+line-height: 40px !important;
+width: auto !important;
+font-weight: 400 !important;
+}
+.BradComBorder {
+    border-top : 1px solid #ccc !important;
+    border-bottom : 1px solid #ccc !important;
+}
+
+.BradComBorder .sk-button-action{
+    margin-top : 0px !important;
+}
+.nx-actionselect-label{
+    position: absolute;
+    color: #0288d1;
+    top: 0px;
+    font-weight: normal;
+    font-size: 1.5em;
+    margin-left:-120px;
+  
+    text-transform: none
+}
+
+div.nx-actionselect {
+    cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+    color: white;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: .81em;
+    /*margin: 0 700px 6px 0;*/
+    box-shadow: 0 0 6px 2px #DDD;
+    vertical-align: middle;
+    margin-left: 0px;
+    
+}
+.nx-field .flex-text-wrap pre, .nx-field .nx-richtext-input, .nx-field input, .nx-field textarea{
+    height:100% !important; 
+}
+
+.nx-basicfieldeditor-item-label{
+    padding: .5rem .5rem .5rem 0!important;
+}

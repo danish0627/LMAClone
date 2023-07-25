@@ -1,0 +1,10 @@
+.navigation td, th{
+    padding:10px;
+} 
+.navigation tr td:first-child
+{
+    color: rgb(0, 109, 204);
+    font-weight: bold;
+    width: 18%;
+    padding-left:0px;
+}

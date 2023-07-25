@@ -1,0 +1,300 @@
+<!-- Created By		: Girikon(Garima[STL-20])
+Created On		: July 31 2019
+@description 	: This LWC is for Manual page in Customer Center.
+
+Modification log --
+Modified By		: Girikon(Prashant[STL-282] Oct 16 2019),[Aishwarya BK-14060 24 Feb 2021],[Aishwarya BK-17763 23 Aug 2021]-->
+<template>
+	<template if:true={showSpinner}>
+		<lightning-spinner variant="brand" size="medium" title="Loading..." style="position: fixed;opacity: 0.3;"></lightning-spinner>
+	</template>   
+	<template if:true={eventDtls}>
+		<template if:true={showTable}>
+		<template if:true={showRequired}>
+		<p class="req-bold-text">* {label.required} {label.manuals} *</p>
+		</template>
+		<template if:true={showAdditional}>
+				<div class="addManual"><p class="req-bold-text">* {label.additional} {label.manuals} *</p></div>
+		
+		
+			<lightning-layout class="slds-m-bottom_small common-table">
+				<lightning-layout-item size="12" class="slds-p-left_xx-small">
+					<lightning-input type="search" value={searchValue} onchange={searchData} label="Search"
+						placeholder="Search" variant="label-hidden" class="search-box slds-float_right"></lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+      
+		</template>
+		<template if:true={isTrue}>
+			<lightning-spinner variant="brand" size="small" title="Loading..."></lightning-spinner>
+		</template>
+		<table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols"
+			role="grid">
+			<thead>
+				<tr class="slds-line-height_reset">
+					<th aria-label="Manual Name" aria-sort="none" class="slds-is-resizable slds-is-sortable slds-size_1-of-4"
+						scope="col">
+						<a id="Manual_Permission__r.Manuals__r.Name" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+							href="javascript:void(0);" role="button" tabindex="-1">
+							<div class="slds-grid slds-grid_vertical-align-center">
+								<span class="slds-truncate" title="Manual Name">{label.manual} {label.name}</span>
+								<span class="slds-icon_container slds-icon-utility-arrowdown">
+									<lightning-icon icon-name="utility:arrowup" size="xx-small"
+										class="slds-is-sortable__icon"></lightning-icon>
+								</span>
+							</div>
+						</a>
+					</th>
+					<th aria-label="Provider" aria-sort="none" class="slds-is-resizable slds-is-sortable"
+						scope="col">
+						<a id="Manual_Permission__r.Manuals__r.Provider__c" onclick={handleSorting}
+							class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button"
+							tabindex="-1">
+							<div class="slds-grid slds-truncate slds-grid_vertical-align-center" title="Account Name">
+								<span class="slds-truncate" title="Provider">{label.provider}</span>
+								<span class="slds-icon_container slds-icon-utility-arrowdown">
+									<lightning-icon icon-name="utility:arrowup" size="xx-small"
+										class="slds-is-sortable__icon"></lightning-icon>
+								</span>
+							</div>
+						</a>
+					</th>
+					<th aria-label="Manual Type" aria-sort="none" class="slds-is-resizable slds-is-sortable"
+						scope="col">
+						<a id="Manual_Permission__r.Manuals__r.Manual_Type__c" onclick={handleSorting}
+							class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button"
+							tabindex="-1">
+							<div class="slds-grid slds-grid_vertical-align-center">
+								<span class="slds-truncate" title="Manual Type">{label.manual} {label.type}</span>
+								<span class="slds-icon_container slds-icon-utility-arrowdown">
+									<lightning-icon icon-name="utility:arrowup" size="xx-small"
+										class="slds-is-sortable__icon"></lightning-icon>
+								</span>
+							</div>
+						</a>
+					</th>
+					<th aria-label="Deadline" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+						<a id="Manual_Permission__r.Manuals__r.Deadline__c" onclick={handleSorting}
+							class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button"
+							tabindex="-1">
+							<div class="slds-grid slds-grid_vertical-align-center">
+								<span class="slds-truncate" title="Deadline">{label.deadline}</span>
+								<span class="slds-icon_container slds-icon-utility-arrowdown">
+									<lightning-icon icon-name="utility:arrowup" size="xx-small"
+										class="slds-is-sortable__icon"></lightning-icon>
+								</span>
+							</div>
+						</a>
+					</th>
+					<th aria-label="Viewed" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+						<a id="Is_Viewed__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+							href="javascript:void(0);" role="button" tabindex="-1">
+							<div class="slds-grid slds-truncate slds-grid_vertical-align-center"
+								title="Opportunity Contact">
+								<span class="slds-truncate" title="Viewed">{label.viewed}</span>
+								<span class="slds-icon_container slds-icon-utility-arrowdown">
+									<lightning-icon icon-name="utility:arrowup" size="xx-small"
+										class="slds-is-sortable__icon"></lightning-icon>
+								</span>
+							</div>
+						</a>
+					</th>
+					<template if:true={eventDtls.Show_Hide_Manual_Agreed__c}>
+						<th aria-label="Agreed" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+							<a id="Is_Agree__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+								href="javascript:void(0);" role="button" tabindex="-1">
+								<div class="slds-truncate slds-truncate slds-grid slds-grid_vertical-align-center"
+									title="Event Edition">
+									<span class="slds-truncate" title="Agreed">{label.agreed}</span>
+									<span class="slds-icon_container slds-icon-utility-arrowdown">
+										<lightning-icon icon-name="utility:arrowup" size="xx-small"
+											class="slds-is-sortable__icon"></lightning-icon>
+									</span>
+								</div>
+							</a>
+						</th>
+					</template>
+					<template if:true={showUpdatedHeading}>
+						<th class="slds-text-align_center" scope="col" >{lastUpdatedBy}
+						</th>
+					</template>
+				</tr>
+			</thead>
+			<tbody>
+				<template for:each={tableData} for:item="item" for:index="ind">
+					<tr key={item.Id} aria-selected="false" class="slds-hint-parent">
+						<td tabindex="0">
+							<div class="slds-truncate" title={item.Manual_Permission__rManuals__rName}>
+								<a href="#" onclick={ViewedLink}
+									data-id={ind}>{item.Manual_Permission__rManuals__rName}</a>
+							</div>
+						</td>
+						<td tabindex="0">
+							<div class="slds-truncate" title={item.Manual_Permission__rManuals__rProvider__c}>
+								{item.Manual_Permission__rManuals__rProvider__c}
+							</div>
+						</td>
+						<td tabindex="0">
+							<div class="slds-truncate" title={item.Manual_Permission__rManuals__rManual_Type__c}>
+								{item.Manual_Permission__rManuals__rManual_Type__c}
+							</div>
+						</td>
+						<td tabindex="0">
+							<div class="slds-truncate" title={item.Manual_Permission__rManuals__rDeadline__c}>
+								<lightning-formatted-date-time value={item.Manual_Permission__rManuals__rDeadline__c}
+									year="numeric" month="numeric" day="numeric"></lightning-formatted-date-time>
+							</div>
+						</td>
+						<td>
+							<template if:true={item.Is_Viewed__c}>
+								<i class="fa fa-check"></i>
+							</template>
+						</td>
+						<template if:true={eventDtls.Show_Hide_Manual_Agreed__c}>
+							<td>
+								<template if:true={item.Is_Agree__c}>
+									<i class="fa fa-check"></i>
+								</template>
+							</td>
+						</template>
+						<!--Added Last updated by column for [STL-282]-->
+						<template if:true={showUpdatedHeading}>
+							<td tabindex="0">
+								<div class="slds-truncate slds-text-align_center">
+									<template if:true={item.showUpdated}>
+										<i style="color:grey;">{item.updatedBy} (<lightning-formatted-date-time
+										value={item.updatedDate}
+										year="2-digit"
+										month="2-digit"
+										day="2-digit">
+									</lightning-formatted-date-time>)</i>
+									</template>
+								</div>
+							</td>
+						</template>
+					</tr>
+				</template>
+			</tbody>
+		</table>
+		<template if:true={error}>
+			<div class="slds-align_absolute-center">No {label.manual} to Display</div>
+		</template>
+		<template if:true={showpagination}>
+			<template if:true={pageList}>
+				<lightning-layout multiple-rows="true" class="slds-m-top_medium slds-clearfix">
+					<lightning-layout-item size="4" padding="horizontal_small" class="slds-float_left">
+						<lightning-combobox options={pagesizeList} value={pagesizeVisible} label="Page Size" variant="label-hidden"
+							placeholder="Page Size" onchange={onPageSizeChange} class="pagesize"></lightning-combobox>
+						&nbsp; {label.manual} per page.
+					</lightning-layout-item>
+					<lightning-layout-item size="8" class="slds-float_right" padding="horizontal_small">
+						<div class="slds-float_right">
+							{showPageView} of &nbsp;
+
+							<template if:true={isMoreThan2000}>2000+</template>
+							<template if:false={isMoreThan2000}>{totalRows}</template>&nbsp;
+							<lightning-button-icon class="prev-btn" size="medium" icon-name="utility:chevronleft"
+								onclick={getPrevData} variant="bare"></lightning-button-icon>&nbsp;
+							<span class="slds-p-horizontal_x-small">
+								<a href="javascript:void(0);" id="first" onclick={processMe} name="1"
+									class={firstActiveClass}>1</a>
+							</span>
+							<span class="slds-p-horizontal_xxx-small">
+								<a href="javascript:void(0);" id="none1">...</a>
+							</span>
+							<template for:each={pageList} for:item="item" for:index="ind">
+								<span key={item} id={item} class="slds-p-horizontal_x-small">
+									<a href="javascript:void(0);" id={item} onclick={processMe} name={item}
+										class="">{item}</a>
+								</span>
+							</template>
+							<span class="slds-p-horizontal_xxx-small">
+								<a href="javascript:void(0);" id="none2">...</a>
+							</span>
+							<span key={item} id={item} class="slds-p-horizontal_x-small">
+								<a href="javascript:void(0);" id="last" onclick={processMe} name={totalPage}
+									class={lastActiveClass}>{totalPage}</a>
+							</span>
+							<lightning-button-icon class="next-btn" size="medium" icon-name="utility:chevronright"
+								onclick={getNextData} variant="bare"></lightning-button-icon>
+						</div>
+					</lightning-layout-item>
+				</lightning-layout>
+			</template>
+		</template>
+	</template>
+</template>
+	<template if:true={downloadModal}>
+		<div class="demo-only" style="height: 640px;">
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+				aria-describedby="modal-content-id-1" class="slds-modal slds-slide-up-saving slds-modal_large">
+				<div class="slds-modal__container">
+					<header class="slds-modal__header">
+						<lightning-icon class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+							icon-name="utility-close" variant="bare" onclick={ClosedPopup}
+							alternative-text="Close window."></lightning-icon>
+					</header>
+					<!--BK-14060-->
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+						<iframe src={pdf} style="width:100%; min-height:600px;padding-bottom:50px;"></iframe>
+					</div> 
+					<footer class="slds-modal__footer" style="margin-top:0px;"> 
+						<div style="float:left;">
+							<template if:false={buttonView}>
+							 <lightning-input aura:id="AgreedCheckbox" type="checkbox" label={label.readandagree}
+									name="IAgree" onchange={ShowSaveButton}></lightning-input>
+							</template>
+							<template if:true={buttonView}>
+								 <lightning-input aura:id="AgreedCheckbox" type="checkbox" label={label.readandagree}
+									name="IAgree" onchange={ShowSaveButton} checked></lightning-input>
+							</template>
+						</div>
+						<a href={pdf} download="MyFile" style="color:rgb(9, 104, 148)">
+							<i class="fa fa-download"></i>&nbsp; {label.downloadpdf} &nbsp;
+						</a>&nbsp;
+						<template if:false={buttonView}>
+							<button class="slds-button slds-button_brand" disabled>
+								<i class="fa fa-check fa-padding-5"></i>{label.save}
+
+							</button>
+						</template>
+						<template if:true={buttonView}>
+							<button class="slds-button slds-button_brand" style={buttonColor} onclick={userAgree} data-id="save">
+								<i class="fa fa-check fa-padding-5"></i>{label.save}
+							</button>
+						</template>
+						<button class="slds-button slds-button_brand" style={buttonColor} onclick={ClosedPopup}>
+							<i class="fa fa-close fa-padding-5"></i>{label.close}
+						</button>
+					</footer>
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</div>
+	</template>
+	<template if:true={errorModal}>
+		<div class="demo-only" style="height: 640px;">
+			<section role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content"
+				aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+					<header class="slds-modal__header slds-modal__header_empty">
+						<lightning-icon class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+							icon-name="utility:close" variant="bare" onclick={ClosedPopup} alternative-text="Closed">
+						</lightning-icon>
+					</header>
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+						<p style="color:red;text-align: center;">
+							<br></br>{eventDtls.Deadline_Reached_Message_for_Manuals__c}
+							<br></br>
+						</p>
+					</div>
+					<footer class="slds-modal__footer" style="margin-top:0px">
+						<button class="slds-button slds-button_brand" style={buttonColor} onclick={ClosedPopup}>
+								<i class="fa fa-close fa-padding-5"></i>{label.close}</button>
+					</footer>
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</div>
+	</template>
+</template>

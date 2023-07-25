@@ -1,0 +1,12 @@
+<!-- Updating Api Version for ticket no: EMEA-200 -->
+<template>
+    <lightning-card icon-name="standard:dashboard">
+        <div slot="title">
+            <span style="font-weight: 700;">Opportunity Dashboard</span>
+        </div>
+        <c-drawer-table is-filter-by-owner="true" condition="Name!=''" 
+        fields="Name,Account.Name,StageName,Status__c,Opportunity_Contact__r.Name,EventEdition__r.Name,ISO_Code__c,Amount_Custom__c,Owner.Name,LastViewedDate,LastModifiedDate" 
+        object-name="Opportunity" object-label="Opportunities">            
+        </c-drawer-table>
+  	</lightning-card>
+</template>

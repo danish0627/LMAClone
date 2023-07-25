@@ -1,0 +1,68 @@
+<template>
+    <template if:false={loaded}>
+        <lightning-spinner alternative-text="Loading" variant="brand"></lightning-spinner>
+    </template>
+    <template if:true={isClassic}>
+        <template if:true={isShowMessageInClassic}>
+            <div style="height:4rem;min-width:300px;">
+                <div class="slds-notify_container slds-is-relative">
+                    <div class={messageCSSClass} role="status">
+                        <lightning-icon icon-name={messageIcon} size="small" variant="inverse" alternative-text={messageTitle} title={messageType} class={messageIconClass}></lightning-icon>
+                        <div class="slds-notify__content">
+                            <h2 class="slds-text-heading_small">
+                                {messageTitle}
+                            </h2>
+                            <p>{message}</p>
+                        </div>
+                        <div class="slds-notify__close">
+                            <lightning-button-icon icon-name="utility:close" size="large" variant="bare-inverse" alternative-text="Close" class="slds-m-left_xx-small"  title="Close" onclick={handleClickCloseError}></lightning-button-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template if:true={isShowBackButton}>
+            <div style="height: 4rem; min-width: 300px;">
+                <div class="slds-notify_container slds-is-relative slds-m-top_large">
+                    <lightning-button label="Go Back" title="Go back to Event Edition" onclick={handleClickGoBack} class="slds-m-left_x-small"></lightning-button>
+                </div>
+            </div>
+        </template>
+    </template>
+    <template if:true={isShowMainContent}>
+        <div style="min-height:400px;position:relative;">
+            <header class="slds-modal__header">
+               <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Add Generic Products</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium">
+                <div>
+                    <lightning-layout multiple-rows="true">
+                        <!--<lightning-layout-item class="slds-p-bottom_small" size="12">
+                            <lightning-dual-listbox name="currencies"
+                            label="Pricebook Currencies"
+                            source-label="Available"
+                            selected-label="Selected"
+                            field-level-help="Select Pricebook Currencies"
+                            options={currencyOptions}
+                            onchange={handleChange}
+                            required-options={requiredCurrencyOptions}
+                            value={selectedOptions}
+                            disable-reordering size="3"></lightning-dual-listbox>
+                        </lightning-layout-item>-->
+                        <lightning-layout-item class="slds-p-top_small" size="12">
+                            <lightning-datatable key-field="Id" 
+                            data={productCustomMetadata} 
+                            columns={columns}
+                            hide-checkbox-column>
+                            </lightning-datatable>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+            </div>
+            <footer class="slds-modal__footer slds-align_absolute-center" style="width:100%;bottom:0;position:absolute;">
+                <lightning-button variant="brand" label="Save" onclick={handleSave} class= "slds-m-right_x-small"></lightning-button>
+                <lightning-button variant="destructive"  label="Cancel" onclick={closeQuickAction}></lightning-button>
+            </footer>
+         </div>
+    </template>
+</template>

@@ -1,0 +1,16 @@
+.feedback{
+    -ms-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    left: -41px;
+    position: fixed;
+    BOTTOM: 64px;
+    height: 36px;
+    width: 115px;
+    color: #ffffff;
+    background-color: black;
+    font-family: "Open Sans",sans-serif;
+    cursor: pointer;
+    font-size: 15px;
+    text-align: center;
+}

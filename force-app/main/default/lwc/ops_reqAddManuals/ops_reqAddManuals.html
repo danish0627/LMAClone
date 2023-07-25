@@ -1,0 +1,495 @@
+<!--
+Created By		: Girikon(Garima[STL-151])
+Created On	 : September 14, 2019
+@description : This component is use to show Required and Additional Manuals settings page at ops admin side.
+
+Modification log -- [Aishwarya 11 Aug 2020 BK-5771] 
+Modified By	: 
+-->
+
+<template>
+        <article class="slds-card slds-p-around_medium">
+            <lightning-layout class="slds-m-bottom_small common-table">
+                <lightning-layout-item size="4" padding="horizontal-small action-buttons">
+                    <template if:true={button1Label}>
+                        <lightning-button icon-name="utility:add" icon-position="left" label={button1Label} variant="brand"
+                            onclick={handleNewModal}></lightning-button>&nbsp;&nbsp;
+                    </template>
+                </lightning-layout-item>
+                <lightning-layout-item size="8" padding="horizontal-small" class="slds-clearfix">
+                    <div style="float: right;text-align: right;">
+                        &nbsp;&nbsp;
+                        <lightning-input type="search" value={searchValue} label="Search" placeholder="Search"
+                            variant="label-hidden" class="search-box" onchange={searchData}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+            <template if:true={isTrue}>
+                <lightning-spinner variant="brand" size="small" title="Loading..."></lightning-spinner>
+            </template>
+           
+                <table aria-multiselectable="true"
+                    class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid">
+    
+                    <thead>
+    
+                        <tr class="slds-line-height_reset">
+                            <th class="slds-text-align_left" scope="col" style="width: 80px;"></th>
+                            <th aria-label="Name" aria-sort="none"
+                                class="slds-is-resizable slds-is-sortable slds-size_1-of-12 " scope="col">
+                                <a id="Section__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+                                    href="javascript:void(0);" role="button" tabindex="-1">
+                                    <div class="slds-grid slds-truncate slds-grid_vertical-align-center">
+                                        <span class="slds-truncate">SECTION #</span>
+                                        <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                            <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                                class="slds-is-sortable__icon"></lightning-icon>
+                                        </span>
+                                    </div>
+                                </a>
+                            </th>
+                            <th aria-label="Manual Name" aria-sort="none"
+                                class="slds-is-resizable slds-is-sortable slds-size_1-of-4 " scope="col">
+                                <a id="Name" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+                                    href="javascript:void(0);" role="button" tabindex="-1">
+                                    <div class="slds-grid slds-truncate slds-grid_vertical-align-center">
+                                        <span class="slds-truncate">MANUAL NAME</span>
+                                        <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                            <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                                class="slds-is-sortable__icon"></lightning-icon>
+                                        </span>
+                                    </div>
+                                </a>
+                            </th>
+                            <th aria-label="Provider" aria-sort="none" class="slds-is-resizable slds-is-sortable "
+                                scope="col">
+                                <a id="Provider__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+                                    href="javascript:void(0);" role="button" tabindex="-1">
+                                    <div class="slds-grid slds-grid_vertical-align-center">
+                                        <span class="slds-truncate">PROVIDER</span>
+                                        <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                            <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                                class="slds-is-sortable__icon"></lightning-icon>
+                                        </span>
+                                    </div>
+                                </a>
+                            </th>
+                            <th aria-label="Type" aria-sort="none" class="slds-is-resizable slds-is-sortable " scope="col">
+                                <a id="Manual_Type__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+                                    href="javascript:void(0);" role="button" tabindex="-1">
+                                    <div class="slds-grid slds-grid_vertical-align-center">
+                                        <span class="slds-truncate">MANUAL TYPE</span>
+                                        <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                            <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                                class="slds-is-sortable__icon"></lightning-icon>
+                                        </span>
+                                    </div>
+                                </a>
+                            </th>
+    
+                            <th aria-label="Required" aria-sort="none" class="slds-is-resizable slds-is-sortable "
+                                scope="col">
+                                <a id="Required__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+                                    href="javascript:void(0);" role="button" tabindex="-1">
+                                    <div class="slds-grid slds-grid_vertical-align-center">
+                                        <span class="slds-truncate">REQUIRED</span>
+                                        <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                            <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                                class="slds-is-sortable__icon"></lightning-icon>
+                                        </span>
+                                    </div>
+                                </a>
+                            </th>
+    
+                            <th aria-label="Deadline" aria-sort="none" class="slds-is-resizable slds-is-sortable "
+                                scope="col">
+                                <a id="Deadline__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+                                    href="javascript:void(0);" role="button" tabindex="-1">
+                                    <div class="slds-grid slds-grid_vertical-align-center">
+                                        <span class="slds-truncate">DEADLINE</span>
+                                        <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                            <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                                class="slds-is-sortable__icon"></lightning-icon>
+                                        </span>
+                                    </div>
+                                </a>
+                            </th>
+                            <th aria-label="Description" aria-sort="none" class="slds-is-resizable slds-is-sortable "
+                                scope="col">
+                                <a id="Manual_Description__c" onclick={handleSorting}
+                                    class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button"
+                                    tabindex="-1">
+                                    <div class="slds-grid slds-grid_vertical-align-center">
+                                        <span class="slds-truncate">DESCRIPTION</span>
+                                        <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                            <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                                class="slds-is-sortable__icon"></lightning-icon>
+                                        </span>
+                                    </div>
+                                </a>
+                            </th>
+                        </tr>
+    
+                    </thead>
+    
+                    <tbody>
+                        <template for:each={tableData} for:item="item" for:index="ind">
+                            <tr key={item.Id} aria-selected="false" class="slds-hint-parent">
+                                <td class="slds-text-align_left" role="gridcell">
+                                    <a title="Edit Form" href="javascript:void(0);" data-record-id={item.Id} data-id={ind}
+                                        onclick={handleEditModal} tabindex="-1">
+                                        <lightning-icon data-record-id={item.Id} icon-name="utility:edit" size="xx-small"
+                                            alternative-text="Edit Form"></lightning-icon>&nbsp;&nbsp;
+                                    </a>
+                                    <a title="Delete Form" href="javascript:void(0);" data-record-id={item.Id}
+                                        onclick={deleteForm} tabindex="-1">
+                                        <lightning-icon data-record-id={item.Id} icon-name="utility:delete" size="xx-small"
+                                            alternative-text="Delete Form"></lightning-icon>&nbsp;&nbsp;
+                                    </a>
+                                    <a title="Quick View" href="javascript:void(0);" data-record-id={item.Id}
+                                        onclick={viewManual} tabindex="-1" data-id={ind}>
+                                        <lightning-icon data-record-id={item.Id} icon-name="utility:preview" size="xx-small"
+                                            alternative-text="View Form"></lightning-icon>
+                                    </a>
+                                </td>
+                                <td tabindex="0">
+                                    <div class="slds-truncate" title={item.Section__c}>
+                                        {item.Section__c}
+                                    </div>
+                                </td>
+                                <td tabindex="0">
+                                    <div class="slds-truncate" title={item.Name}>
+                                        {item.Name}
+                                    </div>
+                                </td>
+                                <td tabindex="0">
+                                    <div class="slds-truncate" title={item.Provider__c}>
+                                        {item.Provider__c}
+                                    </div>
+                                </td>
+                                <td tabindex="0">
+                                    <div class="slds-truncate" title={item.Manual_Type__c}>
+                                        {item.Manual_Type__c}
+                                    </div>
+                                </td>
+                                <td tabindex="0">
+                                    <div class="slds-truncate">
+                                        <lightning-input type="checkbox" checked={item.Required__c}
+                                            disabled={inputDisabled}>
+                                        </lightning-input>
+    
+                                    </div>
+                                </td>
+                                <td tabindex="0">
+                                    <div class="slds-truncate" title={item.Deadline__c}>
+                                        {item.Deadline__c}
+                                    </div>
+                                </td>
+                                <td tabindex="0">
+                                    <div class="slds-truncate" title={item.Manual_Description__c}>
+                                        {item.Manual_Description__c}
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+    
+                </table>
+            
+            <template if:true={error}>
+                <div class="slds-align_absolute-center">No {objectLabel} to Display</div>
+            </template>
+    
+            <template if:true={pageList}>
+                <lightning-layout multiple-rows="true" class="slds-m-around_small slds-clearfix">
+                    <lightning-layout-item size="4" padding="horizontal_small">
+                        <div>
+                            Show
+                            <lightning-combobox options={pagesizeList} value="30" label="Page Size" variant="label-hidden"
+                                placeholder="Page Size" onchange={onPageSizeChange} class="pagesize"></lightning-combobox>
+                            {objectLabel} per page.
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="8" class="slds-float_right" padding="horizontal_small">
+                        <div class="slds-float_right">
+                            {showPageView} of &nbsp;
+                            <template if:true={isMoreThan2000}>2000+</template>
+                            <template if:false={isMoreThan2000}>{totalRows}</template>&nbsp;
+                            <lightning-button-icon class="prev-btn" size="medium" icon-name="utility:chevronleft"
+                                onclick={getPrevData} variant="bare"></lightning-button-icon>&nbsp;
+                            <span class="slds-p-horizontal_x-small">
+                                <a href="javascript:void(0);" id="first" onclick={processMe} name="1"
+                                    class={firstActiveClass}>1</a>
+                            </span>
+                            <span class="slds-p-horizontal_xxx-small">
+                                <a href="javascript:void(0);" id="none1">...</a>
+                            </span>
+                            <template for:each={pageList} for:item="item" for:index="ind">
+                                <span key={item} id={item} class="slds-p-horizontal_x-small">
+                                    <a href="javascript:void(0);" id={item} onclick={processMe} name={item}
+                                        class="">{item}</a>
+                                </span>
+                            </template>
+                            <span class="slds-p-horizontal_xxx-small">
+                                <a href="javascript:void(0);" id="none2">...</a>
+                            </span>
+                            <span key={item} id={item} class="slds-p-horizontal_x-small">
+                                <a href="javascript:void(0);" id="last" onclick={processMe} name={totalPage}
+                                    class={lastActiveClass}>{totalPage}</a>
+                            </span>
+                            <lightning-button-icon class="next-btn" size="medium" icon-name="utility:chevronright"
+                                onclick={getNextData} variant="bare"></lightning-button-icon>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </template>
+    
+    
+            <slot name="newRecordModal"></slot>
+            <slot name="editRecordModal"></slot>
+            <slot name="actionRecordModal"></slot>
+            <slot name="massUpdate">
+    
+            </slot>
+    
+            <!-- Single Delete confirmation -->
+            <template if:true={isOpenSingleDeleteModal}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button onclick={noDelete}
+                                class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close">
+                                <lightning-icon icon-name="utility:close" variant="bare" size="small"></lightning-icon>
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Confirmation</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <div class="slds-text-color_error slds-text-heading_small"> Do you really want to delete record?
+                            </div>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral" onclick={noDelete}>No</button>
+                            <button class="slds-button slds-button_brand" onclick={yesDeleteSingleRecord}>Yes</button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+    
+            <template if:true={openNewModal}>
+                <div class="slds-p-bottom_xx-large">
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                        aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                            <header class="slds-modal__header">
+                                <!-- BK-5771 Update closeModal to closeModalNew-->
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                    title="Close" onclick={closeModalNew}>
+                                    <lightning-icon icon-name="utility:close" size="medium">
+                                    </lightning-icon>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <h2 id="modal-heading-012" class="slds-text-heading_medium slds-hyphenate"> New Manual </h2>
+                                <p style="color:red;text-align: center;">
+                                    {errorMessage}
+                                </p>
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-12">
+                                <lightning-record-edit-form object-api-name="Manual__c" onsubmit={submitManual}
+                                    onsuccess={handleManualCreated} class="globalForm">
+                                    <lightning-messages></lightning-messages>
+    
+                                    <br>
+                                    <template if:true={showForm}>
+                                        <lightning-input-field field-name="Section__c"></lightning-input-field>
+                                        <span class="required">*</span>
+                                        <lightning-input-field field-name="Name"></lightning-input-field>
+                                        <lightning-input-field field-name="Provider__c"></lightning-input-field>
+                                        <lightning-input-field field-name="Manual_Type__c" onchange={input}>
+                                        </lightning-input-field>
+                                        <template if:true={showLinkField}>
+                                            <span class="required">*</span>
+                                            <lightning-input-field field-name="Url__c"></lightning-input-field>
+                                        </template>
+                                        <lightning-input-field field-name="Deadline__c"></lightning-input-field>
+    
+                                        <lightning-input-field field-name="Allow_Submit_After_Deadline__c">
+                                        </lightning-input-field>
+                                        <lightning-input-field field-name="Manual_Description__c"></lightning-input-field>
+                                        <span>Required<lightning-helptext class="slds-p-left_small"
+                                                content="Define whether form is mandatory when inserting form event edition form data.">
+                                            </lightning-helptext></span>
+                                        <template if:true={showCheckboxField}>
+                                            <lightning-input type="checkbox" checked
+                                                class="slds-p-left_xx-small slds-p-bottom_x-small" onchange={chkRequired}>
+                                            </lightning-input>
+                                        </template>
+                                        <template if:false={showCheckboxField}>
+                                            <lightning-input type="checkbox"
+                                                class="slds-p-left_xx-small slds-p-bottom_x-small" onchange={chkRequired}>
+                                            </lightning-input>
+                                        </template>
+    
+                                        <lightning-input-field field-name="User_Type__c"></lightning-input-field>
+                                        <lightning-dual-listbox name="Industries" label="Booth Type"
+                                            options={boothTypeOptions} value={selectedValuesBoothTypeNew}
+                                            onchange={handleChangeBoothTypeNew}>
+                                        </lightning-dual-listbox>
+    
+                                        <lightning-dual-listbox name="Industries" label="Matched Product Name"
+                                            options={matchProductOptions} value={selectedMatchProductNew}
+                                            onchange={handleChangeMatchProductNew}>
+                                        </lightning-dual-listbox>
+                                        <lightning-button class="save slds-hide" type="submit" variant="brand" label="Save">
+                                        </lightning-button>
+                                    </template>
+                                    <template if:false={showForm}>
+                                        <lightning-file-upload label="Attach receipt" name="fileUploader"
+                                            accept={acceptedFormats} record-id={recordId}
+                                            onuploadfinished={handleUploadFinished} multiple></lightning-file-upload>
+                                    </template>
+                                </lightning-record-edit-form>
+    
+                                <br>
+                            </div>
+                            <footer class="slds-modal__footer" style="margin-top:0px;">
+                                <!-- BK-5771 Update closeModal to closeModalNew-->
+                                <lightning-button label="Cancel" variant="neutral" onclick={closeModalNew}></lightning-button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <!-- BK-5771 Render Save button conditionally-->
+                                <template if:false={isPDF}>
+                                    <lightning-button onclick={callSaveBtn} variant="brand" label="Save" disabled={saveDisable}>
+                                    </lightning-button>
+                                </template>
+    
+                            </footer>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                    <br>
+                </div>
+            </template>
+    
+    
+            <template if:true={openEditModal}>
+                <div class="demo-only" style="height: 80%; width:640px;">
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                        aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                            <header class="slds-modal__header">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                    title="Close" onclick={closeModal}>
+                                    <lightning-icon icon-name="utility:close" size="medium">
+                                    </lightning-icon>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Edit Manual</h2>
+                                <p style="color:red;text-align: center;">
+                                    {errorMessage}
+                                </p>
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                                <lightning-record-edit-form object-api-name="Manual__c" onsubmit={onSubmitEditManual}
+                                    onsuccess={onSucessManualUpdated} record-id={recordId} class="globalEditForm">
+    
+                                    <lightning-record-view-form record-id={recordId} object-api-name="Manual__c">
+                                        <lightning-output-field field-name="Section__c"></lightning-output-field>
+                                    </lightning-record-view-form>
+                                    <span class="required">*</span>
+                                    <lightning-input-field field-name="Name" value={name}></lightning-input-field>
+                                    <lightning-input-field field-name="Provider__c" value={provider}>
+                                    </lightning-input-field>
+                                    <lightning-record-view-form record-id={recordId} object-api-name="Manual__c">
+                                        <lightning-output-field field-name="Manual_Type__c"></lightning-output-field>
+                                    </lightning-record-view-form>
+                                    <template if:true={showLinkField}>
+                                        <span class="required">*</span>
+                                        <lightning-input-field field-name="Url__c" value={url}></lightning-input-field>
+                                    </template>
+                                    <lightning-input-field field-name="Deadline__c" value={deadline}>
+                                    </lightning-input-field>
+    
+                                    <lightning-input-field field-name="Allow_Submit_After_Deadline__c"
+                                        value={submitDeadline}></lightning-input-field>
+                                    <lightning-input-field field-name="Manual_Description__c" value={manualDesc}>
+                                    </lightning-input-field>
+                                    <lightning-input-field field-name="Required__c" value={required}>
+                                    </lightning-input-field>
+                                    <lightning-input-field field-name="User_Type__c" value={userType}>
+                                    </lightning-input-field>
+                                    <template if:true={boothTypeOptions}>
+                                        <lightning-dual-listbox name="Industries" label="Booth Type"
+                                            options={boothTypeOptions} value={selectedValuesBoothType}
+                                            onchange={handleChangeBoothType}>
+                                        </lightning-dual-listbox>
+                                    </template>
+    
+    
+                                    <lightning-dual-listbox name="Industries" label="Matched Product Name"
+                                        options={matchProductOptions} value={selectedMatchProduct}
+                                        onchange={handleChangeMatchProduct}>
+                                    </lightning-dual-listbox>
+                                    <template if:true={showUploader}>
+                                        <lightning-file-upload label="Attach receipt" name="fileUploader"
+                                            accept={acceptedFormats} record-id={recordId}
+                                            onuploadfinished={handleEditUploadFinished} multiple></lightning-file-upload>
+                                        <p>{attachName}</p>
+                                    </template>
+                                    <lightning-button class="save slds-hide" type="submit" variant="brand" label="Save">
+                                    </lightning-button>
+                                </lightning-record-edit-form>
+                            </div>
+                            <footer class="slds-modal__footer" style="margin-top:0px;">
+    
+                                <lightning-button label="Cancel" variant="neutral" onclick={closeModal}></lightning-button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <lightning-button onclick={callSaveBtn} variant="brand" label="Save"></lightning-button>
+    
+                            </footer>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </div>
+            </template>
+    
+    
+            <template if:true={viewManualModal}>
+                <div class="demo-only" style="height: 640px;">
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                        aria-describedby="modal-content-id-1"
+                        class="slds-modal slds-fade-in-open slds-slide-up-saving slds-modal_large">
+                        <div class="slds-modal__container">
+                            <header class="slds-modal__header">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                    title="Close" onclick={closeModal}>
+                                    <lightning-icon icon-name="utility:close" size="medium">
+                                    </lightning-icon>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <h2 id="modal-heading-023" class="slds-text-heading_medium slds-hyphenate">{manualName}</h2>
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-23">
+                                <template if:true={downloadablePdfTypeTemplate}>
+                                    <iframe src={pdf} style="width:100%; min-height:600px;"></iframe>
+                                </template>
+                                <template if:true={linkTypeTemplate}>
+                                    PLease click on the link below: <br></br>
+                                    <a href='#' onclick={viewLink} style="color:rgb(9, 104, 148)">
+                                        {iframeLinkValue}
+                                    </a>
+                                </template>
+                            </div>
+                            <footer class="slds-modal__footer" style="margin-top:0px;">
+                                <button class="slds-button slds-button_brand" onclick={closeModal}>
+                                    Cancel
+                                </button>
+                            </footer>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </div>
+            </template>
+        </article>
+    </template>

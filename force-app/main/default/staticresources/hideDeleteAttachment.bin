@@ -1,0 +1,3 @@
+.slds-p-top_xx-small slds-p-left_small forceContentPreviewerActionsBar forceActionsContainer{
+    display : none !important;
+}

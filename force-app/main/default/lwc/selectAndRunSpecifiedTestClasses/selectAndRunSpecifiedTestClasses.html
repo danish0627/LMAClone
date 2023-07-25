@@ -1,0 +1,150 @@
+<template>
+    <lightning-card title="Deployment Activities">        
+        <lightning-spinner if:true={spinner} size="small" variant="brand"></lightning-spinner>    
+        <lightning-tabset active-tab-value={activeTab} variant="scoped">
+            <lightning-tab label="Deployment Detail" value="one">
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="5" padding="horizontal-small">
+                        <c-create-deployment-detail source-org-name={orgName} source-org-id={orgId} deployment-id={deploymentId} package-id={packageId} onaftercreate={handleDeploymentData}></c-create-deployment-detail>
+                        <div if:true={packageId} class="slds-p-around_small"> 
+                            <lightning-button if:false={isRolledBacked} disabled={isUpdateDesabled} onclick={createDeploymentRecord} label={deploymentLabel} variant="brand-outline"></lightning-button>&nbsp;&nbsp;
+                            <span if:true={deploymentObj.Id}>
+                                <span if:false={isRolledBacked}>
+                                    <lightning-button disabled={isValidationDesabled}  if:false={isSpecifiedTest} onclick={validateOrDeployPackage} data-dtype="validate" label="Validate Package" variant="brand-outline"></lightning-button>&nbsp;&nbsp;
+                                    <lightning-button disabled={isDeploymentDesabled} if:false={isSpecifiedTest} onclick={validateOrDeployPackage} data-dtype="deploy" label="Deploy Package" variant="brand-outline"></lightning-button>&nbsp;&nbsp;
+                                    <!-- <lightning-button disabled={isRollbackDisabled} if:false={isSpecifiedTest} onclick={rollbackDeployment} data-dtype="rollback" label="Rollback" variant="brand-outline"></lightning-button> -->
+                                </span>
+                            </span>
+                        </div>
+                    </lightning-layout-item>
+                    
+                    <lightning-layout-item if:true={deploymentObj.Id} size="7" padding="horizontal-small">
+                        <c-show-selected-component if:true={isShowCmp} destructive-datamap={destructiveDatamap} rollback-datamap={rollbackDatamap}></c-show-selected-component>
+                    </lightning-layout-item>
+                    
+                </lightning-layout>
+            </lightning-tab>
+            <lightning-tab if:true={isSpecifiedTest} label="Run Test Classes" value="two">                
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="6" padding="horizontal-small">
+                        <div class="slds-p-top_xx-small">
+                            <strong>Available Test Classes</strong>
+                        </div>
+                        <div class="fixed-height">                            
+                            <lightning-datatable onrowselection={handleRowSelection} selected-rows={selectedClassList} key-field="name" data={classList} columns={columns}></lightning-datatable>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" padding="horizontal-small">
+                        <div class="slds-p-top_xx-small">
+                            <strong>Selected Apex Test Classes</strong>
+                        </div>
+                        <div class="fixed-height">
+                            <lightning-datatable key-field="name" onrowselection={handleRowSelection} data={selectedClasses} selected-rows={selectedClassList} columns={columns}></lightning-datatable>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <div class="slds-p-top_small" if:true={deploymentObj.Id}>                   
+                    <div if:false={isRolledBacked}>
+                        <lightning-button disabled={isValidationDesabled} onclick={validateOrDeployPackage} data-dtype="validate" label="Validate Package" variant="brand-outline"></lightning-button>&nbsp;&nbsp;
+                        <lightning-button disabled={isDeploymentDesabled} onclick={validateOrDeployPackage} data-dtype="deploy" label="Deploy Package" variant="brand-outline"></lightning-button>&nbsp;&nbsp;
+                        <!-- <lightning-button disabled={isRollbackDisabled} if:false={isSpecifiedTest} onclick={rollbackDeployment} data-dtype="rollback" label="Rollback" variant="brand-outline"></lightning-button> -->
+                    </div>
+                </div>
+            </lightning-tab>
+            <lightning-tab label="Result" value="three">
+                <div if:true={deploymentResult}>
+                    <lightning-layout multiple-rows="true">
+                        <lightning-layout-item size="4" padding="around-small">
+                            <div class="status">
+                                <span class="slds-text-heading_large">{processType} {deploymentResult.status}</span>
+                            </div>
+                            <div class="slds-p-top_medium start-date">
+                                <span class="slds-text-heading_small">Start Time: <lightning-formatted-date-time value={deploymentResult.startDate} year="2-digit" month="short" day="2-digit" hour="2-digit"
+                                    minute="2-digit" second="2-digit"></lightning-formatted-date-time></span>
+                            </div>
+                            <div class="start-date">
+                                <span class="slds-text-heading_small">End Time: <lightning-formatted-date-time value={deploymentResult.completedDate} year="2-digit" month="short" day="2-digit" hour="2-digit"
+                                    minute="2-digit" second="2-digit"></lightning-formatted-date-time></span>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-small" class="slds-text-align_center">
+                            <div if:true={deploymentResult} class="component-progress">
+                                <div>Deploy Components</div>
+                                <c-validate-or-deployment-result 
+                                    total-comp={deploymentResult.numberComponentsTotal} 
+                                    deployed-comp={deploymentResult.numberComponentsDeployed} 
+                                    error-count={deploymentResult.numberComponentErrors} is-test-run="false" is-test-required={isSpecifiedTest}></c-validate-or-deployment-result>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-small" class="slds-text-align_center">
+                            <div if:true={deploymentResult} class="test-progress">
+                                <div>Run Apex Test</div>
+                                <c-validate-or-deployment-result 
+                                    total-comp={deploymentResult.numberTestsTotal} 
+                                    deployed-comp={deploymentResult.numberTestsCompleted} 
+                                    error-count={deploymentResult.numberTestErrors} is-test-failed={deploymentTestError} is-test-run="true" is-test-required={isSpecifiedTest}></c-validate-or-deployment-result>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="around-small">
+                            <div if:true={deploymentResult.success} class="deployed-cmp-list">
+                                <div class="slds-text-heading_medium slds-m-bottom_x-small">
+                                    Components
+                                </div>
+                                <table if:true={cmpList} class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Api Name</th>
+                                            <th>Type</th>                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={cmpList} for:item="item" for:index="index">
+                                            <tr key={item.id}>
+                                                <td>{item.value}</td>
+                                                <td>{item.type}</td>                                                
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div if:false={deploymentResult.success} class="cmp-error-message">
+                                <div class="slds-text-heading_medium slds-m-bottom_x-small">Component Errors</div>
+                                <div class="slds-scrollable_x">
+                                    <table if:true={deploymentResult.details.componentFailures} class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Api Name</th>
+                                                <th>Type</th>
+                                                <th>Line</th>
+                                                <th>Column</th>
+                                                <th>Error Message</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template for:each={deploymentResult.details.componentFailures} for:item="item" for:index="index">
+                                                <tr key={item.problem}>
+                                                    <td>{item.fullName}</td>
+                                                    <td>{item.componentType}</td>
+                                                    <td>{item.lineNumber}</td>
+                                                    <td>{item.columnNumber}</td>
+                                                    <td>{item.problem}</td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>                                
+                            </div>
+                            <div if:true={deploymentTestError} class="test-error-message">
+                                <div class="slds-text-heading_small slds-m-bottom_x-small">Test Error:</div> 
+                                <lightning-formatted-rich-text value={deploymentTestError}></lightning-formatted-rich-text>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+                <div if:false={deploymentResult}>
+                    <p class="slds-text-color_error"><i>No activity done yet!</i></p>
+                </div>
+            </lightning-tab>
+        </lightning-tabset>                    
+    </lightning-card>        
+</template>

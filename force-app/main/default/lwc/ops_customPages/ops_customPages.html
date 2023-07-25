@@ -1,0 +1,79 @@
+<!-- Updating Api Version for ticket no: EMEA-200 -->
+<template>
+        <article class="slds-card slds-p-around_medium">
+           <lightning-layout multiple-rows="false">
+              <template if:true={customPageLoad}>
+                 <lightning-layout-item size="12" class="slds-p-horizontal_medium slds-p-bottom_medium ">
+                    <span class="slds-text-heading_medium" style="font-weight: bold;">{selectedEventName}</span>
+                    <lightning-breadcrumbs>
+                       <lightning-breadcrumb label="Customer Centre" onclick={customerCareUrl}>
+                       </lightning-breadcrumb>
+                       <lightning-breadcrumb label="Customer Centre Settings" onclick={customerCareSettingUrl}>
+                       </lightning-breadcrumb>
+                       <lightning-breadcrumb label="Custom Pages" onclick={customPagesUrl}>
+                       </lightning-breadcrumb>
+                       <template if:true={pageLinkName}>
+                        <lightning-breadcrumb label={pageLinkName} >
+                        </lightning-breadcrumb>
+                       </template>
+                    </lightning-breadcrumbs>
+                 </lightning-layout-item>
+                 <lightning-layout-item size="12" class="slds-p-horizontal_medium">
+                    <div class="slds-p-left_x-small">
+                       <lightning-tabset>
+                          <lightning-tab label="CUSTOM PAGES LIST" >
+                             <div class="slds-p-left_small">
+                                <a name="CustomPage1" onclick={handleClick1}>
+                                <b><u>Custom Page 1</u></b><br/><br/>
+                                </a>
+                                <a name="CustomPage2" onclick={handleClick2}>
+                                <b><u>Custom Page 2</u></b><br/><br/>
+                                </a>
+                                <a name="CustomPage3" onclick={handleClick3}>
+                                <b><u>Custom Page 3</u></b><br/><br/>
+                                </a>
+                             </div>
+                          </lightning-tab>
+                       </lightning-tabset>
+                    </div>
+                 </lightning-layout-item>
+              </template>
+              <template if:false={customPageLoad}>
+                <lightning-layout-item size="12" class="slds-p-horizontal_medium slds-p-bottom_medium ">
+                    <span class="slds-text-heading_medium" style="font-weight: bold;">{selectedEventName}</span>
+                    <lightning-breadcrumbs>
+                        <lightning-breadcrumb label="Customer Centre" onclick={customerCareUrl}>
+                        </lightning-breadcrumb>
+                        <lightning-breadcrumb label="Customer Centre Settings" onclick={customerCareSettingUrl}>
+                        </lightning-breadcrumb>
+                        <lightning-breadcrumb label="Custom Pages" onclick={customPagesUrl}>
+                        </lightning-breadcrumb>
+                        <template if:true={pageLinkName}>
+                           <lightning-breadcrumb label={pageLinkName} >
+                           </lightning-breadcrumb>
+                        </template>
+                    </lightning-breadcrumbs>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" class="slds-p-horizontal_medium">
+                <div class="slds-p-left_x-small">
+                    <lightning-tabset>
+                        <lightning-tab label="SETTING" >
+                            <div class="slds-p-left_small">
+                            <lightning-tabset>
+                                <lightning-tab label="General" >
+                                    <template if:true={recordId}>
+                                        <template if:true={pageLinkName}>
+                                            <c-ops_custom-pages-general evt-edition-id={evtEditionId} page-link-name={pageLinkName}></c-ops_custom-pages-general> 
+                                        </template>
+                                      </template>
+                                   </lightning-tab>
+                                </lightning-tabset>
+                             </div>
+                          </lightning-tab>
+                       </lightning-tabset>
+                    </div>
+                 </lightning-layout-item>
+              </template>
+           </lightning-layout>
+        </article>
+     </template>

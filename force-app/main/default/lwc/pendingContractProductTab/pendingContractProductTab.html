@@ -1,0 +1,84 @@
+<!--
+    Created By		: Girikon( Mukesh Gupta )
+    Created On		: 8/16/2019
+    @description 	: This component is used show the list of product related to the selected opportunity.
+    Modified By		: Girikon( Yash Gupta 9/12/2019 ]
+    Updating Api Version for ticket no: EMEA-200
+-->
+
+<template>
+   <!-- <template if:true={condition}>
+        <c-common-table condition={condition}
+            fields="SBQQ__Product__r.Name,SBQQ__Quantity__c,Booth_Number__c,Start_Date__c,End_Date__c,Event_Product_Type__c,Line_Description__c,SBQQ__NetTotal__c"
+            fields-label={fieldsLabels}
+            object-name="SBQQ__QuoteLine__c" object-label="Product" is-multi-language="true" custom-label="-1,0,7">
+        </c-common-table>
+        <div class="slds-clearfix">
+            <div class="slds-float_right">
+                <strong class="slds-text-heading_small">Total: {isoCode} {totalAmount}</strong>
+            </div>
+        </div>
+    </template>
+    
+    -->
+   <template if:true={shoWAct}>
+        <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+            <lightning-layout-item size="9">
+
+            </lightning-layout-item>
+            <lightning-layout-item size="2" alignment-bump="right">
+                <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey}
+                    class="slds-float_right search-box" onchange={reloadData}></lightning-input>
+
+            </lightning-layout-item>
+            <lightning-layout-item size="1" alignment-bump="right">
+                <button class="slds-button slds-button_icon slds-button_icon-brand" title="Search" onclick={handleKeyChange}>
+                    <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+                </button>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+
+    <lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+        <lightning-layout-item size="12">
+            <lightning-datatable data={finalTableData} columns={columns} key-field="Id" hide-checkbox-column="true"
+                                 onsave={handleSave} draft-values={draftValues} show-row-number-column="false">
+            </lightning-datatable>
+        </lightning-layout-item>
+    </lightning-layout>
+
+    <lightning-layout horizontal-align="space" class="slds-float_left">
+                    Show  
+                    <lightning-combobox options={pagesizeList} value={pagesizeToVisible} label="Page Size" variant="label-hidden" onchange={onPageSizeChange} class="pagesize"></lightning-combobox> 
+                    Product per page.
+    </lightning-layout>
+
+    <lightning-layout horizontal-align="space" class="slds-float_right">
+
+        Showing Page {page} of {totalPage}
+
+        <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+            onclick={firstHandler} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+            onclick={previousHandler} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+        &nbsp;
+
+        <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+            onclick={nextHandler} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+            onclick={lastHandler} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    </lightning-layout>
+    </br></br></br>
+    <lightning-layout horizontal-align="space" class="slds-float_right">
+    <div class="slds-clearfix">
+        <div class="slds-float_right">
+            <strong class="slds-text-heading_small">Total: {isoCode} {totalAmount}</strong>
+        </div>
+    </div>
+    </lightning-layout>
+
+</template>

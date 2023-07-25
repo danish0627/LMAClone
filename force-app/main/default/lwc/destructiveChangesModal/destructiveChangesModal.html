@@ -1,0 +1,26 @@
+<template>
+    <lightning-spinner if:true={spinner} size="small" variant="brand"></lightning-spinner> 
+    <lightning-modal-header label="Destructive Details"></lightning-modal-header>
+    <lightning-modal-body>
+        <div if:true={content}>
+            <h2>Constructive data list</h2>
+            <lightning-datatable 
+                key-field="Id" 
+                data={cdMap} 
+                columns={coloums} 
+                hide-checkbox-column="true">
+            </lightning-datatable>
+            <br>
+            <!-- <h2>Destructive data list</h2>
+            <lightning-datatable 
+                key-field="Id" 
+                data={ddMap} 
+                columns={coloums} 
+                hide-checkbox-column="true">
+            </lightning-datatable> -->
+        </div>
+    </lightning-modal-body>
+    <lightning-modal-footer>
+        <lightning-button label="Destructive Deployment" variant="brand-outline" onclick={destructiveConfirm}></lightning-button>
+    </lightning-modal-footer>
+</template>

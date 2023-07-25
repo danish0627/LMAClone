@@ -1,0 +1,224 @@
+<!--
+    Created By		: Girikon( Yash Gupta [STL-127] )
+    Created On		: 8/28/2019
+    @description 	: This component is used to show the list of several sub tabs of financial under opportunity page.
+    Modified By		: Girikon( Yash Gupta 9/16/2019 ]
+-->
+
+<template>
+    <div class="slds-card slds-p-around_small" style="min-height:500px;max-height:auto;">
+        <lightning-tabset>
+            <lightning-tab label="Payment Information">
+                <lightning-tabset>
+                    <lightning-tab icon-name="utility:cart" label="Order">                        
+                        <!-- Table for Orders -->
+                        <template if:true={orderCond1}>
+                            <c-crm-opp-financial-dwr-table show-link=false condition={orderCond1}></c-crm-opp-financial-dwr-table>
+                        </template>
+                       <template if:true={orderCond2}>
+                            <c-crm-opp-financial-dwr-table show-drawer=true condition={orderCond2}></c-crm-opp-financial-dwr-table>
+                       </template>
+
+                    </lightning-tab>
+
+                    <lightning-tab icon-name="utility:home" label="Final Invoices">
+                        <!-- Table for Final Invoices -->
+                         <template if:true={finalInvoiceCondition1}>
+                            <c-crm-opp-financial-final-invoice show-mail=true record-id={recordId}
+                                object-name="blng__Invoice__c" object-label="Final Invoice"
+                                condition={finalInvoiceCondition1}>
+                            </c-crm-opp-financial-final-invoice>
+                        </template>
+                        <template if:true={finalInvoiceCondition2}>
+                            <c-crm-opp-financial-final-invoice record-id={recordId} object-name="blng__Invoice__c"
+                                object-label="Final Invoice" condition={finalInvoiceCondition2}>
+                            </c-crm-opp-financial-final-invoice>
+                        </template> 
+                    </lightning-tab>
+
+                    <lightning-tab icon-name="utility:moneybag" label="Payments">
+                        <!-- Table for Payments -->
+                        <template if:true={paymentModelCond}>
+                            <c-common-table condition={paymentModelCond}
+                                fields="Name,blng__PaymentType__c,blng__Invoice__r.blng__Order__r.OrderNumber,blng__Invoice__r.Name,blng__Amount__c,CreatedDate,LastModifiedDate,blng__Invoice__r.blng__Order__r.Opportunity.Name"
+                                object-name="blng__Payment__c" object-label="Payment" is-multi-language="true" custom-label="-1,2,3,7"
+                                fields-label={paymentsFieldsLabels}>
+                            </c-common-table>
+                        </template>
+                    </lightning-tab>
+
+                    <lightning-tab icon-name="utility:shopping_bag" label="Product History">
+                        <!-- Table for Product History -->
+                        <template if:true={productHistoryCond}>
+                            <c-common-table condition={productHistoryCond}
+                                fields="SBQQ__Quote__r.Name,SBQQ__Product__r.Name,SBQQ__Quantity__c,SBQQ__NetPrice__c,SBQQ__NetTotal__c,SBQQ__ListPrice__c,SBQQ__ListTotal__c,LastModifiedDate"
+                                object-name="SBQQ__QuoteLine__c" object-label="Quote Line" is-multi-language="true" custom-label="-1,1"
+                                fields-label={productHistoryFieldsLabels}>
+                            </c-common-table>
+                        </template>
+                    </lightning-tab>
+
+                    <lightning-tab icon-name="utility:custom_apps" label="Contract">
+                        <!-- Table for Contract -->
+                        <template if:true={contractCond}>
+                            <c-common-table condition={contractCond}
+                                fields="ContractNumber,StartDate,EndDate,ActivatedDate,LastModifiedDate,SBQQ__Opportunity__r.Name"
+                                object-name="Contract" object-label="Contract" is-multi-language="true" custom-label="-1"
+                                fields-label="Contract Number,Contract Start Date,Contract End Date,Activated Date,Last Modified Date,Opportunity">
+                            </c-common-table>
+                        </template>
+                    </lightning-tab>
+
+                    <lightning-tab icon-name="utility:home" label="Invoice History">
+                        <!-- Table for Invoice History -->
+                        <template if:true={invHistoryCond}>
+                            <c-crm-opp-financial-invce-hstry record-id={recordId} object-name="blng__Invoice__c"
+                                object-label="Final Invoice" condition={invHistoryCond}>
+                            </c-crm-opp-financial-invce-hstry>
+                        </template>
+                    </lightning-tab>
+
+                    <lightning-tab icon-name="utility:currency" label="Credit Note">
+                        <!-- Table for Credit Note -->
+                        <template if:true={creditNotCond}>
+                            <c-common-table condition={creditNotCond}
+                                fields="blng__Account__r.Name,blng__Allocations__c,blng__Balance__c,blng__BillToContact__r.Name,blng__CreditNoteDate__c,Name,Credit_Number_SFDC__c,blng__Notes__c,blng__Refunds__c,blng__Status__c,blng__RelatedInvoice__c,blng__Subtotal__c,blng__TaxAmount__c,blng__TotalAmount__c,blng__Unallocations__c"
+                                object-name="blng__CreditNote__c" object-label="Credit Note" is-multi-language="true" custom-label="-1,3,6"
+                                fields-label={creditNoteFieldsLabels}
+                                is-view-file="true">
+                            </c-common-table>
+                        </template>
+                    </lightning-tab>
+
+                    <lightning-tab icon-name="utility:money" label="Credit Card Charges">
+                        <!-- Table for Credit Card Charges -->
+                        <template if:true={creditCardChrgesCond}>
+                            <c-common-table condition={creditCardChrgesCond}
+                                fields="Name,Payment_token__c,Payment_Status__c,Currency__c,Amount__c"
+                                object-name="CyberSource_Transaction_Log__c" object-label="CyberSource Transaction Log"
+                                is-multi-language="true" custom-label="-1,0"
+                                fields-label="CyberSource Transaction Log,Payment Token,Payment Status,Currency,Amount">
+                            </c-common-table>
+                        </template>
+                    </lightning-tab>
+
+                </lightning-tabset>
+            </lightning-tab>
+
+            <!-- Start Form for Brasil Payment Options -->
+            <template if:true={showBrasilTab}>
+                <lightning-tab label="Brasil Payment Options">
+                    <template if:false={showEdit}>
+                        <lightning-record-view-form record-id={recordId} object-api-name="Opportunity">
+                            <lightning-layout multiple-rows=true>
+                                <lightning-layout-item size='6'>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div
+                                            class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <span class="slds-form-element__label">{PAYMENTDUEDATE}</span>
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-form-element__static">
+                                                    <lightning-output-field field-name="Payment_Due_Date__c"
+                                                        variant="label-hidden">
+                                                    </lightning-output-field>
+                                                    <template if:true={showEditButton}>
+                                                        <lightning-button-icon icon-name="utility:edit" class="edit"
+                                                            icon-class="slds-button__icon_hint" variant="bare"
+                                                            alternative-text="Edit Record" onclick={showEditForm}>
+                                                        </lightning-button-icon>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div
+                                            class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <span class="slds-form-element__label">{PAYMENTSCHEDULE}</span>
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-form-element__static">
+                                                    <lightning-output-field field-name="Payment_Schedule__c"
+                                                        variant="label-hidden">
+                                                    </lightning-output-field>
+                                                    <template if:true={showEditButton}>
+                                                        <lightning-button-icon icon-name="utility:edit" class="edit"
+                                                            icon-class="slds-button__icon_hint" variant="bare"
+                                                            alternative-text="Edit Record" onclick={showEditForm}>
+                                                        </lightning-button-icon>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item size='6'>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <span class="slds-form-element__label">{FIRSTPAYMENTDUEDATE}</span>
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-form-element__static">
+                                                    <lightning-output-field field-name="First_Payment_Due_Date__c"
+                                                        variant="label-hidden">
+                                                    </lightning-output-field>
+                                                    <template if:true={showEditButton}>
+                                                        <lightning-button-icon icon-name="utility:edit" class="edit"
+                                                            icon-class="slds-button__icon_hint" variant="bare"
+                                                            alternative-text="Edit Record" onclick={showEditForm}>
+                                                        </lightning-button-icon>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-record-view-form>
+                    </template>
+
+                    <template if:true={showSpinner}>
+                        <lightning-spinner variant="brand" size="small" title="Loading..."></lightning-spinner>
+                    </template>
+
+                    <template if:true={showEdit}>
+                        <lightning-record-edit-form object-api-name="Opportunity" record-id={recordId}
+                            onsubmit={handleSubmit} onsuccess={handleSuccess}>
+                            <lightning-layout multiple-rows=true>
+                                <lightning-layout-item size='6'>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element__static">
+                                            <lightning-input-field field-name="Payment_Due_Date__c">
+                                            </lightning-input-field>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element__static">
+                                            <lightning-input-field field-name="Payment_Schedule__c">
+                                            </lightning-input-field>
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item size='6'>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element__static">
+                                            <lightning-input-field field-name="First_Payment_Due_Date__c">
+                                            </lightning-input-field>
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <div class="slds-m-top_medium slds-align_absolute-center sticky ">
+                                <lightning-button label='Cancel'
+                                    class="buttonClass slds-m-left_x-small slds-m-right_x-small" onclick={showEditForm}>
+                                </lightning-button>
+                                <lightning-button label='Save' variant='brand' type='submit'
+                                    class="buttonClass slds-m-left_x-small slds-m-right_x-small">
+                                </lightning-button>
+                            </div>
+                        </lightning-record-edit-form>
+                    </template>
+                </lightning-tab>
+            </template>
+            <!-- End Form for Brasil Payment Options -->
+        </lightning-tabset>
+    </div>
+</template>

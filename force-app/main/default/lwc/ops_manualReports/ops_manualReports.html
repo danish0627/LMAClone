@@ -1,0 +1,239 @@
+<!--
+Created By		: Girikon(Sunil[STL-156])
+Created On	 : September 17, 2019
+@description : This component is use to show Manual Reorts section at Ops Admin Side.
+
+Modification log --
+Modified By	: 
+-->
+<template>
+    <div if:true={isLoading} class="slds-is-relative">
+        <lightning-spinner variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
+    </div>
+    <lightning-layout multiple-rows="true">
+        <lightning-layout-item size="12" class="slds-p-right_medium ">
+            <lightning-layout class="slds-m-bottom_small common-table">
+                <lightning-layout-item size="3" padding="horizontal-small action-buttons">
+                    <div style="float:left;text-align:left;" onclick={exportReportAll}>
+                        <button class="slds-button slds-button_brand">Export Marketing List</button>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="9" padding="horizontal-small" class="slds-clearfix">
+                    <div style="float: right;text-align: right;">
+                        <template if:true={filterField1}>&nbsp;&nbsp;
+                            <c-multi-picklist placeholder={filter1Label} options={filterField1Options}
+                                selected-options={filterField1Value} onmultipicklistselect={handleMultipicklistChange}
+                                filter-name="1">
+                            </c-multi-picklist> </template>
+                        &nbsp;&nbsp;
+                        <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden"
+                            class="search-box" onchange={srchManual}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+            <table aria-multiselectable="true"
+                class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th aria-label="Account Name" aria-sort="none" scope="col">
+                            <a id="Name" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+                                href="javascript:void(0);" role="button" tabindex="-1">
+                                <div class="slds-grid slds-truncate slds-grid_vertical-align-center">
+                                    <span class="slds-truncate">MANUAL NAME</span>
+                                    <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                        <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                            class="slds-is-sortable__icon"></lightning-icon>
+                                    </span>
+                                </div>
+                            </a>
+                        </th>
+                        <th aria-label="StageName" aria-sort="none" scope="col">
+                            <a id="Form_Group__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+                                href="javascript:void(0);" role="button" tabindex="-1">
+                                <div class="slds-grid slds-grid_vertical-align-center">
+                                    <span class="slds-truncate">REQUIRED</span>
+                                    <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                        <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                            class="slds-is-sortable__icon"></lightning-icon>
+                                    </span>
+                                </div>
+                            </a>
+                        </th>
+                        <th aria-label="Status" aria-sort="none" scope="col">
+                            <a id="Business_Unit__c" onclick={handleSorting}
+                                class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button"
+                                tabindex="-1">
+                                <div class="slds-grid slds-grid_vertical-align-center">
+                                    <span class="slds-truncate">TYPE</span>
+                                    <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                        <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                            class="slds-is-sortable__icon"></lightning-icon>
+                                    </span>
+                                </div>
+                            </a>
+                        </th>
+
+                        <th aria-label="Amount" aria-sort="none" scope="col">
+                            <a id="Doc_Type__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+                                href="javascript:void(0);" role="button" tabindex="-1">
+                                <div class="slds-grid slds-grid_vertical-align-center">
+                                    <span class="slds-truncate">VIEWED</span>
+                                    <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                        <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                            class="slds-is-sortable__icon"></lightning-icon>
+                                    </span>
+                                </div>
+                            </a>
+                        </th>
+
+                        <th aria-label="Amount" aria-sort="none" scope="col">
+                            <a id="Template_Form__c" onclick={handleSorting}
+                                class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button"
+                                tabindex="-1">
+                                <div class="slds-grid slds-grid_vertical-align-center">
+                                    <span class="slds-truncate">AGREED</span>
+                                    <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                        <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                            class="slds-is-sortable__icon"></lightning-icon>
+                                    </span>
+                                </div>
+                            </a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={manualsList} for:item="item" for:index="ind">
+                        <tr key={item.Id} aria-selected="false" class="slds-hint-parent">
+
+                            <td tabindex="0">
+                                <div class="slds-truncate" title={item.Name}>
+                                    {item.Name}
+                                </div>
+                            </td>
+                            <td tabindex="0">
+                                <div class="slds-truncate">
+                                    <lightning-input type="checkbox" checked={item.Required__c} disabled>
+                                    </lightning-input>
+                                </div>
+                            </td>
+                            <td tabindex="0">
+                                <div class="slds-truncate" title={item.ManualType__c}>
+                                    {item.ManualType__c}
+                                </div>
+                            </td>
+                            <td tabindex="0">
+                                <div class="slds-truncate">
+                                    <a href="javascript:void(0);" data-record-id={item.Manuals__c}
+                                        onclick={clickOnViewed} tabindex="-1" data-id={ind}>
+                                        {item.expr1}/{item.expr0}
+                                    </a>
+                                </div>
+                            </td>
+                            <td tabindex="0">
+                                <div class="slds-truncate">
+                                    <a href="javascript:void(0);" data-record-id={item.Manuals__c}
+                                        onclick={clickOnAgreed} tabindex="-1" data-id={ind}>
+                                        {item.expr2}/{item.expr0}
+                                    </a>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </template>
+                </tbody>
+
+            </table>
+            <lightning-layout multiple-rows="true" class="slds-m-around_small slds-clearfix" if:true={showPagination}>
+                <lightning-layout-item size="6" padding="horizontal_small">
+                    <div>
+                        Show
+                        <lightning-combobox options={pagesizeList} variant="label-hidden"
+                            placeholder={pageSize} onchange={onPageSizeChange} class="pagesize"></lightning-combobox>
+                        Manuals per page.
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="6" class="slds-float_right" padding="horizontal_small">
+                    <div class="slds-float_right">
+                        {showPageView} of &nbsp;
+                        {totalRecords}&nbsp;
+                        <lightning-button-icon class="prev-btn" size="medium" icon-name="utility:chevronleft"
+                            onclick={getPrevData} variant="bare">
+                        </lightning-button-icon>&nbsp;
+                        <span class="slds-p-horizontal_x-small">
+                            <a href="javascript:void(0);" id="first" onclick={processMe} name="1"
+                                class={firstActiveClass}>1</a>
+                        </span>
+                        <span class="slds-p-horizontal_xxx-small">
+                            <a href="javascript:void(0);" id="none1">...</a>
+                        </span>
+                        <template for:each={pageList} for:item="item" for:index="ind">
+                            <span key={item} id={item} class="slds-p-horizontal_x-small">
+                                <a href="javascript:void(0);" id={item} onclick={processMe} name={item}
+                                    class="">{item}</a>
+                            </span>
+                        </template>
+                        <span class="slds-p-horizontal_xxx-small">
+                            <a href="javascript:void(0);" id="none2">...</a>
+                        </span>
+                        <span key={item} id={item} class="slds-p-horizontal_x-small">
+                            <a href="javascript:void(0);" id="last" onclick={processMe} name={totalPages}
+                                class={lastActiveClass}>{totalPages}</a>
+                        </span>
+                        <lightning-button-icon class="next-btn" size="medium" icon-name="utility:chevronright"
+                            onclick={getNextData} variant="bare">
+                        </lightning-button-icon>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-layout-item>
+
+    </lightning-layout>
+    <div class="demo-only" if:true={showViewedReport}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-describedby="modal-content-id-1"
+            class="slds-modal slds-fade-in-open">
+
+            <div class="slds-modal__container" style="width: 70%;max-width: 70%">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium slds-hyphenate"><b>{selectedManaul}</b></h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <div class="slds-grid slds-gutters">
+                    </div>
+                    <lightning-tabset>
+                        <lightning-tab label={tablabelYes} onactive={tabValue} value="t1">
+                            <c-events-list-custom-table if:true={qryConditionViewed} pagesize=20
+                                condition={qryConditionViewed} filter1-label="User Type"
+                                filter-field1="User_Type__r.Name" button2-label="Export Marketing List"
+                                onopenformlink={exportReport} fields="Account__r.Name,User_Type__r.Name"
+                                fields-label="Account,User Type" object-name="User_Manual_Action__c"
+                                object-label="Manuals">
+                            </c-events-list-custom-table>
+                        </lightning-tab>
+                        <lightning-tab label={tablabelNo} onactive={tabValue} value="t2">
+                            <c-events-list-custom-table if:false={isSendEmail} button2-label="Export Marketing List"
+                                onopenformlink={exportReport} pagesize=20 condition={qryConditionNotViewed}
+                                filter1-label="User Type" filter-field1="User_Type__r.Name"
+                                fields="Account__r.Name,User_Type__r.Name" fields-label="Account,User Type"
+                                object-name="User_Manual_Action__c" object-label="Manuals">
+                            </c-events-list-custom-table>
+                            <c-events-list-custom-table if:true={isSendEmail} button1-label="Send Email for this manual"
+                                onopennewmodal={sendEmail} button2-label="Export Marketing List"
+                                onopenformlink={exportReport} pagesize=20 condition={qryConditionNotViewed}
+                                filter1-label="User Type" filter-field1="User_Type__r.Name"
+                                fields="Account__r.Name,User_Type__r.Name" fields-label="Account,User Type"
+                                object-name="User_Manual_Action__c" object-label="Manuals">
+                            </c-events-list-custom-table>
+                        </lightning-tab>
+                    </lightning-tabset>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button class="slds-m-left_x-small" label="Cancel" variant="neutral"
+                        onclick={closeRightSection}>
+                    </lightning-button>
+                </footer>
+            </div>
+
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+</template>

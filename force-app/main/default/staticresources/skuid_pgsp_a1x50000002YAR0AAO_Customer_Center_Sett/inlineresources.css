@@ -1,0 +1,119 @@
+.ui-button .ui-button-text {
+    display: block;
+    line-height: 60px;
+    width :230px;
+}
+
+.ui-button, .ui-widget-content .ui-button.ui-state-default {
+    background: #bdc5d2;
+    font-weight: 700;
+    color: black;
+    border: 1px solid #bdc5d2;
+    box-shadow: ;
+    -webkit-border-radius: .25rem;
+    -moz-border-radius: .25rem;
+    border-radius: .25rem;
+}
+
+.ui-button {
+    margin: 10px 24px 4px 4px;
+    font-size: inherit;
+}
+
+
+
+.ui-button.ui-state-active, .ui-widget-content .ui-button.ui-state-default.ui-state-active, .ui-button.ui-state-hover, .ui-widget-content .ui-button.ui-state-default.ui-state-hover, .ui-button.ui-state-focus, .ui-widget-content .ui-button.ui-state-default.ui-state-focus {
+    background: #bdc5d2;
+    box-shadow: ;
+    color: #000;
+    border: 1px solid #bdc5d2;
+}
+
+.ui-button .ui-button-text, .ui-widget-content .ui-button.ui-state-default .ui-button-text {
+    font-weight: 600;
+    font-size: 0.90rem;
+}
+
+.sk-buttonset>.nx-editor-header .sk-button-cancel, .sk-buttonset>.nx-editor-header .sk-button-save, .sk-button-action, .sk-buttonset>.nx-editor-header>.nx-status {
+    margin: 50px 0px 0px 0px;
+}
+.sk-navigation-item > a {
+    margin: 0px 0px;
+    padding:  0 1.5rem 0 .6rem;
+    font-weight: 400;
+    background-image: url("../resource/bredcom_arrow");
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+.sk-navigation-item > a:hover {
+    background-image: url("../resource/bredcom_arrow_hover");
+    background-repeat: no-repeat;
+    background-position: right;
+    background-color: transparent;
+}
+
+.sk-navigation-item {
+    margin: 0px 5px;
+}
+
+.sk-navigation > .sk-navigation-item:hover, .sk-navigation > .sk-navigation-item:focus {
+    background:  none repeat scroll 0 0;
+}
+.bradcom {
+    margin: 0px !important;
+
+background-image: url("../resource/bredcom_arrow") !important;
+background-repeat: no-repeat !important;
+background-position: right !important;
+color: #000 !important;
+border : none !important;
+padding: 0px !important;
+background-color: transparent !important;
+}
+
+.bradcom:hover {
+    background-image: url("../resource/bredcom_arrow_hover") !important;
+    background-repeat: no-repeat !important;
+    background-position: right !important;
+    background-color: transparent !important;
+}
+
+.bradcom span{
+line-height: 40px !important;
+width: auto !important;
+font-weight: 400 !important;
+}
+.BradComBorder {
+    border-top : 1px solid #ccc !important;
+    border-bottom : 1px solid #ccc !important;
+}
+
+.BradComBorder .sk-button-action{
+    margin-top : 0px !important;
+}
+
+.buttonColor{
+    background:#005fb2 !important;
+    color: White !important;
+    border: 0px !important;
+    Width: 180px !important;
+    text-align: inherit !important;
+    margin-left: -5px;
+    border:none !important;
+}
+.buttonColor:hover {
+  background-color: lightblue !important;
+}
+
+.ui-button .ui-button-text {
+    line-height: 40px;
+}
+
+.nx-header-left .ui-button {
+     margin: 0 0 0 0 !important; 
+
+}
+.TextColor{
+    color: black !important;
+}

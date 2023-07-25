@@ -1,0 +1,16 @@
+<!--
+    Created By		: Girikon( Yash Gupta [STL-15] )
+    Created On		: 26/7/2019
+    @description 	: This component is used to fetch all booth approval records where the opportunity Booth_Approval_Status__c are Approved and opportunity MSA Requested checkbox is false and status is Approved.
+    Modified By		: Yash Gupta [STL-15 1/8/2019]
+-->
+
+<template>
+    <template if:true={approvedContractCond}>
+        <c-common-table condition={approvedContractCond}
+            fields="Name,Opportunity__r.Name,Opportunity__r.Event_Series__r.Name,Opportunity__r.EventEdition__r.Name,Status__c,Comment__c,CreatedDate,LastModifiedDate"
+            object-name="Booth_Approval_Dashboard__c" is-multi-language="true" custom-label="-1" object-label="Booth Approval Dashboard" profile="System Administrator" onopeneditmodal={handleEditModal} 
+            fields-label="Booth Approval #,Opportunity,Event Series,Event Edition,Status,Comment,Created Date,Last Modified Date">
+        </c-common-table>
+    </template>
+</template>

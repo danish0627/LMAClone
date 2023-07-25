@@ -1,0 +1,138 @@
+<!--
+Created By		: Girikon(Garima[STL-145])
+Created On	 : September 23, 2019
+@description : This component is use to show Form Permissions section at Ops Admin Side.
+
+Modification log --
+Modified By	: 
+-->
+
+<template>
+   <div if:true={isLoading} class="slds-is-relative">
+      <lightning-spinner variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
+   </div>
+   <lightning-layout multiple-rows="true">
+      <lightning-layout-item size="6">
+         <c-events-list-custom-table condition="Name !=null" fields="Name" object-name="User_Type__c"
+            object-label="User Type" fields-label="User Type" is-open-link="true" onopenlink={handleEditModal}
+            button1-label="Set Form Permissions" onopennewmodal={handleNewModal}>
+         </c-events-list-custom-table>
+      </lightning-layout-item>
+   </lightning-layout>
+
+   <template if:true={openNewModal}>
+      <div class="slds-p-bottom_xx-large">
+         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+               <header class="slds-modal__header">
+                  <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                     onclick={closeModal}>
+                     <lightning-icon icon-name="utility:close" size="small" variant="bare">
+                     </lightning-icon>
+                     <span class="slds-assistive-text">Close</span>
+                  </button>
+                  <h2 id="modal-heading-012" class="slds-text-heading_medium slds-hyphenate"> Add Form Permissions</h2>
+                  <p style="color:red;text-align: medium;">
+                     {errorMessage}
+                  </p>
+               </header>
+               <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-12">
+                  <lightning-record-edit-form object-api-name="Forms_Permission__c" onsubmit={submitFormPer}
+                     onsuccess={handleFormCreated} class="globalForm">
+                     <lightning-messages></lightning-messages>
+                     <br>
+                     <span class="required">*</span>
+                     <lightning-input-field field-name="User_Type__c"></lightning-input-field>
+                     <span class="required">*</span>
+                     <c-common-lookup condition={lookupCondition} index=0 selected-item-id=""
+                        onhandlelookup={setLookupField} help-text="Form Permission related to form" label="Forms"
+                        object-label="Forms" object-name="Event_Edition_Form__c" field-name="Name" name-field-api="Name"
+                        search-placeholder="Search Forms"></c-common-lookup>
+                     <lightning-input-field field-name="Active__c"></lightning-input-field>
+                     <lightning-button class="save slds-hide" type="submit" variant="brand" label="Save">
+                     </lightning-button>
+                  </lightning-record-edit-form>
+                  <br>
+               </div>
+               <footer class="slds-modal__footer" style="margin-top:0px;">
+                  <lightning-button label="Cancel" variant="neutral" onclick={closeModal}></lightning-button>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <lightning-button onclick={callSaveBtn} variant="brand" label="Save"></lightning-button>
+               </footer>
+            </div>
+         </section>
+         <div class="slds-backdrop slds-backdrop_open"></div>
+         <br>
+      </div>
+   </template>
+   <template if:true={openEditModal}>
+      <div class="slds-p-bottom_xx-large">
+         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+            <div class="slds-modal__container">
+               <header class="slds-modal__header">
+                  <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                     onclick={closeModal}>
+                     <lightning-icon icon-name="utility:close" size="small" variant="bare">
+                     </lightning-icon>
+                     <span class="slds-assistive-text">Close</span>
+                  </button>
+                  <h2 id="modal-heading-013" class="slds-text-heading_medium slds-hyphenate">
+                     <lightning-record-view-form record-id={recordId} object-api-name="User_Type__c">
+                        <lightning-output-field field-name="Name" variant="label-hidden"> </lightning-output-field>
+                     </lightning-record-view-form>
+                  </h2>
+               </header>
+               <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-13">
+                     <lightning-layout multiple-rows="true">
+                           <lightning-layout-item size="12">
+                  <p class="req-bold-text">Permissions</p>
+                  <c-events-list-custom-table condition={renderingCondition} object-name="Forms_Permission__c"
+                     fields-label={fieldlabel} fields={fields} object-label="Forms Permission"
+                     onopeneditmodal={handleEditInnerModal} is-show-action="true" is-hide-delete-action="false">
+                  </c-events-list-custom-table>
+                  </lightning-layout-item>
+                  </lightning-layout>
+               </div>
+            </div>
+         </section>
+         <div class="slds-backdrop slds-backdrop_open"></div>
+         <br>
+      </div>
+   </template>
+   <template if:true={openPermissionModal}>
+      <div class="slds-p-bottom_xx-large">
+         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+            <div class="slds-modal__container popup-background">
+               <header class="slds-modal__header">
+                  <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                     onclick={closeEditModal}>
+                     <lightning-icon icon-name="utility:close" size="small" variant="bare">
+                     </lightning-icon>
+                     <span class="slds-assistive-text">Close</span>
+                  </button>
+                  <h2 id="modal-heading-014" class="slds-text-heading_medium slds-hyphenate">Edit Form</h2>
+               </header>
+               <div class="slds-modal__content slds-p-around_medium " id="modal-content-id-14">
+                  <lightning-record-edit-form layout-type="Full" density="compact" object-api-name="Forms_Permission__c"
+                     record-id={formPermId} onsuccess={onSuccess} class="globalForm">
+                     <lightning-messages></lightning-messages>
+                     <lightning-input-field field-name="Active__c" value={activeCheck}></lightning-input-field>
+                     <lightning-button class="save slds-hide" type="submit" variant="brand" label="Save">
+                     </lightning-button>
+                  </lightning-record-edit-form>
+               </div>
+               <footer class="slds-modal__footer" style="margin-top:0px;">
+                  <lightning-button label="Cancel" variant="neutral" onclick={closeEditModal}></lightning-button>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <lightning-button onclick={callSaveBtn} variant="brand" label="Save"></lightning-button>
+               </footer>
+            </div>
+         </section>
+         <div class="slds-backdrop slds-backdrop_open"></div>
+         <br>
+      </div>
+   </template>
+</template>

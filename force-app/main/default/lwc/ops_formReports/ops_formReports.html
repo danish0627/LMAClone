@@ -1,0 +1,497 @@
+<template>
+      <div if:true={isLoading}>
+         <lightning-spinner variant="brand" alternative-text="Loading..." size="small"></lightning-spinner>
+      </div>
+      <lightning-layout multiple-rows="true">
+         <lightning-layout-item size="12" class="slds-p-right_medium ">
+            <lightning-layout class="slds-m-bottom_small common-table">
+               <lightning-layout-item size="3" padding="horizontal-small action-buttons"></lightning-layout-item>
+               <lightning-layout-item size="9" padding="horizontal-small" class="slds-clearfix">
+                  <div style="float: right;text-align: right;">
+                     <template if:true={filterField1}>
+                             &nbsp;&nbsp;
+                             
+                        <c-multi-picklist placeholder={filter1Label} options={filterField1Options}
+                                selected-options={filterField1Value} onmultipicklistselect={handleMultipicklistChange}
+                                filter-name="1"></c-multi-picklist>
+                     </template>
+                          &nbsp;&nbsp;
+                          
+                     <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden"
+                             class="search-box" onchange={srchForms}></lightning-input>
+                  </div>
+               </lightning-layout-item>
+            </lightning-layout>
+            <table aria-multiselectable="true"
+                    class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid">
+               <thead>
+                  <tr class="slds-line-height_reset">
+                     <th aria-label="Account Name" aria-sort="none" scope="col">
+                        <a id="Name" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+                                href="javascript:void(0);" role="button" tabindex="-1">
+                           <div class="slds-grid slds-truncate slds-grid_vertical-align-center">
+                              <span class="slds-truncate">EVENT EDITION FORM NAME</span>
+                              <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                 <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                         class="slds-is-sortable__icon"></lightning-icon>
+                              </span>
+                           </div>
+                        </a>
+                     </th>
+                     <th aria-label="StageName" aria-sort="none" scope="col">
+                        <a id="Form_Group__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+                                href="javascript:void(0);" role="button" tabindex="-1">
+                           <div class="slds-grid slds-grid_vertical-align-center">
+                              <span class="slds-truncate">REQUIRED</span>
+                              <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                 <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                         class="slds-is-sortable__icon"></lightning-icon>
+                              </span>
+                           </div>
+                        </a>
+                     </th>
+                     <th aria-label="Status" aria-sort="none" scope="col">
+                        <a id="Business_Unit__c" onclick={handleSorting}
+                                class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button"
+                                tabindex="-1">
+                           <div class="slds-grid slds-grid_vertical-align-center">
+                              <span class="slds-truncate">TYPE</span>
+                              <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                 <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                         class="slds-is-sortable__icon"></lightning-icon>
+                              </span>
+                           </div>
+                        </a>
+                     </th>
+                     <th aria-label="Amount" aria-sort="none" scope="col">
+                        <a id="Doc_Type__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+                                href="javascript:void(0);" role="button" tabindex="-1">
+                           <div class="slds-grid slds-grid_vertical-align-center">
+                              <span class="slds-truncate">VIEWED</span>
+                              <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                 <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                         class="slds-is-sortable__icon"></lightning-icon>
+                              </span>
+                           </div>
+                        </a>
+                     </th>
+                     <th aria-label="Amount" aria-sort="none" scope="col">
+                        <a id="Template_Form__c" onclick={handleSorting}
+                                class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button"
+                                tabindex="-1">
+                           <div class="slds-grid slds-grid_vertical-align-center">
+                              <span class="slds-truncate">SUBMITTED</span>
+                              <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                 <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                         class="slds-is-sortable__icon"></lightning-icon>
+                              </span>
+                           </div>
+                        </a>
+                     </th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <template for:each={manualsList} for:item="item" for:index="ind">
+                     <tr key={item.Id} aria-selected="false" class="slds-hint-parent">
+                        <td tabindex="0">
+                           <div class="slds-truncate" title={item.Name} style="white-space: normal">
+                                   {item.Name}
+                                </div>
+                        </td>
+                        <td tabindex="0">
+                           <div class="slds-truncate">
+                              <lightning-input type="checkbox" checked={item.Mandatory__c} disabled></lightning-input>
+                           </div>
+                        </td>
+                        <td tabindex="0">
+                           <div class="slds-truncate" title={item.FormType__c}>
+                                   {item.FormType__c}
+                                </div>
+                        </td>
+                        <td tabindex="0">
+                           <div class="slds-truncate">
+                              <a href="javascript:void(0);" data-record-id={item.Event_Edition_Form__c}
+                                      onclick={clickOnViewed} tabindex="-1" data-id={ind}>
+                                   {item.expr1}/{item.expr0}
+                                   </a>
+                           </div>
+                        </td>
+                        <td tabindex="0">
+                           <div class="slds-truncate">
+                              <a href="javascript:void(0);" data-record-id={item.Event_Edition_Form__c}
+                                      onclick={clickOnSubmitted} tabindex="-1" data-id={ind}>
+                                   {item.expr2}/{item.expr0}
+                                   </a>
+                           </div>
+                        </td>
+                     </tr>
+                  </template>
+               </tbody>
+            </table>
+            <lightning-layout multiple-rows="true" class="slds-m-around_small slds-clearfix" if:true={showPagination}>
+               <lightning-layout-item size="6" padding="horizontal_small">
+                  <div>
+                          Show
+                          <lightning-combobox options={pagesizeList} variant="label-hidden"
+                          placeholder={pageSize} onchange={onPageSizeChange} class="pagesize"></lightning-combobox>
+                          Forms per page.
+                  </div>
+               </lightning-layout-item>
+               <lightning-layout-item size="6" class="slds-float_right" padding="horizontal_small">
+                  <div class="slds-float_right">
+                          {showPageView} of &nbsp;
+                          
+                     <!-- <template if:true={isMoreThan2000}>2000+</template> -->
+                          {totalRecords}&nbsp;
+                          
+                     <lightning-button-icon class="prev-btn" size="medium" icon-name="utility:chevronleft"
+                             onclick={getPrevData} variant="bare"></lightning-button-icon>
+                          &nbsp;
+                          
+                     <span class="slds-p-horizontal_x-small">
+                        <a href="javascript:void(0);" id="first" onclick={processMe} name="1"
+                             class={firstActiveClass}>1</a>
+                     </span>
+                     <span class="slds-p-horizontal_xxx-small">
+                        <a href="javascript:void(0);" id="none1">...</a>
+                     </span>
+                     <template for:each={pageList} for:item="item" for:index="ind">
+                        <span key={item} id={item} class="slds-p-horizontal_x-small">
+                           <a href="javascript:void(0);" id={item} onclick={processMe} name={item}
+                                class="">{item}</a>
+                        </span>
+                     </template>
+                     <span class="slds-p-horizontal_xxx-small">
+                        <a href="javascript:void(0);" id="none2">...</a>
+                     </span>
+                     <span key={item} id={item} class="slds-p-horizontal_x-small">
+                        <a href="javascript:void(0);" id="last" onclick={processMe} name={totalPages}
+                             class={lastActiveClass}>{totalPages}</a>
+                     </span>
+                     <lightning-button-icon class="next-btn" size="medium" icon-name="utility:chevronright"
+                             onclick={getNextData} variant="bare"></lightning-button-icon>
+                  </div>
+               </lightning-layout-item>
+            </lightning-layout>
+         </lightning-layout-item>
+      </lightning-layout>
+      <!-- Viewed Report-->
+      <div if:true={showViewedReport}>
+         <section role="dialog" tabindex="-1" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+            <div class="slds-modal__container">
+               <header class="slds-modal__header">
+                  <h2 class="slds-text-heading_medium slds-hyphenate">
+                     <b>{selectedManaul}</b>
+                  </h2>
+               </header>
+               <div class="slds-modal__content slds-p-around_medium">
+                  <lightning-tabset>
+                     <lightning-tab label={tablabelYes} onactive={tabValue}  value="t1">
+                        <template if:true={spinner}>
+                           <lightning-spinner variant="brand" size="small"></lightning-spinner>
+                        </template>
+                        <!-- viewed -->
+                        <c-events-list-custom-table filter-field1="Status__c" filter1-label="Status" filter-field2="User_Type__r.Name" filter2-label="User Type" if:true={qryConditionViewed} pagesize="20"
+                                condition={qryConditionViewed} button2-label="Export Marketing List"
+                                onopenformlink={exportReport} fields="Account__r.Name,User_Type__r.Name"
+                                object-name="User_Form_Action__c" fields-label="ACCOUNT,USER TYPE" object-label="User Form Actions"></c-events-list-custom-table>
+                     </lightning-tab>
+                     <!-- not viewed -->
+                     <lightning-tab label={tablabelNo} onactive={tabValue}   value="t2">
+                        <c-events-list-custom-table if:true={qryConditionNotViewed} filter-field1="Status__c" filter1-label="Status" filter-field2="User_Type__r.Name" filter2-label="User Type"
+                                pagesize=20
+                                condition={qryConditionNotViewed}  button2-label="Export Marketing List"
+                                onopenformlink={exportReport} fields="Account__r.Name,User_Type__r.Name"
+                                object-name="User_Form_Action__c" fields-label="ACCOUNT,USER TYPE" object-label="User Form Actions"></c-events-list-custom-table>
+                     </lightning-tab>
+                  </lightning-tabset>
+               </div>
+               <footer class="slds-modal__footer">
+                  <lightning-button class="slds-m-left_x-small" label="Cancel" variant="neutral"
+                          onclick={closeRightSection}></lightning-button>
+               </footer>
+            </div>
+         </section>
+         <div class="slds-backdrop slds-backdrop_open"></div>
+      </div>
+      <!-- Submitted Report-->
+      <div if:true={showSubmittedReport}>
+         <section role="dialog" tabindex="-1" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+            <div class="slds-modal__container">
+               <header class="slds-modal__header">
+                  <h2 class="slds-text-heading_medium slds-hyphenate">
+                     <b>{selectedManaul}</b>
+                  </h2>
+               </header>
+               <div class="slds-modal__content slds-p-around_medium">
+                  <lightning-tabset>
+                     <lightning-tab label={tablabelYes} onactive={tabValue}  value="t1">
+                        <template if:true={spinner}>
+                           <lightning-spinner variant="brand" size="small"></lightning-spinner>
+                        </template>
+                        <!-- for online form (Form_Permission__r.Event_Edition_Form__r.Forms__r.Doc_Type__c='Online')-->
+                        <template if:true={isOnlineForm}>
+                           <!-- submitted -->
+                           <div  style="float:left;text-align:left;position:absolute">
+                              <div class="demo-only" style="height:8.75rem">
+                                 <div class="slds-button-group" role="group">
+                                    <button class="slds-button slds-button_neutral"  onclick={exportMarketingList}>Export Marketing List</button>
+                                    <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last slds-is-open">
+                                       <button class="slds-button slds-button_icon slds-button_icon-border-filled" aria-haspopup="true" title="Show More"  onclick={showOptiondropdown}>
+                                       <div> <lightning-button-icon icon-name="utility:down"  size="xx-small"  ></lightning-button-icon></div>  
+                                       </button>
+                                       <template if:true={showoption}>
+                                          <div style="width: 193px;padding: 0px;" class="slds-dropdown slds-dropdown_right slds-dropdown_actions">
+                                             <ul class="slds-dropdown__list" role="menu">
+                                                <li class="slds-dropdown__item" role="presentation">
+                                                   <a href="javascript:void(0);" role="menuitem" tabindex="0">
+                                                      <span class="slds-truncate" title="Overflow Item One"  onclick={exportFormData}>Export Form Data</span>
+                                                   </a>
+                                                </li>
+                                             </ul>
+                                          </div>
+                                       </template>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <c-events-list-custom-table filter-field1="Status__c" filter1-label="Status" filter-field2="User_Type__r.Name" filter2-label="User Type" if:true={qryConditionSubmitted} pagesize="20"
+                                   condition={qryConditionSubmitted}  
+                                   onopenformlink={exportReport} open-link-icon="utility:open_folder" is-open-link="true" open-link-text="View Record Details" 
+                                   open-link-icon2="doctype:pdf" open-link-text2="View PDF" onfileopen={handleOpenFileEvent} onopenlinkmodal={handleOpenlinkEvent}
+                                   fields="Account__r.Name,User_Type__r.Name"
+                                   object-name="User_Form_Action__c" fields-label="ACCOUNT,USER TYPE" object-label="User Form Actions"></c-events-list-custom-table>
+                        </template>
+                        <!-- submitted-->
+                        <template if:false={isOnlineForm}>
+                           <c-events-list-custom-table filter-field1="Status__c" filter1-label="Status" filter-field2="User_Type__r.Name" filter2-label="User Type" if:true={qryConditionSubmitted} pagesize="20"
+                           onopenformlink={exportReport} condition={qryConditionSubmitted}   button2-label="Export Marketing List" fields="Account__r.Name,User_Type__r.Name"
+                                   object-name="User_Form_Action__c" fields-label="ACCOUNT,USER TYPE" object-label="User Form Actions"></c-events-list-custom-table>
+                        </template>
+                     </lightning-tab>
+                     <lightning-tab label={tablabelNo} onactive={tabValue}  value="t2">
+                        <!-- not Submitted -->
+                        <c-events-list-custom-table if:false={isEmaiSendButton} filter-field1="Status__c" filter1-label="Status" filter-field2="User_Type__r.Name" filter2-label="User Type" pagesize=20
+                                condition={qryConditionNotSubmitted} button2-label="Export Marketing List"
+                                onopenformlink={exportReport} fields="Account__r.Name,User_Type__r.Name"
+                                object-name="User_Form_Action__c" fields-label="ACCOUNT,USER TYPE" object-label="User Form Actions"></c-events-list-custom-table>
+                        <!--  not submitted  -->
+                        <c-events-list-custom-table if:true={isEmaiSendButton} filter-field1="Status__c" filter1-label="Status" filter-field2="User_Type__r.Name" filter2-label="User Type" pagesize=20
+                                condition={qryConditionNotSubmitted} button1-label="Send Email for this Form" onopennewmodal={sendEmail} button2-label="Export Marketing List"
+                                onopenformlink={exportReport} fields="Account__r.Name,User_Type__r.Name"
+                                object-name="User_Form_Action__c" fields-label="ACCOUNT,USER TYPE" object-label="User Form Actions"></c-events-list-custom-table>
+                     </lightning-tab>
+                  </lightning-tabset>
+               </div>
+               <footer class="slds-modal__footer">
+                  <lightning-button class="slds-m-left_x-small" label="Cancel" variant="neutral"
+                          onclick={closeRightSection}></lightning-button>
+               </footer>
+            </div>
+         </section>
+         <div class="slds-backdrop slds-backdrop_open"></div>
+      </div>
+      <template if:true={isOpenApprovalForm}>
+         <section role="dialog" tabindex="-1" aria-modal="true" aria-describedby="modal-content-id-1"
+                 class="slds-modal slds-fade-in-open slds-modal_large"  style="z-index: 9991">
+            <div class="slds-modal__container">
+               <header class="slds-modal__header">
+                  <h2 class="slds-text-heading_medium slds-hyphenate">
+                     <b></b>
+                  </h2>
+               </header>
+               <div class="slds-modal__content slds-p-around_medium">
+                  <template if:true={spinner}>
+                     <lightning-spinner variant="brand" size="small"></lightning-spinner>
+                  </template>
+                  <div class="slds-page-header">
+                     <div class="slds-page-header__row">
+                        <div class="slds-page-header__col-title">
+                           <div class="slds-media">
+                              <div class="slds-media__figure">
+                                 <lightning-icon icon-name="doctype:gform" size="large"></lightning-icon>
+                              </div>
+                              <div class="slds-media__body">
+                                 <div class="slds-page-header__name">
+                                    <div class="slds-page-header__name-title">
+                                       <h1>
+                                          <span class="slds-page-header__title slds-truncate" title="">Exhibitor:  {accountName}</span>
+                                       </h1>
+                                       <h1>
+                                          <span class="slds-page-header__title slds-truncate" title="">Form: {formName}</span>
+                                       </h1>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <lightning-layout multiple-rows="true">
+                     <template if:true={isApprove}>
+                        <lightning-layout-item size="9" padding="around-small" style="background: lightgreen;">
+                           <div style="font-size:21.5px">This form has been approved. Would you like to make changes?</div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="3" padding="around-small" style="background: lightgreen;">
+                           <!-- set Status__c Pending-->
+                           <lightning-button label="Save" value="approve" icon-name="utility:check" onclick={setStatusPending}></lightning-button>
+                        </lightning-layout-item>
+                     </template>
+                     <template if:true={isReject}>
+                        <lightning-layout-item size="9" padding="around-small" style="background: red;">
+                           <div style="font-size:21.5px">The Form have been rejected. Would you like to make changes?</div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="3" padding="around-small" style="background: red;">
+                           <!-- set Status__c Pending-->
+                           <lightning-button label="Save" value="reject" icon-name="utility:check" onclick={setStatusPending}></lightning-button>
+                        </lightning-layout-item>
+                     </template>
+                     <lightning-layout-item size="12" padding="around-small">
+                        <template if:true={iframeUrl}>
+                           <iframe src={iframeUrl} width="1350px" height="400px;" style="border:0px solid #e1e1e1"></iframe>
+                        </template>
+                     </lightning-layout-item>
+                  </lightning-layout>
+               </div>
+               <footer class="slds-modal__footer">
+                  <template if:true={btnRender}>
+                     <lightning-button icon-name="utility:check" variant="brand" label="Approve" onclick={approveFormAction}></lightning-button>
+                          &nbsp;&nbsp;
+                          
+                     <lightning-button icon-name="utility:error" variant="destructive" label="Reject" onclick={rejectFormAction}></lightning-button>
+                  </template>
+                  <template if:false={btnRender}>
+                     <!--Only for show case-->
+                     <lightning-button icon-name="utility:check" variant="brand" label="Approve" disabled></lightning-button>
+                          &nbsp;&nbsp;
+                          
+                     <lightning-button icon-name="utility:error" variant="destructive" label="Reject" disabled></lightning-button>
+                  </template>
+                       &nbsp;&nbsp;
+                       
+                  <lightning-button class="slds-m-left_x-small" label="Cancel" variant="neutral" onclick={hideApprovalForm}></lightning-button>
+               </footer>
+            </div>
+         </section>
+         <div class="slds-backdrop slds-backdrop_open" style="z-index: 999"></div>
+      </template>
+      <!-- Approve Confirmation Modal-->
+      <template if:true={isApprovalFormConfirm}>
+         <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open"  style="z-index: 9993">
+            <div class="slds-modal__container">
+               <header class="slds-modal__header">
+                  <h2 class="slds-text-heading_medium slds-hyphenate">
+                     <b></b>
+                  </h2>
+               </header>
+               <div class="slds-modal__content slds-p-around_medium">
+                  <template if:true={spinner}>
+                     <lightning-spinner variant="brand" size="small"></lightning-spinner>
+                  </template>
+                  <template if:true={isOnlineForm}>
+                     <lightning-layout multiple-rows="true">
+                        <lightning-layout-item size="12" padding="around-small">
+                           <p>If you would like to notify the customer this form was approved, check the box below.</p>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="around-small">
+                           <lightning-input type="checkbox" name="ApproveAndSendEmail" label="Approve Form and send E-mail"  onchange={handleChangeEvent}></lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="around-small">
+                           <template if:true={ApproveAndSendEmail}>
+                              <lightning-textarea name="ApprovalNote" label="ApprovalNote: (Optional)"  onchange={handleChangeEvent}></lightning-textarea>
+                           </template>
+                        </lightning-layout-item>
+                     </lightning-layout>
+                  </template>
+                  <template if:false={isOnlineForm}>
+                     <p>An email will be sent to your customer informing them their form was approved.Use the following field to add any note to the email they will receive.</p>
+                     <lightning-textarea name="ApprovalNote" label="ApprovalNote: (Optional)"  onchange={handleChangeEvent}></lightning-textarea>
+                     <p>Are you sure you wish to approve this form and e-mail your customer?</p>
+                  </template>
+               </div>
+               <footer class="slds-modal__footer">
+                  <template if:true={isOnlineForm}>
+                     <template if:false={ApproveAndSendEmail}>
+                        <lightning-button icon-name="utility:check" value="Approved" onclick={approve_rejectFormAction} variant="brand" label="Approve"></lightning-button>
+                             &nbsp;&nbsp;
+                          
+                     </template>
+                     <template if:true={ApproveAndSendEmail}>
+                        <lightning-button icon-name="utility:check" value="Approved" onclick={approve_rejectForm_SendEmailAction} variant="brand" label="Approve and Send Email"></lightning-button>
+                             &nbsp;&nbsp;
+                          
+                     </template>
+                  </template>
+                  <template if:false={isOnlineForm}>
+                     <lightning-button icon-name="utility:check" variant="brand" label="Send"></lightning-button>
+                          &nbsp;&nbsp;
+                       
+                  </template>
+                  <lightning-button label="Cancel" onclick={closeConfirmModal}></lightning-button>
+               </footer>
+            </div>
+         </section>
+         <div class="slds-backdrop slds-backdrop_open" style="z-index: 9992"></div>
+      </template>
+      <!-- Reject Confirmation Modal-->
+      <template if:true={isRejectFormConfirm}>
+         <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open"  style="z-index: 9993">
+            <div class="slds-modal__container">
+               <header class="slds-modal__header">
+                  <h2 class="slds-text-heading_medium slds-hyphenate">
+                     <b></b>
+                  </h2>
+               </header>
+               <div class="slds-modal__content slds-p-around_medium">
+                  <template if:true={spinner}>
+                     <lightning-spinner variant="brand" size="small"></lightning-spinner>
+                  </template>
+                  <!-- for online form-->
+                  <template if:true={isOnlineForm}>
+                     <lightning-layout multiple-rows="true">
+                        <lightning-layout-item size="12" padding="around-small">
+                           <p>If you would like to notify the customer this form was rejected, check the box below.</p>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="around-small">
+                           <lightning-input type="checkbox" name="RejectAndSendEmail" label="Reject Form and send E-mail"  onchange={handleChangeEvent}></lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="around-small">
+                           <template if:true={RejectAndSendEmail}>
+                              <lightning-textarea name="RejectionNote" label="Rejection Note: (Optional)" onchange={handleChangeEvent}></lightning-textarea>
+                           </template>
+                        </lightning-layout-item>
+                     </lightning-layout>
+                  </template>
+                  <!-- for downloadable PDF-->
+                  <template if:false={isOnlineForm}>
+                     <p>An email will be sent to your customer informing them their form was approved.Use the following field to add any note to the email they will receive.</p>
+                     <lightning-textarea name="RejectionNote" label="Rejection Note" onchange={handleChangeEvent}></lightning-textarea>
+                     <p>Are you sure you wish to reject this form and e-mail your customer?</p>
+                  </template>
+               </div>
+               <footer class="slds-modal__footer">
+                  <template if:true={isOnlineForm}>
+                     <template if:false={RejectAndSendEmail}>
+                        <lightning-button icon-name="utility:error" onclick={approve_rejectFormAction} value="Rejected" variant="destructive" label="Reject"></lightning-button>
+                             &nbsp;&nbsp;
+                          
+                     </template>
+                     <template if:true={RejectAndSendEmail}>
+                        <lightning-button icon-name="utility:error" value="Rejected" onclick={approve_rejectForm_SendEmailAction} variant="destructive" label="Reject and Send Email"></lightning-button>
+                             &nbsp;&nbsp;
+                          
+                     </template>
+                  </template>
+                  <!-- for downloadable PDF-->
+                  <template if:false={isOnlineForm}>
+                     <lightning-button icon-name="utility:error" variant="brand" label="Send"></lightning-button>
+                          &nbsp;&nbsp;
+                       
+                  </template>
+                  <lightning-button label="Cancel" onclick={closeConfirmModal}></lightning-button>
+               </footer>
+            </div>
+         </section>
+         <div class="slds-backdrop slds-backdrop_open" style="z-index: 9992"></div>
+      </template>
+   </template>

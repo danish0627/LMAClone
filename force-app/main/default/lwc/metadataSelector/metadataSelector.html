@@ -1,0 +1,104 @@
+<template>
+    <lightning-card title="Select Metadata">
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="10" padding="horizontal-small">
+                <div class="slds-form-element">                
+                    <div class="slds-form-element__control">
+                        <div class="slds-combobox-group slds-has-selection">                
+                            <div class="slds-combobox_container slds-combobox-addon_end">
+                                <div class={className} onmouseleave={hideDropdown} id="primary-combobox">
+                                    <div class="slds-combobox__form-element" role="none">
+                                        <lightning-input onfocus={showDropdown} type="search" variant="label-hidden" placeholder="Search metadata types..." onchange={searchMetadataTypes} onkeyup={handleKeyUp} value={metadataTypeSearchBox}></lightning-input>
+                                    </div>
+                                    <div if:true={isOpenDropdown} id="listbox" class="mp-5 slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+                                        <ul class="gkn-search-list slds-listbox slds-listbox_vertical" role="presentation">
+                                            <template for:each={metadataType} for:item="item" for:index="index">
+                                                <li key={item.value} onclick={selectOption} data-metadatatype={item.value} role="presentation" class="slds-listbox__item">
+                                                    <div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                                                        <span class="slds-media__body">
+                                                            <span class="slds-listbox__option-text slds-listbox__option-text_entity">
+                                                                {item.label}
+                                                            </span>                                            
+                                                        </span>
+                                                    </div>
+                                                </li>
+                                            </template>                                
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div if:true={isSelected} class="gkn-listbox slds-listbox_selection-group">
+                            <ul class="slds-listbox slds-listbox_horizontal" role="listbox" aria-label="Selected Options:"
+                                aria-orientation="horizontal">
+                                <template for:each={selectedMetadataTypes} for:item="item">
+                                    <li key={item} class="slds-listbox-item" role="presentation">
+                                        <lightning-pill name={item} label={item} onremove={removePill}></lightning-pill>
+                                    </li>
+                                </template>                                        
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="2" padding="horizontal-small">
+                <lightning-button disabled={isLocked} icon-name="utility:database" onclick={retrieveMetadata} label="Retrieve Metadata"></lightning-button>
+                <div if:false={isLocked} class="slds-m-top_xx-small">
+                    <lightning-button disabled={isDisabledAddToPackage} icon-name="utility:add" onclick={addSelectedMetadataToPackage} variant="brand" label="Add To Package"></lightning-button>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-small">
+                <lightning-tabset variant="scoped">
+                    <lightning-tab label="All Metadata">
+                        <div class="slds-p-horizontal_small slds-einstein-header">
+                            <lightning-input onchange={searchInAllMetadataItems} type="search" variant="label-hidden" label="Search" placeholder="Search Metadata by name, type, created by and so on..."></lightning-input>
+                        </div>                    
+                        <div class="fixed-height">                        
+                            <lightning-datatable
+                                    key-field="Id"
+                                    data={filteredItems}
+                                    columns={tableColumns} default-sort-direction={defaultSortDirection}
+                                    sorted-direction={sortDirection} hide-checkbox-column={isLocked}
+                                    sorted-by={sortedBy} selected-rows={selectedRows}
+                                    onsort={onHandleSortAllMetadataItems} onrowselection={handleRowSelectionAllMetadataItems}>
+                            </lightning-datatable>                        
+                        </div>
+                        <div class="slds-p-top_small">
+                            <div class="slds-grid gkn-align-center slds-gutters slds-grid_align-end">                            
+                                <div if:true={isShowPagination} class="slds-col">
+                                    <strong>{paginationText}</strong>
+                                </div>
+                                <div if:true={isShowPagination} class="slds-col">
+                                    <lightning-button-icon disabled={isPrevBtnDisabled} onclick={gotoPrev} icon-name="utility:chevronleft"></lightning-button-icon>&nbsp;&nbsp;
+                                    <lightning-button-icon disabled={isNextBtnDisabled} onclick={gotoNext} icon-name="utility:chevronright"></lightning-button-icon>
+                                </div>
+                                <div if:true={isShowPagination} class="slds-col">
+                                    <lightning-combobox value={pageSize} options={pageSizes} label="Page size" variant="label-hidden"></lightning-combobox>
+                                </div>
+                                <div class="slds-col">
+                                    <strong>Total: {totalMetadataItems} component(s)</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-tab>
+                    <lightning-tab label="Selected Metadata" title="Selected Metadata Items">
+                        <div class="fixed-height">                        
+                            <lightning-datatable key-field="Id" hide-checkbox-column={isLocked}
+                                    data={selectedMetadataItems} selected-rows={selectedRows}
+                                    columns={tableColumns} onrowselection={handleRowSelectionAllMetadataItems} >
+                            </lightning-datatable>
+                            <div class="slds-p-top_small">
+                                <div class="slds-grid gkn-align-center slds-grid_align-end">
+                                    <div class="slds-col">
+                                        <strong>Total: {totalSelectedMetadataItems} component(s)</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-tab>                
+                </lightning-tabset>
+                <lightning-spinner if:true={spinner} size="small" variant="brand"></lightning-spinner>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+</template>

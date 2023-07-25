@@ -1,0 +1,10 @@
+.slds-has-error .slds-form-element__help{padding-left:33%}
+
+.summaryHeader{font-size: 22px;color: #000;font-weight: 700;}
+.textBold{font-weight: 700;}
+.summarytable th a{text-decoration: none !important; font-weight:400;}
+.summarytable th{padding-bottom:8px;}
+.summarytable td{padding-bottom:3px;}
+.summarytable tr th:nth-child(2) {padding-left:10px;}
+.summarytable tr td:nth-child(2) {padding-left:10px;}
+.scrollClass{height: 300px;overflow: auto;}

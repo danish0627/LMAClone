@@ -1,0 +1,11 @@
+a{font-weight: bold;}
+.THIS .slds-modal__container{
+    max-width: 70px !important;
+    width:100% !important;
+    background: rgba(8, 7, 7, 0.8) !important;
+    
+   }
+ .popup-background
+    {
+        background: rgba(8, 7, 7, 0.8) !important;
+    }

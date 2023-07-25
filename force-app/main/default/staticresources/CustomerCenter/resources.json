@@ -1,0 +1,34 @@
+{
+	"fontConfig": {
+		"custom": {
+			"families": [
+				"Open Sans"
+			],
+			"urls": [
+				"https://fonts.googleapis.com/css?family=Open+Sans:300,400,600"
+			]
+		},
+		"__comment": "DO NOT EDIT, this is a generated file and all changes will be overwritten. If you wish to change the webfonts loaded, please do so in the skuid_theme.json"
+	},
+	"cssResources": [
+		{
+			"type": "external",
+			"url": "/resource/skuid__Fonts/opensans/opensans.css"
+		},
+		{
+			"type": "static",
+			"name": "CustomerCenter",
+			"namespace": "",
+			"path": "inline.css"
+		}
+	],
+	"themeSettings": {
+		"visualizations": {
+			"chart": {},
+			"geochart": {
+				"background": "#9bc6cf",
+				"nullColor": "#eee"
+			}
+		}
+	}
+}

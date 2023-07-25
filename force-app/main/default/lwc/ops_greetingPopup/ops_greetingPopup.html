@@ -1,0 +1,25 @@
+<template>
+        <div if:true={isLoading} class="slds-is-relative">
+            <lightning-spinner variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="12">
+                <lightning-record-edit-form record-id={esId} onsuccess={onSuccess} onsubmit={onSubmit} onload={onLoad}
+                    onerror={onError} layout-type="Full" density="compact" object-api-name="Event_Settings__c">
+                    <lightning-messages></lightning-messages>
+                    <lightning-input-field field-name="Is_Pop_Up_Greeting__c">
+                    </lightning-input-field>
+                    <lightning-input-field field-name="Pop_Up_Greeting_Header__c"></lightning-input-field>
+                   <!-- <template if:true={renderedComponent}> -->
+                           
+                        <lightning-input-field field-name="Pop_Up_Greeting__c"></lightning-input-field>
+                   <!-- </template>-->
+                    <div class="slds-p-top_large">
+                        <lightning-button variant="brand" type="submit" name="Save" label="Save"></lightning-button>
+                        <lightning-button class="slds-m-left_x-small" variant="neutral" onclick={cancel} name="Cancel"
+                            label="Cancel"></lightning-button>
+                    </div>
+                </lightning-record-edit-form>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>

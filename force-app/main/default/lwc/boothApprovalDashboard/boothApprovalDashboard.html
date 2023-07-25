@@ -1,0 +1,21 @@
+<!--
+    Created By		: Girikon( Yash Gupta [STL-15] )
+    Created On		: 26/7/2019 
+    @description 	: This component is used to call all the three different component into this component that will show on the page.
+    Modified By		: Girikon( Yash Gupta[STL-15 1/8/2019 ]
+-->
+<template>
+    <div class="slds-card slds-p-around_small" style="min-height: 550px;max-height:auto;">
+        <lightning-tabset>
+            <lightning-tab label="Live Opportunity">
+                <c-live-opportunity-dashboard></c-live-opportunity-dashboard>
+            </lightning-tab>        
+            <lightning-tab label="Approved Opportunity" onactive={handleTabClick}>
+                <c-approved-opportunity-dashboard></c-approved-opportunity-dashboard>
+            </lightning-tab>
+            <lightning-tab label="Declined Opportunity" onactive={handleTabClick}>
+                <c-declined-opportunity-dashboard></c-declined-opportunity-dashboard>
+            </lightning-tab>
+        </lightning-tabset>
+    </div>
+</template>

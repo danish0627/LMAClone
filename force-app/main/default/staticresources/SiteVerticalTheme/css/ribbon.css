@@ -1,0 +1,146 @@
+    margin-top: 172px;
+}
+
+body.bi-ribbon.logged-in.admin-bar {
+    margin-top: 203px;
+}
+
+body.bi-ribbon.logged-in.admin-bar #iribbon-container {
+    top: 32px;
+}
+
+#iribbon-container nav ul, #iribbon-container nav ul li {
+    list-style: outside none none;
+    margin: 0;
+    padding: 1em 0;
+}
+
+#iribbon-container ul, #iribbon-container ol {
+    margin: 0 0 20px 20px;
+}
+
+#iribbon-container {
+    background: #525a5c;
+    border-bottom: 1px solid #a5acaf;
+    color: #fff;
+    font-size: 13px;
+    min-height: 37px;
+    line-height: 18px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10000;
+    position: absolute;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#iribbon-container a {
+    color: #fff;
+}
+
+#iribbon-title {
+    background: url(../images/iribbon-logo.gif) no-repeat center top;
+    border: none;
+    bottom: 0;
+    border-radius: 0;
+    box-shadow: none;
+    cursor: pointer;
+    display: block;
+    height: 16px;
+    left: 50%; /* center the left edge of the <button> within its container */
+    margin: 10px auto 10px -46px; /* center the <button> about its centre - half the width */
+    position: absolute;
+    text-indent: -999em;
+    -moz-transition: none;
+    -webkit-transition: none;
+    -o-transition: color 0 ease-in;
+    transition: none;
+    width: 92px;
+}
+
+@media not all, not all {
+    #iribbon-title {
+        background: rgba(0, 0, 0, 0) url("../images/iribbon-logo@2x.png") repeat 0 0 / 92px 34px;
+    }
+}
+
+#iribbon-detail {
+    margin: 0 auto;
+    max-width: 1180px;
+    overflow: hidden;
+    transition: max-height 500ms ease-in-out 0s, min-height 500ms ease-in-out 0s;
+}
+
+/* script added classes */
+#iribbon-detail.ribbon-hide {
+    max-height: 0
+}
+
+#iribbon-detail.ribbon-show {
+    max-height: 400px
+}
+
+#iribbon-right, #iribbon-left {
+    float: left;
+    margin: 40px 0;
+    max-width: 570px;
+    padding: 0 2%;
+    width: 45%;
+}
+
+#iribbon-right {
+    border-left: 1px solid #a5acaf;
+    float: right;
+    padding-left: 2%;
+}
+
+#iribbon-detail p {
+    margin-bottom: 0;
+}
+
+#iribbon-detail ul, #iribbon-detail ul li {
+    display: inline-block;
+    list-style: outside none none;
+    margin: 10px 0 0;
+    padding: 0;
+}
+
+#iribbon-detail ul li {
+    line-height: 1em;
+    margin-bottom: 1.25em;
+    padding: 0 15px 0 0;
+}
+
+#iribbon-detail ul li:last-child {
+    border: 0 none;
+}
+
+#iribbon-detail ul li a {
+    text-decoration: underline;
+    text-transform: uppercase;
+}
+
+#iribbon-detail ul li.iribbon-mainlink {
+    border: 0 none;
+    padding-left: 0;
+}
+
+#iribbon-detail ul li.iribbon-mainlink a {
+    font-weight: bold;
+    text-transform: none;
+}
+
+#iribbon-title.active {
+    background-position: center bottom;
+}
+
+.fixed-ribbon-hide{
+    display:none;
+}
+
+.header-up{
+    top: 0 !important;
+}
+
+/* end of Informa top ribbon */
+

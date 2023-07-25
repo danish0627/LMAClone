@@ -1,0 +1,56 @@
+<!--
+    Created By		: Girikon( Yash Gupta [STL-25] )
+    Created On		: 8/21/2019
+    @description 	: This component is used to show the related data of approved contracts.
+    Modified By		: Girikon( Yash Gupta 8/23/2019 )
+    Modified By		: Girikon( Deepak Shukla - on 25-01-2021 As per jira ticket - BSM-879 )
+-->
+
+<template>
+    <template if:true={isOpenActionModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="edit-form-heading" aria-modal="true" aria-describedby="modal-content-edit-form" class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button type="button" onclick={closeModal} class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                        <lightning-icon icon-name="utility:close" variant="bare" size="small"></lightning-icon>
+                    </button>
+                    <h2 id="edit-form-heading" class="slds-text-heading_medium slds-hyphenate">Viewing Opportunity: {oppName}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-edit-form">
+                    <div>            
+                        <lightning-tabset>
+                            <lightning-tab label="Agreement">
+                                <template if:true={agreementCond}>
+                                    <!--BSM-879: added Opportunity__r.SBQQ__PrimaryQuote__r.Name in fields and "Primary Quote" in fields-label attribute-->
+                                    <c-common-table condition={agreementCond}
+                                    fields="Name,LastModifiedDate,Opportunity__r.Name,Opportunity__r.SBQQ__PrimaryQuote__r.Name" 
+                                    object-name="Agreement__c" object-label="Agreement"
+                                    fields-label="Agreement Name,Last Modified Date,Opportunity,Primary Quote" is-view-file="true">
+                                    </c-common-table>
+                                    </template>
+                                </lightning-tab>   
+                            <lightning-tab label="Invoices">
+                                <template if:true={invoiceCond}>
+                                 <c-approved-contract-invoice-model object-name="blng__Invoice__c" record-id={recordId} condition={invoiceCond} object-label="Invoice"></c-approved-contract-invoice-model>
+                                </template>
+                            </lightning-tab> 
+                            <lightning-tab label="Credit Note">
+                                <template if:true={creditNoteCond}>
+                                    <c-common-table condition={creditNoteCond}
+                                    fields="Name,blng__RelatedInvoice__r.Name,Credit_Number_SFDC__c,blng__TotalAmount__c,CreatedDate" 
+                                    object-name="blng__CreditNote__c" object-label="Credit Note"
+                                    fields-label="Credit Note Number,Source Invoice,Sequential Number,Total Amount (With Tax),Created Date">
+                                    </c-common-table>
+                                </template>
+                            </lightning-tab>     
+                        </lightning-tabset>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" type="button" onclick={closeModal}>Close</button>                        
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>        
+    </template>
+</template>

@@ -1,0 +1,111 @@
+<!--
+    Created By		: Girikon( Mukesh Gupta [STL-227] )
+    Created On		: 9/23/2019
+    @description 	: This component is used show the expocad deck report page.
+    Modified By		: Girikon( Yash Gupta 10/03/2019 ]
+-->
+
+<template>
+    <template if:true={spinner}>
+        <lightning-spinner size="small" variant="brand"></lightning-spinner>
+    </template>  
+    <div class="slds-page-header" style="background-color: #f3f2f2">
+        <div class="slds-page-header__row">
+            <div class="slds-page-header__col-title">
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+                        <span class="slds-icon_container slds-icon-standard-opportunity" title="Event Edition">
+                            <lightning-icon icon-name="standard:events"></lightning-icon>
+                            <span class="slds-assistive-text">EVENT EDITION</span>
+                        </span>
+                    </div>
+                    <div class="slds-media__body">                        
+                        <div class="slds-page-header__name">
+                            <div class="slds-page-header__name-title">
+                                <h1>
+                                    <span style="text-transform: uppercase">Event Edition</span>
+                                    <template if:true={eventObj}>
+                                        <span class="slds-page-header__title slds-truncate" title={eventObj.Name}>{eventObj.Name}</span>
+                                    </template>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slds-m-top_medium">
+        <!--level - 1 -->
+        <lightning-tabset variant="scoped">
+            <lightning-tab label="ExpoCad Decks">
+                <!--level - 2 -->
+                <lightning-tabset>
+                    <lightning-tab label="Expocad Statistics">
+                        <div class="slds-p-bottom_small">
+                            <h2 class="slds-text-heading_medium"><strong>Expocad Event Statistics - <template if:true={eventObj}>{eventObj.Name}</template></strong></h2>
+                        </div>                        
+                        <!--level - 3 -->
+                        <lightning-tabset variant="scoped">
+                            <lightning-tab label="Event Area">                                
+                                <lightning-datatable
+                                        key-field="Id"
+                                        data={mapBoothEventDetails}
+                                        columns={eventAreacolumns} hide-checkbox-column="true"> 
+                                </lightning-datatable>                                
+                            </lightning-tab>
+                            <lightning-tab label="Event Information">                                
+                                <lightning-datatable
+                                        key-field="Id"
+                                        data={mapBoothEventDetails}
+                                        columns={eventInformationcolumns} hide-checkbox-column="true">
+                                </lightning-datatable>                            
+                            </lightning-tab>
+                            <lightning-tab label="Event Booths">
+                                <lightning-tabset variant="scoped">
+                                    <lightning-tab label="All Booths" onactive={handleEventAllBooth}>
+                                            <template if:true={mapBoothAllEvents}>
+                                                <c-events-all-booths-tab map-booth-all-events={mapBoothAllEvents} all-booth-columns={eventAllBoothscolumns}></c-events-all-booths-tab>
+                                            </template>
+                                    </lightning-tab>
+                                    <lightning-tab label="Rented Booth" onactive={handleExpocadBoothDetails}>
+                                            <template if:true={mapBoothDetails}>
+                                                <c-events-rented-booths-tab map-booth-details={mapBoothDetails} rented-booth-columns={rentedBoothColumns}></c-events-rented-booths-tab>
+                                            </template>
+                                    </lightning-tab>
+                                </lightning-tabset>
+                            </lightning-tab>
+                        </lightning-tabset>
+                        <template if:true={eventAreaChartData}>
+                            <template if:true={event1ChartArea}>
+                                <template if:true={event2ChartArea}>
+                                    <template if:true={event3ChartArea}>
+                                        <c-expocad-clickable-chart chart-datas={eventAreaChartData} chart-title="Booth Information" child1-chart-data={event1ChartArea} child2-chart-data={event2ChartArea} child3-chart-data={event3ChartArea}></c-expocad-clickable-chart>
+                                    </template>    
+                                </template>    
+                            </template>
+                        </template>
+                    </lightning-tab>
+                    <lightning-tab label="Expocad Booth Details" onactive={handleExpocadBoothDetails}>
+                        <div class="slds-p-bottom_small">
+                            <h2 class="slds-text-heading_medium"><strong>Event Edition : <template if:true={eventObj}>{eventObj.Name}</template></strong></h2>
+                        </div>
+                        <template if:true={mapBoothDetails}>   
+                            <c-expocad-booth-details-tab map-booth-details={mapBoothDetails} table-columns={columns}></c-expocad-booth-details-tab>
+                        </template>
+                    </lightning-tab>
+                </lightning-tabset>
+            </lightning-tab>
+            <lightning-tab label="Expocad  Yield">
+                <template if:true={yieldCondition}>
+                    <c-deck-yield-dashboard object-label="Quote Line" object-name="SBQQ__QuoteLine__c" condition={yieldCondition} record-id={recordId}></c-deck-yield-dashboard>
+                </template>
+            </lightning-tab>
+            <lightning-tab label="Expocad Report">
+                <a href="/lightning/r/Report/00O50000005rSqn/view" target="_blank"><b>All ExpoCAD Booths</b></a><br><br>
+                <a href="/lightning/r/Report/00O50000005rT1W/view" target="_blank"><b>All ExpoCAD Booths with Quote</b></a><br><br>
+                <a href="/lightning/r/Report/00O50000005rT1X/view" target="_blank"><b>ExpoCAD Summary Yield Test </b></a>
+            </lightning-tab>
+        </lightning-tabset>
+    </div>
+</template>

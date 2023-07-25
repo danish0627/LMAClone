@@ -1,0 +1,26 @@
+body{font-family: 'Open Sans', sans-serif;}
+.maindiv{ width:600px; margin:0px auto; margin-top:180px; border-radius:5px; border:1px solid #ccc; box-shadow: 0 0 5px #ccc; overflow:hidden;}
+.headerdiv{ width:100%; border-bottom:1px solid #ccc; background-color:#e0e0e0; padding:12px 20px;}
+.bodydiv{ width:100%; padding:8px 0px;}
+.headname{ border-bottom:1px solid #ccc; padding:0px 0px 8px 0px; margin-bottom:15px;}
+.marbottom{ margin-bottom:10px !important;}
+.divip{ font-size:10px !important; margin-top:10px;}
+.note{ color:#ff0000; margin-left:2%;}
+.buttonbg {background-color: #000 !important; border: none; color: #fff; border-radius: 5px; padding: 10px; margin-left: 2%;}        
+.pull-left {float: left !important;}
+.clearfix{clear: both;}
+.form-control {display: block; margin-left:2%; width: 90%; height: 34px; padding: 0px 12px; font-size: 14px; line-height: 1.42857143; color: #555;
+  background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075); box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+	   -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+		  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+.form-control:focus {border-color: #66afe9; outline: 0; -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6); box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);}
+.form-control::-moz-placeholder {color: #999; opacity: 1;}
+.form-control:-ms-input-placeholder {color: #999;}
+.form-control::-webkit-input-placeholder {color: #999;}
+a {    
+color: #0072BC !important;
+font-size: 14px;
+}

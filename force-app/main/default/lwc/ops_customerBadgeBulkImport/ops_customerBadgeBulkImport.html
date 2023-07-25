@@ -1,0 +1,40 @@
+<template>
+    <table class="slds-p-top_large">
+        <tr>
+            <td colspan="2">Use this tab to manage the bulk import template that
+                customers use to import multiple badges. The base template contains all fields, while the upload
+                customer
+                template should indicate which fields are required for this event.
+
+                IMPORTANT Please confirm that the fields you mark as required in the customer template, match the fields
+                you
+                check as required under the 'Badge Data' tab.</td>
+        </tr>
+        <tr>
+            <td><br> </td>
+            <td><br> </td>
+        </tr>
+        <tr>
+            <td> Base Import Template:</td>
+            
+            <template if:true={attachmentLink}>
+                <td> <a href={attachmentLink}>Download File</a></td>
+            </template>
+        </tr>
+        <tr>
+            <td> Upload Customer Template:</td>
+            <td>
+                <lightning-input class="inputfile" label="" name="file uploader" onchange={handleFilesChange}
+                    type="file" multiple>
+                </lightning-input>
+                <lightning-button class="upload-btn slds-m-top--medium btnUpload" label={UploadFile} onclick={handleSave}
+                    variant="brand" disabled={isTrue}></lightning-button>
+                <div class="slds-text-body_small slds-text-color_error">{fileName}
+                    <template if:true={showLoadingSpinner}>
+                        <lightning-spinner alternative-text="Uploading......" size="medium"></lightning-spinner>
+                    </template>
+                </div>
+            </td>
+        </tr>
+    </table>
+</template>

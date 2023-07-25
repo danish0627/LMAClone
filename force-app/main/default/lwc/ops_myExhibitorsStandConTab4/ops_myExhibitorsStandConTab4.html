@@ -1,0 +1,33 @@
+<template>
+        <article class="slds-card " if:true={recordId}>
+                <div if:true={isLoading} class="slds-is-relative">
+                                <lightning-spinner variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
+                            </div>
+                            <lightning-layout multiple-rows="true" class="slds-p-right_x-small slds-p-left_x-small">
+                                        <lightning-layout-item size="12">
+        <lightning-record-edit-form layout-type="Full" density="compact" record-id={recordId}
+                object-api-name="Event_Settings__c" onload={onLoad} onerror={onError} onsubmit={onSubmit} onsuccess={handleSuccess}>
+        
+                <lightning-input-field field-name="Contractor_MyExhibitor_Detail_Tab_4__c"></lightning-input-field>
+                <lightning-input-field field-name="Cont_MyExhibitor_Detail_Tab_4_Title__c" ></lightning-input-field>
+
+                <lightning-input-field field-name="Cont_MyExhibitor_Detail_Tab_4_Title_Intr__c" ></lightning-input-field>
+                <template if:true={renderedComponent}>
+                <lightning-input-field field-name="Cont_MyExh_Detail_Tab_4_Show_Amount__c" ></lightning-input-field>
+                </template>
+                <lightning-input-field field-name="Cont_MyExh_Detail_Tab_4_Amount_Currency__c" ></lightning-input-field>
+                <lightning-input-field field-name="Is_Cont_MyEx_Detail_Tab_4_Agree_Visible__c" ></lightning-input-field>
+                <lightning-input-field field-name="Is_Cont_MyExh_Tab_4_Signature_Visible__c" ></lightning-input-field>
+                      
+        
+                <div class="slds-p-left_small slds-p-top_xx-large">
+                        <lightning-button label="Save" variant="brand" type="submit"></lightning-button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <lightning-button label="Cancel" variant="neutral" onclick={cancelForm}>
+                        </lightning-button>
+                </div>
+        </lightning-record-edit-form>
+        </lightning-layout-item>
+        </lightning-layout>
+        </article>
+</template>

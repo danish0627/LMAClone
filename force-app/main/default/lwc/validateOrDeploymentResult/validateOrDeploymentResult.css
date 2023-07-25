@@ -1,0 +1,33 @@
+svg {
+    display: inline-flex;
+    vertical-align: bottom;
+    width: 200px;
+    height: 200px;
+}
+
+circle {
+    stroke: #ddd;
+    stroke-width: 8px;
+    stroke-dasharray: 0;
+    fill: none;
+}
+  
+.meter {
+    stroke-width: 8px;
+    stroke: #ddd;
+    fill: none;
+    transition: 1s cubic-bezier(0.43, 0.41, 0.22, 0.91);
+    transition-duration: 1s;
+    transition-timing-function: cubic-bezier(0.43, 0.41, 0.22, 0.91);
+    transition-delay: 0s;
+    transition-property: all;
+    transform-origin: center center;
+    transform: rotate(-90deg) scaleX(-1);
+}
+  
+text {
+    fill: #656060;
+    font-weight: bold;
+    word-wrap: normal;
+    font-size: 10px;
+}

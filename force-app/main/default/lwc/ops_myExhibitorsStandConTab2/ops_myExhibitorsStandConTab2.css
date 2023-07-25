@@ -1,0 +1,18 @@
+.mainDiv{
+        display:inline-flex; width: 100%;margin: 15px 0px;
+}
+.div1{
+        float:left; width:33%; height:100%;
+}
+.div2{
+        float:left; height:100%;position: relative;
+}
+.div3{
+        float:left; height:100%;margin-left: 10px;
+}
+.div4{
+        float:left; width:47%; height:100%;
+}
+.slds-form-element__icon{
+        display: none !important;
+}

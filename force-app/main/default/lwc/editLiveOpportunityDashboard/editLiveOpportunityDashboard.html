@@ -1,0 +1,46 @@
+<!--
+    Created By		: Girikon( Yash Gupta[STL-15] )
+    Created On		:  29/7/2019
+    @description 	: This component is used for the edit the booth approval row and save it.
+    Modified By		: Girikon( Yash Gupta[STL-15 1/8/2019 ]
+-->
+
+<template>
+    <template if:true={isOpenEditModal}>
+        <lightning-record-edit-form class="edit_single_record" onload={handleLoad} record-id={recordId} object-api-name={objectName} onsubmit={handleSubmit} onsuccess={handleSuccess} onerror={handleError}>
+            <section role="dialog" tabindex="-1" aria-labelledby="edit-form-heading" aria-modal="true" aria-describedby="modal-content-edit-form" class="slds-modal slds-fade-in-open slds-modal_medium">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button type="button" onclick={closeModal} class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                            <lightning-icon icon-name="utility:close" variant="bare" size="small"></lightning-icon>
+                        </button>
+                        <h2 id="edit-form-heading" class="slds-text-heading_medium slds-hyphenate">Edit Record</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-edit-form" style="min-height:450px;max-height:auto">
+                        <c-forms-placeholder is-show={isShow}></c-forms-placeholder>                    
+                        <template if:true={mySpinner}>
+                            <lightning-spinner size="small" variant="brand"></lightning-spinner>
+                        </template>
+                        <div class={className}>
+                            <lightning-layout multiple-rows="true">
+                                <!-- col 1 -->
+                                <lightning-layout-item size="6" padding="around-small">
+                                    <lightning-input-field field-name="Comment__c" variant="stack"></lightning-input-field>
+                                </lightning-layout-item>
+                                <!-- col 2 -->
+                                <lightning-layout-item size="6" padding="around-small">
+                                    <lightning-input-field field-name="Status__c" variant="stack"></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" type="button" onclick={closeModal}>Cancel</button>
+                        <button class="slds-button slds-button_brand" type="submit">Update</button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </lightning-record-edit-form>
+    </template>
+</template>

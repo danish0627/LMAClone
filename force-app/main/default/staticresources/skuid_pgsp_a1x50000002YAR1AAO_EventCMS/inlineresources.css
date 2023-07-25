@@ -1,0 +1,80 @@
+.bradcom {
+    margin: 0px !important;
+
+background-image: url("../resource/bredcom_arrow") !important;
+background-repeat: no-repeat !important;
+background-position: right !important;
+color: #000 !important;
+border : none !important;
+padding: 0px !important;
+background-color: transparent !important;
+}
+
+.bradcom:hover {
+    background-image: url("../resource/bredcom_arrow_hover") !important;
+    background-repeat: no-repeat !important;
+    background-position: right !important;
+    background-color: transparent !important;
+}
+
+.bradcom span{
+line-height: 40px !important;
+width: auto !important;
+font-weight: 400 !important;
+}
+.BradComBorder {
+    border-top : 1px solid #ccc !important;
+    border-bottom : 1px solid #ccc !important;
+}
+
+.BradComBorder .sk-button-action{
+    margin-top : 0px !important;
+}
+.nx-basicfieldeditor-item-label {
+    width: 20%;
+    padding-right: .5rem;
+    box-sizing: border-box;
+}
+
+div.nx-basicfieldeditor-section-body > div.nx-basicfieldeditor-item > .nx-field, div.nx-basicfieldeditor-item > .nx-field {
+    width: 30%;
+    margin: 0px;
+    padding-bottom: 10px;
+}
+.nx-basicfieldeditor-item-label {
+    width: 30%;
+    padding-right: .5rem;
+    box-sizing: border-box;
+}
+
+div.nx-basicfieldeditor-section-body > div.nx-basicfieldeditor-item > .nx-field, div.nx-basicfieldeditor-item > .nx-field {
+    width: 70%;
+    margin: 0px;
+    padding-bottom: 10px;
+}
+.checkboxHeight input[type=checkbox] {
+    margin-bottom:10px;
+    margin-top:0;
+}
+.checkboxHeight .nx-field {
+    padding-bottom: 0!important;
+}
+.nx-basicfieldeditor-item-label{
+    padding: .5rem .5rem .5rem 0!important;
+}
+.nx-editor input[type=checkbox]{
+    margin-top: 0!important;
+}
+/*
+.nx-field .flex-text-wrap pre, .nx-field .nx-richtext-input, .nx-field input, .nx-field textarea {
+    height:auto;
+} 
+
+.checkboxHeight input[type=checkbox] {
+    margin-bottom:10px;
+    margin-top:0;
+}
+.checkboxHeight .nx-field {
+    padding-bottom: 0!important;
+}
+*/

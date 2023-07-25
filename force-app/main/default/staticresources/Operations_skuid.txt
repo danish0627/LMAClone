@@ -1,0 +1,246 @@
+<skuidpage unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" showheader="true" theme="GE_Lightning">
+    <models>
+        <model id="OperationTeamMember" limit="10" query="true" createrowifnonefound="false" type="" sobject="Operations_Team_Member__c" datasource="salesforce">
+            <fields>
+                <field id="CreatedDate"/>
+                <field id="Operations_Team__c"/>
+                <field id="Operations_Team__r.Name"/>
+                <field id="OwnerId"/>
+                <field id="Owner.Name"/>
+                <field id="Name"/>
+                <field id="CreatedById"/>
+                <field id="CreatedBy.Name"/>
+                <field id="User_Name__c"/>
+                <field id="User_Name__r.Name"/>
+                <field id="Operations_Team__r.Event_Series__c"/>
+                <field id="Operations_Team__r.Event_Series__r.Name"/>
+            </fields>
+            <conditions>
+                <condition type="userinfo" value="" field="User_Name__c" state="filterableon" operator="=" enclosevalueinquotes="true" userinfotype="userid" inactive="false" name="User_Name__c"/>
+            </conditions>
+            <actions/>
+        </model>
+        <model id="WorkOrderModal" limit="50" query="true" createrowifnonefound="false" type="" sobject="WorkOrder" orderby="LastModifiedDate DESC" datasource="salesforce">
+            <fields>
+                <field id="AccountId"/>
+                <field id="Account.Name"/>
+                <field id="LastModifiedBy.Name"/>
+                <field id="LastModifiedDate"/>
+                <field id="CreatedDate"/>
+                <field id="Opportunity__c"/>
+                <field id="Opportunity__r.Name"/>
+                <field id="OwnerId"/>
+                <field id="Owner.Name"/>
+                <field id="Status"/>
+                <field id="WorkOrderNumber"/>
+                <field id="Work_Order_Name__c"/>
+                <field id="Opportunity__r.EventEdition__c"/>
+                <field id="Opportunity__r.EventEdition__r.Name"/>
+                <field id="Opportunity__r.EventEdition__r.Part_of_Series__c"/>
+                <field id="Opportunity__r.EventEdition__r.Part_of_Series__r.Name"/>
+                <field id="Opportunity__r.Event_Series__c"/>
+                <field id="Opportunity__r.Event_Series__r.Name"/>
+                <field id="Id"/>
+                <field id="WorkOrderOwnerId__c"/>
+                <field id="Event_SeriesL__c"/>
+                <field id="Event_SeriesL__r.Name"/>
+                <field id="Event_Edition__c"/>
+                <field id="Event_Edition__r.Name"/>
+                <field id="Event_Edition__r.Event_Edition_Event_ID__c"/>
+                <field id="Event_Edition__r.Id"/>
+                <field id="Product_Name__r.Event_Product_Type__c"/>
+                <field id="Event_Product_Type__c"/>
+                <field id="StartDate"/>
+                <field id="EndDate"/>
+                <field id="Product_Name__c"/>
+                <field id="Product_Name__r.Name"/>
+            </fields>
+            <conditions>
+                <condition type="modelmerge" value="" field="Event_SeriesL__c" operator="in" model="OperationTeamMember" enclosevalueinquotes="true" mergefield="Operations_Team__r.Event_Series__c" novaluebehavior="noquery" state="filterableon" inactive="false" name="Opportunity__r.EventEdition__r.Part_of_Series__c" fieldtargetobjects="Event_Series__c"/>
+                <condition type="fieldvalue" field="Product_Name__r.Event_Product_Type__c" operator="=" inactive="true" enclosevalueinquotes="true" name="__autofilter__Product_Name__r.Event_Product_Type__c" state="filterableoff" value=""/>
+                <condition type="modelmerge" value="" field="Event_Edition__c" fieldtargetobjects="Event_Edition__c" operator="in" model="EventEdition" enclosevalueinquotes="true" mergefield="Id" novaluebehavior="deactivate" state="filterableoff" inactive="true" name="Event_Edition__c"/>
+            </conditions>
+            <actions/>
+        </model>
+        <model id="Workorder_task" limit="10" query="true" createrowifnonefound="false" type="" sobject="WorkOrderLineItem" orderby="LastModifiedDate DESC" datasource="salesforce">
+            <fields>
+                <field id="Task_Name__c"/>
+                <field id="Status"/>
+                <field id="Assign_To__r.Name"/>
+                <field id="Assign__c"/>
+                <field id="Assign__r.Name"/>
+                <field id="WorkOrderId" overridemetadata="false" ogdisplaytype="REFERENCE" displaytype="REFERENCE" targetobjects="WorkOrder"/>
+                <field id="LineItemNumber"/>
+            </fields>
+            <conditions>
+                <condition type="fieldvalue" value="" field="WorkOrderId" operator="=" mergefield="Id" novaluebehavior="deactivate" state="filterableoff" enclosevalueinquotes="true" inactive="true" name="WorkOrderId"/>
+            </conditions>
+            <actions/>
+        </model>
+        <model id="WorkOrderESAgg" limit="100" query="false" createrowifnonefound="false" datasource="salesforce" type="aggregate" sobject="WorkOrder">
+            <fields/>
+            <conditions>
+                <condition type="blank" value="null" field="Event_SeriesL__c" fieldtargetobjects="Event_Series__c" operator="!=" enclosevalueinquotes="false"/>
+                <condition type="blank" value="null" field="Event_Edition__c" fieldtargetobjects="Event_Edition__c" operator="!=" enclosevalueinquotes="false"/>
+                <condition type="blank" value="null" field="Product_Name__r.Event_Product_Type__c" operator="!=" enclosevalueinquotes="false"/>
+                <condition type="modelmerge" value="" field="Event_SeriesL__c" fieldtargetobjects="Event_Series__c" operator="in" model="OperationTeamMember" enclosevalueinquotes="true" mergefield="Operations_Team__r.Event_Series__c" novaluebehavior="noquery"/>
+            </conditions>
+            <actions/>
+            <groupby method="simple">
+                <field id="Event_SeriesL__c" name="eventSeriesLc"/>
+                <field id="Event_SeriesL__r.Name" name="eventSeriesLrName"/>
+                <field id="Event_SeriesL__r.Id" name="eventSeriesLrId"/>
+            </groupby>
+        </model>
+        <model id="WorkOrderEDAgg" limit="100" query="false" createrowifnonefound="false" datasource="salesforce" type="aggregate" sobject="WorkOrder">
+            <fields/>
+            <conditions>
+                <condition type="blank" value="null" field="Event_Edition__c" fieldtargetobjects="Event_Edition__c" operator="!=" enclosevalueinquotes="false"/>
+                <condition type="fieldvalue" value="" enclosevalueinquotes="true" field="Product_Name__r.Event_Product_Type__c" operator="!="/>
+            </conditions>
+            <actions/>
+            <groupby method="simple">
+                <field id="Event_Edition__r.Id" name="eventEditionrId"/>
+                <field id="Event_Edition__c" name="eventEditionc"/>
+                <field id="Event_Edition__r.Name" name="eventEditionrName"/>
+                <field id="Event_SeriesL__c" name="eventSeriesLc"/>
+                <field id="Event_SeriesL__r.Name" name="eventSeriesLrName"/>
+                <field id="Event_SeriesL__r.Id" name="eventSeriesLrId"/>
+            </groupby>
+        </model>
+        <model id="WorkOrderPTAgg" limit="100" query="false" createrowifnonefound="false" datasource="salesforce" type="aggregate" sobject="WorkOrder">
+            <fields/>
+            <conditions>
+                <condition type="blank" value="null" field="Product_Name__r.Event_Product_Type__c" operator="!=" enclosevalueinquotes="false"/>
+            </conditions>
+            <actions/>
+            <groupby method="simple">
+                <field id="Event_Edition__c" name="eventEditionc"/>
+                <field id="Event_Edition__r.Name" name="eventEditionrName"/>
+                <field id="Event_Edition__r.Id" name="eventEditionrId"/>
+                <field id="Event_SeriesL__c" name="eventSeriesLc"/>
+                <field id="Event_SeriesL__r.Name" name="eventSeriesLrName"/>
+                <field id="Event_SeriesL__r.Id" name="eventSeriesLrId"/>
+                <field id="Product_Name__r.Event_Product_Type__c" name="productNamerEventProductT"/>
+            </groupby>
+        </model>
+        <model id="EventEdition" limit="20" query="true" createrowifnonefound="false" datasource="salesforce" type="" sobject="Event_Edition__c">
+            <fields>
+                <field id="Event_Edition_Status__c"/>
+                <field id="Name"/>
+                <field id="Id"/>
+            </fields>
+            <conditions>
+                <condition type="fieldvalue" value="Confirmed" enclosevalueinquotes="true" field="Event_Edition_Status__c" operator="=" state="filterableon" inactive="false" name="Event_Edition_Status__c"/>
+                <condition type="modelmerge" value="" field="Part_of_Series__c" fieldtargetobjects="Event_Series__c" operator="in" model="OperationTeamMember" enclosevalueinquotes="true" mergefield="Operations_Team__r.Event_Series__c" novaluebehavior="noquery"/>
+            </conditions>
+            <actions/>
+        </model>
+        <model id="WOlineItems" limit="500" query="false" createrowifnonefound="false" datasource="salesforce" type="" sobject="WorkOrderLineItem">
+            <fields>
+                <field id="LineItemNumber"/>
+                <field id="Task_Name__c"/>
+                <field id="Status"/>
+                <field id="WorkOrderId"/>
+                <field id="WorkOrder.WorkOrderNumber"/>
+                <field id="Account_Name__c"/>
+                <field id="Assign__c"/>
+                <field id="Assign__r.Name"/>
+                <field id="StartDate"/>
+                <field id="EndDate"/>
+            </fields>
+            <conditions>
+                <condition type="fieldvalue" value="" enclosevalueinquotes="true" field="WorkOrderId" fieldtargetobjects="WorkOrder" state="filterableoff" inactive="true" name="WorkOrderId"/>
+            </conditions>
+            <actions/>
+        </model>
+    </models>
+    <components>
+        <pagetitle model="OperationTeamMember" uniqueid="sk-107QSa-228">
+            <maintitle>&lt;h1&gt;Operations Team Dashboard&lt;/h1&gt;</maintitle>
+            <actions/>
+        </pagetitle>
+        <richtext multiple="false" uniqueid="sk-33-9oK-175" model="OperationTeamMember">
+            <contents>&lt;h2 style="font-style:italic;"&gt;&lt;span style="color:#0000ff;"&gt;&lt;span style="font-size:16px;"&gt;&lt;span style="font-family:Georgia,serif;"&gt;&lt;strong&gt;You are not a part of the operations team of any of the shows.&amp;nbsp;&lt;/strong&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/h2&gt;
+</contents>
+            <renderconditions logictype="and">
+                <rendercondition fieldmodel="OperationTeamMember" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasNoRows"/>
+            </renderconditions>
+        </richtext>
+        <skootable showconditions="true" showsavecancel="false" showerrorsinline="true" searchmethod="server" searchbox="true" showexportbuttons="false" pagesize="10" alwaysresetpagination="false" createrecords="false" model="WorkOrderModal" buttonposition="" mode="read" allowcolumnreordering="false" responsive="true" uniqueid="sk-1T8GuK-223">
+            <fields>
+                <field id="WorkOrderNumber" hideable="false" uniqueid="fi-1T8lKL-258" valuehalign="" type="" allowordering="true" showbydefault="true"/>
+                <field id="Work_Order_Name__c" hideable="false" uniqueid="fi-1T8lKM-259" valuehalign="" type="" showbydefault="true" allowordering="true"/>
+                <field id="StartDate" hideable="false" uniqueid="fi-1T8lKM-260" valuehalign="" type="" showbydefault="true" allowordering="true"/>
+                <field id="EndDate" hideable="false" uniqueid="fi-iL8fU-412" valuehalign="" type="" showbydefault="true" allowordering="true"/>
+                <field id="Status" hideable="false" uniqueid="fi-1T8lKN-262" valuehalign="" type="" showbydefault="true" allowordering="true"/>
+                <field id="Product_Name__c" hideable="false" uniqueid="fi-iH_AF-293" valuehalign="" type="" showbydefault="true" allowordering="true"/>
+                <field id="AccountId" hideable="false" uniqueid="fi-iHuwm-269" valuehalign="" type="" showbydefault="true" allowordering="true"/>
+                <field id="Event_SeriesL__c" hideable="false" uniqueid="fi-1T9S2g-265" valuehalign="" type="" showbydefault="true" allowordering="true"/>
+                <field id="Event_Product_Type__c" hideable="false" uniqueid="fi-1T9S2h-266" valuehalign="" type="" showbydefault="true" allowordering="true"/>
+                <field id="Event_Edition__c" hideable="false" uniqueid="fi-1T9S2h-267" valuehalign="" type="" showbydefault="true" allowordering="true"/>
+                <field id="OwnerId" hideable="false" uniqueid="fi-1T8lKN-263" valuehalign="" type="" showbydefault="true" allowordering="true"/>
+            </fields>
+            <rowactions>
+                <action type="multi" label="Work Order Line Items" icon="fa-list-ul">
+                    <actions>
+                        <action type="setCondition" model="WOlineItems" condition="WorkOrderId" value="{{Id}}"/>
+                        <action type="requeryModel" model="WOlineItems" behavior="standard"/>
+                        <action type="showPopup">
+                            <popup title="Line Items for Opportunity -  {{Opportunity__c}}" width="90%">
+                                <components>
+                                    <skootable showconditions="true" showsavecancel="false" showerrorsinline="true" searchmethod="server" searchbox="true" showexportbuttons="false" pagesize="10" alwaysresetpagination="false" createrecords="false" model="WOlineItems" buttonposition="" mode="read" allowcolumnreordering="false" responsive="true" uniqueid="sk-NaAXp-287">
+                                        <fields>
+                                            <field id="LineItemNumber" hideable="false" uniqueid="fi-NavEg-382" valuehalign="" type="" allowordering="true" showbydefault="true"/>
+                                            <field id="Task_Name__c" hideable="false" uniqueid="fi-NavEh-383" valuehalign="" type="" showbydefault="true"/>
+                                            <field id="Status" hideable="false" uniqueid="fi-NavEh-384" valuehalign="" type="" allowordering="true" showbydefault="true"/>
+                                            <field id="WorkOrderId" hideable="false" uniqueid="fi-NavEi-385" valuehalign="" type="" showbydefault="true" allowordering="true"/>
+                                            <field id="Account_Name__c" hideable="false" uniqueid="fi-NkjUC-1078" valuehalign="" type="" allowordering="true" showbydefault="true"/>
+                                            <field id="Assign__c" hideable="true" uniqueid="fi-iIZj6-355"/>
+                                            <field id="StartDate" hideable="true" uniqueid="fi-iIZj7-356"/>
+                                            <field id="EndDate" hideable="true" uniqueid="fi-iIZj7-357"/>
+                                        </fields>
+                                        <rowactions/>
+                                        <massactions usefirstitemasdefault="true"/>
+                                        <views>
+                                            <view type="standard"/>
+                                        </views>
+                                        <conditions/>
+                                        <renderconditions logictype="and"/>
+                                    </skootable>
+                                </components>
+                            </popup>
+                        </action>
+                    </actions>
+                    <renderconditions logictype="and"/>
+                </action>
+            </rowactions>
+            <massactions usefirstitemasdefault="true"/>
+            <views>
+                <view type="standard"/>
+            </views>
+            <renderconditions logictype="and">
+                <rendercondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="OperationTeamMember" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+            </renderconditions>
+            <filters>
+                <filter type="select" filteroffoptionlabel="Product Type" createfilteroffoption="true" affectcookies="true" autocompthreshold="25" conditionsource="auto" labelmode="no" conditionfield="Product_Name__r.Event_Product_Type__c"/>
+                <filter type="select" filteroffoptionlabel="Event Edition" createfilteroffoption="true" affectcookies="false" autocompthreshold="25" conditionsource="manual" labelmode="no" conditionfield="Event_Edition__c" fieldtargetobjects="Event_Edition__c" condition="Event_Edition__c">
+                    <sources>
+                        <source type="model" effectsbehavior="justdefault" model="EventEdition">
+                            <labeltemplate>{{{Name}}}</labeltemplate>
+                            <valuetemplate>{{{Id}}}</valuetemplate>
+                        </source>
+                    </sources>
+                </filter>
+            </filters>
+        </skootable>
+    </components>
+    <resources>
+        <labels/>
+        <javascript/>
+        <css/>
+    </resources>
+    <styles>
+        <styleitem type="background" bgtype="none"/>
+    </styles>
+</skuidpage>

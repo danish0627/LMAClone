@@ -1,0 +1,190 @@
+<!--
+Created By	 : Girikon(Sunil)
+Created On	 : September 23, 2019
+@description     : This component is use to show Customer Badges General seetings page at Ops Admin Side.
+
+Modification log 
+Modified By	: 
+-->
+<template>
+  <article class="slds-card " if:true={esId}>
+    <div if:true={isLoading} class="slds-is-relative">
+      <lightning-spinner variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
+    </div>
+    <lightning-layout multiple-rows="true" class="slds-p-right_x-small slds-p-left_x-small">
+      <lightning-layout-item size="12">
+        <lightning-record-edit-form layout-type="Full" density="compact" record-id={esId}
+          object-api-name="Event_Settings__c" onload={onLoad} onerror={onError} onsubmit={onSubmit}
+          onsuccess={handleSuccess}>
+          <table class="navigation">
+            <thead>
+              <tr>
+                <th scope="col" class="column1">&nbsp;Required</th>
+                <th scope="col" class="column">Response Character Limit</th>
+                <th scope="col" class="column">To Uppercase</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <lightning-input-field field-name="Allow_VIP_Badges__c"></lightning-input-field>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <lightning-input-field field-name="Company_Name_on_Badge__c"></lightning-input-field>
+                </td>
+                <td class="packages">
+                  <lightning-input-field field-name="Company_Name_on_Badge_Character_Limit__c" variant="label-hidden">
+                  </lightning-input-field>
+                </td>
+                <td class="packages">
+                  <lightning-input-field field-name="Company_Name_on_Badge_ToUpperCase__c" variant="label-hidden">
+                  </lightning-input-field>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <lightning-input-field field-name="Badge_First_Name__c"></lightning-input-field>
+                </td>
+                <td class="packages">
+                  <lightning-input-field field-name="Badge_FName_Character_Limit__c" variant="label-hidden">
+                  </lightning-input-field>
+                </td>
+                <td class="packages">
+                  <lightning-input-field field-name="Badge_FName_To_UpperCase__c" variant="label-hidden">
+                  </lightning-input-field>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <lightning-input-field field-name="Badge_Last_Name__c"></lightning-input-field>
+                </td>
+                <td class="packages">
+                  <lightning-input-field field-name="Badge_LName_Character_Limit__c" variant="label-hidden">
+                  </lightning-input-field>
+                </td>
+                <td class="packages">
+                  <lightning-input-field field-name="Badge_LName_To_UpperCase__c" variant="label-hidden">
+                  </lightning-input-field>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <lightning-input-field field-name="Badge_Job_Title__c"></lightning-input-field>
+                </td>
+                <td class="packages">
+                  <lightning-input-field field-name="Badge_JobTitle_Character_Limit__c" variant="label-hidden">
+                  </lightning-input-field>
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <lightning-input-field field-name="Badge_Email__c"></lightning-input-field>
+                </td>
+                <td class="packages">
+                  <lightning-input-field field-name="Badge_Email_Character_Limit__c" variant="label-hidden">
+                  </lightning-input-field>
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <lightning-input-field field-name="Badge_Mobile_Number__c"></lightning-input-field>
+                </td>
+                <td class="packages">
+                  <lightning-input-field field-name="Badge_Mobile_Character_Limit__c" variant="label-hidden">
+                  </lightning-input-field>
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <lightning-input-field field-name="Badge_Age_Bracket__c"></lightning-input-field>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <lightning-input-field field-name="Badge_Address__c"></lightning-input-field>
+                </td>
+                <td class="packages">
+                  <lightning-input-field field-name="Badge_Address_Character_Limit__c" variant="label-hidden">
+                  </lightning-input-field>
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <lightning-input-field field-name="Badge_City__c"></lightning-input-field>
+                </td>
+                <td class="packages">
+                  <lightning-input-field field-name="Badge_City_Character_Limit__c" variant="label-hidden">
+                  </lightning-input-field>
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <lightning-input-field field-name="Badge_State__c"></lightning-input-field>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <lightning-input-field field-name="Badge_Country__c"></lightning-input-field>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <lightning-input-field field-name="Badge_Nationality__c"></lightning-input-field>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <lightning-input-field field-name="Badges_MatchMaking__c"></lightning-input-field>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+          <div class="slds-p-top_xx-large">
+            <lightning-button label="Save" variant="brand" type="submit"></lightning-button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <lightning-button label="Cancel" variant="neutral" onclick={cancelForm}>
+            </lightning-button>
+          </div>
+        </lightning-record-edit-form>
+      </lightning-layout-item>
+    </lightning-layout>
+  </article>
+</template>

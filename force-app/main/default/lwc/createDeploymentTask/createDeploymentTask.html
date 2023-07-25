@@ -1,0 +1,21 @@
+<template>
+    <lightning-modal-header label="Create Task"></lightning-modal-header>
+    <lightning-modal-body>
+        <lightning-input label="Package" name="PackageName" value={content.packageName} disabled="true"
+            onchange={handleTaskChange}>
+        </lightning-input>
+        <lightning-input name="Subject" label="Subject" type="text" value={Subject}
+            onchange={handleTaskChange}></lightning-input>
+        <lightning-textarea name="Description" label="Description" value={Description} onchange={handleTaskChange}
+            required></lightning-textarea>
+        <lightning-combobox name="Status" label="Deployment Status" value={Status} options={deploymentStatusValues}
+            onchange={handleTaskChange}>
+        </lightning-combobox>
+        <lightning-combobox name="Type" label="Deployment Type" value={Type} options={deploymentTypeValues}
+            onchange={handleTaskChange}>
+        </lightning-combobox>
+    </lightning-modal-body>
+    <lightning-modal-footer>
+        <lightning-button label="Save" variant="brand" onclick={taskCreated}></lightning-button>
+    </lightning-modal-footer>
+</template>

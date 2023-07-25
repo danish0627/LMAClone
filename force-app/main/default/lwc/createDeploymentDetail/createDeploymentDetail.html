@@ -1,0 +1,100 @@
+<template>
+    <lightning-spinner size="small" variant="brand" if:true={spinner}></lightning-spinner>
+    <lightning-layout multiple-rows="true">
+        <lightning-layout-item size="12">
+            <div class="slds-m-bottom_x-small" if:true={deploymentObj.Name}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <span class="slds-form-element__label">Deployment No.</span>
+                    <div class="slds-form-element__control">
+                        <div class="slds-form-element__static">{deploymentObj.Name}</div>                      
+                    </div>
+                </div>
+            </div>
+            <div class="slds-m-bottom_x-small" if:true={sourceOrgName}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <span class="slds-form-element__label">Source Org</span>
+                    <div class="slds-form-element__control">
+                        <div class="slds-form-element__static">{sourceOrgName}</div>                      
+                    </div>
+                </div>
+            </div>
+            <div if:true={isUpdateDesabled}>
+                <div class="slds-m-bottom_x-small">
+                    <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                        <span class="slds-form-element__label">Target Org</span>
+                        <div class="slds-form-element__control">
+                            <div class="slds-form-element__static">
+                                <lightning-combobox disabled="true" 
+                                value={deploymentObj.GKNRMA__Target_Org__c} 
+                                placeholder="Select Target Org" variant="label-hidden"
+                                required="true" 
+                                name="targetorg" 
+                                options={orgList} 
+                                onchange={handleFieldChange} 
+                                label="Select Target Org"></lightning-combobox>
+                            </div>                      
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-m-bottom_x-small">
+                    <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                        <span class="slds-form-element__label">Test Level</span>
+                        <div class="slds-form-element__control">
+                            <div class="slds-form-element__static">{deploymentObj.GKNRMA__Test_Level__c}</div>                      
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-m-bottom_x-small">
+                    <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                        <span class="slds-form-element__label">Description</span>
+                        <div class="slds-form-element__control">
+                            <div class="slds-form-element__static">
+                                <lightning-formatted-rich-text value={deploymentObj.GKNRMA__Note__c}></lightning-formatted-rich-text>
+                            </div>                      
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div if:false={isUpdateDesabled}>
+                <div class="slds-m-top_x-small">
+                    <lightning-combobox disabled={isDisabled} value={deploymentObj.GKNRMA__Target_Org__c} 
+                        placeholder="Select Target Org" 
+                        required="true" 
+                        name="targetorg" 
+                        options={orgList} 
+                        onchange={handleFieldChange} 
+                        label="Select Target Org"></lightning-combobox>
+                </div>
+                <div class="slds-m-top_x-small">
+                    <lightning-combobox disabled={isDisabled} value={deploymentObj.GKNRMA__Test_Level__c} 
+                        placeholder="Select Test Type" 
+                        required="true" 
+                        name="testtype" 
+                        onchange={handleFieldChange} 
+                        options={testTypeOptions} 
+                        label="Select Test Type"></lightning-combobox>
+                </div>
+                <div class="slds-m-top_x-small">
+                    <lightning-textarea disabled={isDisabled} value={deploymentObj.GKNRMA__Note__c} 
+                        label="Description" 
+                        name="note" 
+                        onchange={handleFieldChange}></lightning-textarea>
+                </div>
+                 <div class="slds-m-top_x-small">
+                     <lightning-button disabled={isLocked} icon-name="utility:database" onclick={CommitMetadata} label="Commit Metadata"></lightning-button>
+                </div>
+
+                <div class="slds-m-top_x-small">
+                    <lightning-button disabled={isLocked} icon-name="utility:database" onclick={GetDataFromRepo} label="Get Repo Data"></lightning-button>
+               </div>
+            </div>
+
+        </lightning-layout-item>
+        <lightning-layout-item size="8" padding="horizontal-small">
+            
+        </lightning-layout-item>
+    </lightning-layout>
+
+</template>

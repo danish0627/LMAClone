@@ -1,0 +1,323 @@
+<template>
+   <template if:true={showSpinner}>
+      <lightning-spinner variant="brand" size="medium" title="Loading..." style="position: fixed;opacity: 0.3;">
+      </lightning-spinner>
+   </template>
+   <template if:true={showTable}>
+      <template if:true={showRequired}>
+         <p class="req-bold-text">* {label.Required} {label.Forms}*</p>
+      </template>
+
+      <lightning-layout class="slds-m-bottom_small common-table">
+
+         <template if:true={showAdditional}>
+            <lightning-layout-item size="12" class="slds-p-left_xx-small">
+
+               <div class="slds-grid slds-gutters">
+                  <div class="slds-col slds-size_2-of-3">
+                     <p class="req-bold-text">* {label.Additional} {label.Forms}*</p>
+                  </div>
+                  <div class="slds-col slds-size_1-of-3 slds-m-top_medium">
+                     <lightning-input type="search" value={searchValue} onchange={searchData} label="Search"
+                        placeholder="Search" variant="label-hidden" class="slds-float_right search-box">
+                     </lightning-input>
+                  </div>
+               </div>
+            </lightning-layout-item>
+         </template>
+
+      </lightning-layout>
+      <c-table-placeholder is-show={isShow}></c-table-placeholder>
+      <template if:true={isTrue}>
+         <lightning-spinner variant="brand" size="small" title="Loading..."></lightning-spinner>
+      </template>
+
+      <table aria-multiselectable="true"
+         class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid">
+         <thead>
+            <tr class="slds-line-height_reset">
+               <th aria-label="Form Name" aria-sort="none" class="slds-is-resizable slds-is-sortable slds-size_1-of-4"
+                  scope="col">
+                  <a id="Form_Permission__r.Event_Edition_Form__r.Forms__r.Name" onclick={handleSorting}
+                     class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button"
+                     tabindex="-1">
+                     <div class="slds-grid slds-grid_vertical-align-center">
+                        <span class="slds-truncate" title="Form Name">{label.Form} {label.Name}</span>
+                        <span class="slds-icon_container slds-icon-utility-arrowdown">
+                           <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon">
+                           </lightning-icon>
+                        </span>
+                     </div>
+                  </a>
+               </th>
+               <th aria-label="Category" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                  <a id="Form_Permission__r.Event_Edition_Form__r.Form_Group__c" onclick={handleSorting}
+                     class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button"
+                     tabindex="-1">
+                     <div class="slds-grid slds-truncate slds-grid_vertical-align-center" title="Category">
+                        <span class="slds-truncate" title="Category">{label.Category}</span>
+                        <span class="slds-icon_container slds-icon-utility-arrowdown">
+                           <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon">
+                           </lightning-icon>
+                        </span>
+                     </div>
+                  </a>
+               </th>
+               <th aria-label="Form Type" aria-sort="none" class="slds-is-resizable slds-is-sortable " scope="col">
+                  <a id="Form_Permission__r.Event_Edition_Form__r.Form_Type__c" onclick={handleSorting}
+                     class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button"
+                     tabindex="-1">
+                     <div class="slds-grid slds-grid_vertical-align-center">
+                        <span class="slds-truncate" title="Form Type ">{label.Form} {label.Type}</span>
+                        <span class="slds-icon_container slds-icon-utility-arrowdown">
+                           <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon">
+                           </lightning-icon>
+                        </span>
+                     </div>
+                  </a>
+               </th>
+               <th aria-label="Provider" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                  <a id="Form_Permission__r.Event_Edition_Form__r.Provider__c" onclick={handleSorting}
+                     class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button"
+                     tabindex="-1">
+                     <div class="slds-grid slds-grid_vertical-align-center">
+                        <span class="slds-truncate" title="Provider">{label.Provider}</span>
+                        <span class="slds-icon_container slds-icon-utility-arrowdown">
+                           <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon">
+                           </lightning-icon>
+                        </span>
+                     </div>
+                  </a>
+               </th>
+               <th aria-label="Deadline" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                  <a id="Form_Permission__r.Event_Edition_Form__r.Deadline__c" onclick={handleSorting}
+                     class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button"
+                     tabindex="-1">
+                     <div class="slds-grid slds-truncate slds-grid_vertical-align-center" title="Opportunity Contact">
+                        <span class="slds-truncate" title="Deadline">{label.Deadline}</span>
+                        <span class="slds-icon_container slds-icon-utility-arrowdown">
+                           <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon">
+                           </lightning-icon>
+                        </span>
+                     </div>
+                  </a>
+               </th>
+               <th aria-label="Viewed" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                  <a id="Is_Viewed__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+                     href="javascript:void(0);" role="button" tabindex="-1">
+                     <div class="slds-truncate slds-truncate slds-grid slds-grid_vertical-align-center" title="Viewed">
+                        <span class="slds-truncate" title="Viewed">{label.Viewed}</span>
+                        <span class="slds-icon_container slds-icon-utility-arrowdown">
+                           <lightning-icon icon-name="utility:arrowup" size="xx-small" class="slds-is-sortable__icon">
+                           </lightning-icon>
+                        </span>
+                     </div>
+                  </a>
+               </th>
+
+               <template if:true={lsteventsetting.On_Off_Form_Status__c}>
+
+                  <th aria-label="Status" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                     <a id="StatusDisplay__c" onclick={handleSorting} class="slds-th__action slds-text-link_reset"
+                        href="javascript:void(0);" role="button" tabindex="-1">
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                           <span class="slds-truncate" title="Status">{label.Status}</span>
+                           <span class="slds-icon_container slds-icon-utility-arrowdown">
+                              <lightning-icon icon-name="utility:arrowup" size="xx-small"
+                                 class="slds-is-sortable__icon"></lightning-icon>
+                           </span>
+                        </div>
+                     </a>
+                  </th>
+
+               </template>
+               <template if:true={showUpdatedHeading}>
+                  <th class="slds-text-align_center" style="width:15%;" scope="col">{lastUpdatedBy}
+                  </th>
+               </template>
+            </tr>
+         </thead>
+         <tbody>
+            <template for:each={tableData} for:item="item" for:index="ind">
+               <tr key={item.Id} aria-selected="false" class="slds-hint-parent">
+                  <td tabindex="0">
+                     <div class="slds-truncate" title="FORM NAME">
+                        <a target="_blank" onclick={openAction}
+                           data-id={ind}>{item.Form_Permission__r.Event_Edition_Form__r.Forms__r.Name}</a>
+                     </div>
+                  </td>
+                  <td tabindex="0">
+                     <div class="slds-truncate" title={item.Form_Permission__r.Event_Edition_Form__r.Form_Group__c}>
+                        {item.Form_Permission__r.Event_Edition_Form__r.Form_Group__c}
+                     </div>
+                  </td>
+                  <td tabindex="0">
+                     <div class="slds-truncate" title={item.Form_Permission__r.Event_Edition_Form__r.Form_Type__c}>
+                        {item.Form_Permission__r.Event_Edition_Form__r.Form_Type__c}
+                     </div>
+                  </td>
+                  <td tabindex="0">
+                     <div class="slds-truncate" title={item.Form_Permission__r.Event_Edition_Form__r.Provider__c}>
+                        {item.Form_Permission__r.Event_Edition_Form__r.Provider__c}
+                     </div>
+                  </td>
+                  <td tabindex="0">
+                     <div class="slds-truncate" title={item.Form_Permission__r.Event_Edition_Form__r.Deadline__c}>
+
+                        <lightning-formatted-date-time value={item.Form_Permission__r.Event_Edition_Form__r.Deadline__c}
+                           year="numeric" month="numeric" day="numeric"></lightning-formatted-date-time>
+
+                     </div>
+                  </td>
+                  <td tabindex="0">
+                     <div class="slds-truncate" title={item.Is_Viewed__c}>
+                        <template if:true={item.Is_Viewed__c}>
+                           <i class="fa fa-check"></i>
+                        </template>
+
+                     </div>
+                  </td>
+                  <template if:true={lsteventsetting.On_Off_Form_Status__c}>
+                     <td tabindex="0">
+                        <div class="slds-truncate" title={item.StatusDisplay__c}>
+                           <template if:true={item.StatusDisplay__c}>
+                              {item.StatusDisplay__c}
+                           </template>
+                        </div>
+                     </td>
+                  </template>
+                  <!--Added Last updated by column for [STL-282]-->
+                  <template if:true={showUpdatedHeading}>
+                     <td tabindex="0">
+                        <div class="slds-truncate slds-text-align_center">
+                           <template if:true={item.showUpdated}>
+                              <i style="color:grey;">{item.updatedBy} (<lightning-formatted-date-time
+                                    value={item.updatedDate} year="2-digit" month="2-digit" day="2-digit">
+                                 </lightning-formatted-date-time>)</i>
+                           </template>
+                        </div>
+                     </td>
+                  </template>
+               </tr>
+            </template>
+         </tbody>
+      </table>
+
+   </template>
+   <template if:true={showPagination}>
+      <template if:true={pageList}>
+         <lightning-layout multiple-rows="true" class="slds-m-top_small slds-clearfix">
+            <lightning-layout-item size="4" padding="horizontal_small" class="slds-float_left">
+               <div>
+                  <lightning-combobox options={pagesizeList} value={pagesizeVisible} label="Page Size"
+                     variant="label-hidden" placeholder="Page Size" onchange={onPageSizeChange} class="pagesize">
+                  </lightning-combobox> &nbsp;
+                  {label.Form} per page.
+               </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="8" class="slds-float_right" padding="horizontal_small">
+               <div class="slds-float_right">
+                  {showPageView} of &nbsp;
+                  <template if:true={isMoreThan2000}>2000+</template>
+                  <template if:false={isMoreThan2000}>{totalRows}</template>
+                  &nbsp;
+                  <lightning-button-icon class="prev-btn" size="medium" icon-name="utility:chevronleft"
+                     onclick={getPrevData} variant="bare"></lightning-button-icon>
+                  &nbsp;
+                  <span class="slds-p-horizontal_x-small">
+                     <a href="javascript:void(0);" id="first" onclick={processMe} name="1"
+                        class={firstActiveClass}>1</a>
+                  </span>
+                  <span class="slds-p-horizontal_xxx-small">
+                     <a href="javascript:void(0);" id="none1">...</a>
+                  </span>
+                  <template for:each={pageList} for:item="item" for:index="ind">
+                     <span key={item} id={item} class="slds-p-horizontal_x-small">
+                        <a href="javascript:void(0);" id={item} onclick={processMe} name={item} class="">{item}</a>
+                     </span>
+                  </template>
+                  <span class="slds-p-horizontal_xxx-small">
+                     <a href="javascript:void(0);" id="none2">...</a>
+                  </span>
+                  <span key={item} id={item} class="slds-p-horizontal_x-small">
+                     <a href="javascript:void(0);" id="last" onclick={processMe} name={totalPage}
+                        class={lastActiveClass}>{totalPage}</a>
+                  </span>
+                  <lightning-button-icon class="next-btn" size="medium" icon-name="utility:chevronright"
+                     onclick={getNextData} variant="bare"></lightning-button-icon>
+               </div>
+            </lightning-layout-item>
+         </lightning-layout> 
+      </template>
+   </template>
+   <slot name="newRecordModal"></slot>
+   <slot name="editRecordModal"></slot>
+   <slot name="actionRecordModal"></slot>
+   
+   <!--    To show deadline message   -->
+   <template if:true={message}>
+      <template if:true={bShowModal}>
+         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-03" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+               <!-- modal header start -->
+               <header class="slds-modal__header">
+                  <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                     onclick={closeModal}>
+                     <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small">
+                     </lightning-icon>
+                     <span class="slds-assistive-text">Close</span>
+                  </button>
+                  <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Deadline Alert!!!</h2>
+               </header>
+               <!-- modal body start -->
+               <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                  <center>
+                     <p style="color:red;text-align: center;">
+                        {message}
+                     </p>
+                  </center>
+               </div>
+               <!-- modal footer start-->
+               <footer class="slds-modal__footer">
+                  <button class="slds-button slds-button_brand" style={buttonColor} onclick={closeModal}>
+                     <i class="fa fa-close fa-padding-5"></i>{label.close}
+                  </button>
+               </footer>
+            </div>
+         </section>
+         <div class="slds-backdrop slds-backdrop_open"></div>
+      </template>
+   </template>
+
+   <template if:true={showLinkOrPdfDialog}>
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+         aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+         <div class="slds-modal__container">
+            <!-- modal header start -->
+            <header class="slds-modal__header">
+               <h2 id="mail-resend-header" class="slds-text-heading_medium slds-hyphenate">
+                  <span onclick={closeLinkPdfModal} class="close">&times;</span>
+                  <b>{label.FormAgreement}</b>
+               </h2>
+
+            </header>
+            <!-- modal body start -->
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+               <p>{label.LinkPdfFormAlert}</p>
+            </div>
+            <!-- modal footer start-->
+            <footer class="slds-modal__footer">
+               <lightning-button variant="brand" class="slds-float_left" icon-name="utility:check" label={label.Agree}
+                  onclick={handleLinkPdf}>
+               </lightning-button>
+               &nbsp;&nbsp;
+               <lightning-button variant="brand" class="slds-float_left slds-m-left_small" icon-name="utility:close"
+                  label={label.Cancel} onclick={closeLinkPdfModal}>
+               </lightning-button>
+            </footer>
+         </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+   </template>
+</template>

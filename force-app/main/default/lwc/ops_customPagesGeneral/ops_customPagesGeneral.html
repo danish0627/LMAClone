@@ -1,0 +1,53 @@
+<template>
+        <template if:true={spinner}>
+                <lightning-spinner variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
+             </template>
+    <article class="slds-card minHeight" if:true={recordId}>
+                                <lightning-layout multiple-rows="true" class="slds-p-right_x-small slds-p-left_x-small">
+                                            <lightning-layout-item size="12">
+            <lightning-record-edit-form layout-type="Full" density="compact" record-id={recordId}  class="globalForm"
+                    object-api-name="Custom_Setting_CC__c" onload={onLoad} onerror={onError} onsubmit={onSubmit} onsuccess={onSuccess}>
+                    <template if:true={renderedComponent}>
+                    <lightning-input-field field-name="Left_Panel__c" ></lightning-input-field>
+                    <lightning-input-field field-name="Right_Panel__c"></lightning-input-field>
+                    </template>
+                    <lightning-button class="save slds-hide" type="submit" variant="brand" label="Save">
+                    </lightning-button>
+                    
+            </lightning-record-edit-form>
+            <div class="slds-p-left_small slds-p-top_xx-large">
+                <lightning-button onclick={callSaveBtn} variant="brand" label="Save" disabled={saveDisable}>
+                </lightning-button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <lightning-button label="Cancel" variant="neutral" onclick={cancel}>
+                    </lightning-button>
+            </div>
+            </lightning-layout-item>
+            </lightning-layout>
+   </article>
+
+   <article class="slds-card minHeight" if:false={recordId}>
+                <lightning-layout multiple-rows="true" class="slds-p-right_x-small slds-p-left_x-small">
+                            <lightning-layout-item size="12">
+<lightning-record-edit-form layout-type="Full" density="compact" record-id={recordId}  class="globalForm"
+    object-api-name="Custom_Setting_CC__c" onload={onLoad} onerror={onError} onsubmit={onSubmit} onsuccess={onSuccess}>
+
+ <template if:true={renderedComponent}> 
+        <lightning-input-field field-name="Left_Panel__c" value={LeftPanel}></lightning-input-field>
+        <lightning-input-field field-name="Right_Panel__c" value={RightPanel}></lightning-input-field>
+     </template> 
+    <lightning-button class="save slds-hide" type="submit" variant="brand" label="Save">
+    </lightning-button>
+    
+</lightning-record-edit-form>
+<div class="slds-p-left_small slds-p-top_xx-large">
+<lightning-button onclick={callSaveBtn} variant="brand" label="Save" disabled={saveDisable}>
+</lightning-button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <lightning-button label="Cancel" variant="neutral" onclick={cancel}>
+    </lightning-button>
+</div>
+</lightning-layout-item>
+</lightning-layout>
+</article>
+</template>

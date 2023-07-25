@@ -1,0 +1,20 @@
+<!-- 
+    Created By: {Girikon(Abhishek)}
+    Created On: 30/07/2019
+    Description/Purpose: Why and where it is used [ticket No] 
+-->
+<template>
+  <b>{typeOfContact}</b>
+  <p>{contactName}</p>
+  <template if:true={contactPhone}>
+    <p>
+      {phoneLabel}&nbsp;{contactPhone}
+    </p>
+  </template>
+  <template if:true={contactEmail}>
+    <p>
+      {emailLabel}&nbsp;
+      <a href={contactEmailLink}>{contactEmail}</a>
+    </p>
+  </template>
+</template>

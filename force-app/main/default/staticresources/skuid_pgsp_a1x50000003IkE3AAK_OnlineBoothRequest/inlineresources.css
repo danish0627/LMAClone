@@ -1,0 +1,7 @@
+.nx-basicfieldeditor-item-label{
+    width:50%;
+}
+
+div.nx-basicfieldeditor-section-body > div.nx-basicfieldeditor-item > .nx-field, div.nx-basicfieldeditor-item > .nx-field{
+    width:50%;
+}

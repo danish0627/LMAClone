@@ -1,0 +1,34 @@
+<!--
+Created By		: Girikon(Garima[STL-151])
+Created On	 : September 11, 2019
+@description : This component is use to show Manual General seetings page at Ops Admin Side.
+
+Modification log --
+Modified By	: [Aishwarya 28 Sep 2020 BK-9045]
+-->
+<template>
+        <article class="slds-card " if:true={recordId}>
+                        <div if:true={isLoading} class="slds-is-relative">
+                                        <lightning-spinner variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
+                                    </div>
+                                    <lightning-layout multiple-rows="true" class="slds-p-right_x-small slds-p-left_x-small">
+                                                <lightning-layout-item size="12">
+                <lightning-record-edit-form layout-type="Full" density="compact" record-id={recordId}
+                        object-api-name="Event_Settings__c" onload={onLoad} onerror={onError} onsubmit={onSubmit} onsuccess={handleSuccess}>
+                        <template if:true={renderedComponent}>
+                        <lightning-input-field field-name="Welcome_Text_Manuals__c" value={welcomeText}></lightning-input-field>
+                        </template>
+                        <lightning-input-field field-name="Show_Hide_Manual_Agreed__c" value={showHideAgree}></lightning-input-field>
+                        <lightning-input-field field-name="Deadline_Reached_Message_for_Manuals__c" value={deadlineMessage}>
+                        </lightning-input-field>
+                        <div class="slds-p-left_small slds-p-top_xx-large">
+                                <lightning-button label="Save" variant="brand" type="submit"></lightning-button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <lightning-button label="Cancel" variant="neutral" onclick={cancelForm}>
+                                </lightning-button>
+                        </div>
+                </lightning-record-edit-form>
+                </lightning-layout-item>
+                </lightning-layout>
+       </article>
+</template>

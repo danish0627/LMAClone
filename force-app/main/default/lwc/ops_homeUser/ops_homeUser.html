@@ -1,0 +1,74 @@
+<!-- Ticket No - EMEA-198 Updating API Version -->
+<!--
+Created By		: Girikon(Sunil[STL-139])
+Created On	 : August 5, 2019
+@description : This component is use to show User Tab under Home Settings in Customer Center.
+
+Modification log --
+Modified By	: 
+-->
+<template>
+    <div if:true={isLoading} class="slds-is-relative">
+        <lightning-spinner variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
+    </div>
+    <lightning-layout multiple-rows="true">
+        <lightning-layout-item size="6">
+            <c-events-list-custom-table condition="Name !=null" fields="Name" object-name="User_Type__c" object-label="User Type"
+                fields-label="Name" is-open-link="true" onopenlink={openMyLink} >
+            </c-events-list-custom-table>
+        </lightning-layout-item>
+    </lightning-layout>
+    <template if:true={modalShowStatus}>
+        <div class="demo-only" style="height: 640px;">
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-describedby="modal-content-id-1"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium slds-hyphenate"> User Type Visibility</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning-record-edit-form class="userTypeForm" record-id={recordId} onsuccess={onSuccess}
+                            onsubmit={onSubmit} onload={onLoad} onerror={onError} density="compact"
+                            object-api-name="ComponentUserTypeMapping__c">
+                            <lightning-messages></lightning-messages>
+                            <lightning-input-field  field-name="User_Type__c" disabled value={userTypeId}>
+                            </lightning-input-field>
+                            <lightning-input-field  field-name="Event_Edition__c" disabled value={eId}>
+                            </lightning-input-field>
+                            <span class="slds-text-heading_medium" style="font-weight: bold;">Is Visible?</span>
+                            <lightning-input-field field-name="Pop_Up_Greeting_Show__c"></lightning-input-field>
+                            <lightning-input-field field-name="Form_Show__c"> </lightning-input-field>
+                            <lightning-input-field field-name="Manual_Show__c"> </lightning-input-field>
+                            <lightning-input-field field-name="Badges_Show__c"> </lightning-input-field>
+                            <lightning-input-field field-name="E_Commerce_Show__c"> </lightning-input-field>
+                            <lightning-input-field field-name="Accounts_and_Billing_Show__c"> </lightning-input-field>
+                            <lightning-input-field field-name="Exhibitor_Directory_Show__c"></lightning-input-field>
+                            <lightning-input-field field-name="Upload_Center_Show__c"></lightning-input-field>
+                            <lightning-input-field field-name="Freeman_Show__c"></lightning-input-field>
+                            <lightning-input-field field-name="Custom_1_Show__c"></lightning-input-field>
+                            <lightning-input-field field-name="Custom_2_Show__c"></lightning-input-field>
+                            <lightning-input-field field-name="Custom_3_Show__c"></lightning-input-field>
+                            <lightning-input-field field-name="Standard_Contractor_Show__c"></lightning-input-field>
+                            <lightning-input-field field-name="My_Exhibitor_Show__c"></lightning-input-field>
+                            <lightning-input-field field-name="SubContractor_Show__c"></lightning-input-field>
+                            <lightning-input-field field-name="Agent_Own_Exhibitor_Show__c"></lightning-input-field>
+                            <lightning-input-field field-name="Gorrilla_Show__c"></lightning-input-field>
+                            <div class="slds-p-top_large slds-hide"> 
+                                <lightning-button variant="brand" class="Save" type="submit" name="Save" label="Save">
+                                </lightning-button>
+                            </div>
+                        </lightning-record-edit-form>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button variant="brand" type="submit" name="Save" label="Save" onclick={onsave}>
+                        </lightning-button>
+                        <lightning-button class="slds-m-left_x-small" label="Cancel" variant="neutral"
+                            onclick={closeModal}></lightning-button>
+                    </footer>
+                </div>
+
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+</template>

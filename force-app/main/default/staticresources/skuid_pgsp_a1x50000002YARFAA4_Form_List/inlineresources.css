@@ -1,0 +1,100 @@
+#div.nx-basicfieldeditor-section-body>div.nx-basicfieldeditor-item>.nx-field, div.nx-basicfieldeditor-item>.nx-field {
+    width: 70%;
+    /* margin: 0px; */
+}
+
+#FieldEditor{
+    font-weight:bold;
+    line-height:2.2em;
+    font-size:15px;
+}
+
+#FieldEditor.nx-field{
+ margin-top:13px;   
+}
+
+#FieldEditor1{
+    font-weight:bold;
+    line-height:2.2em;
+    font-size:15px;
+}
+
+#FieldEditor1.nx-field{
+ margin-top:13px;   
+}
+
+#FieldEditor2{
+    font-weight:bold;
+    line-height:2.2em;
+    font-size:15px;
+}
+
+#FieldEditor2.nx-field{
+ margin-top:13px;   
+}
+.nx-basicfieldeditor-item.MainCSS{
+ margin-top:16px !important;   
+}
+
+/*For Sorting*/
+.nx-skootable-order-icon-wrapper
+{
+    float:left;
+    margin-right: 10px;
+}
+.sk-navigation-item > a {
+    margin: 0px 0px;
+    padding:  0 1.5rem 0 .6rem;
+    font-weight: 400;
+    background-image: url("../resource/bredcom_arrow");
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+.sk-navigation-item > a:hover {
+    background-image: url("../resource/bredcom_arrow_hover");
+    background-repeat: no-repeat;
+    background-position: right;
+    background-color: transparent;
+}
+
+.sk-navigation-item {
+    margin: 0px 5px;
+}
+
+.sk-navigation > .sk-navigation-item:hover, .sk-navigation > .sk-navigation-item:focus {
+    background:  none repeat scroll 0 0;
+}
+.bradcom {
+    margin: 0px !important;
+
+background-image: url("../resource/bredcom_arrow") !important;
+background-repeat: no-repeat !important;
+background-position: right !important;
+color: #000 !important;
+border : none !important;
+padding: 0px !important;
+background-color: transparent !important;
+}
+
+.bradcom:hover {
+    background-image: url("../resource/bredcom_arrow_hover") !important;
+    background-repeat: no-repeat !important;
+    background-position: right !important;
+    background-color: transparent !important;
+}
+
+.bradcom span{
+line-height: 40px !important;
+width: auto !important;
+font-weight: 400 !important;
+}
+.BradComBorder {
+    border-top : 1px solid #ccc !important;
+    border-bottom : 1px solid #ccc !important;
+}
+
+.BradComBorder .sk-button-action{
+    margin-top : 0px !important;
+}
+#sk-2WvP0T-124 {margin: 0 10px 4px 0px;}

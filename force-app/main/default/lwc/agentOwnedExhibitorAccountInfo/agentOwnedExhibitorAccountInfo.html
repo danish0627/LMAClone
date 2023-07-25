@@ -1,0 +1,660 @@
+<!-- 
+    Created By: {Girikon(Abhishek)}
+    Created On: 29/07/2019
+    Description/Purpose: C2E-11 - It is beins used to display Exhibitor Account Summary in AgentOwnedExhibitorDetails Aura Cmp. 
+-->
+<template>
+  <template if:false={showInModalMode}>
+    <div class="slds-grid slds-wrap">
+      <div
+        class="slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_7-of-12"
+      >
+        <div class="slds-grid slds-wrap">
+          <div
+            class="slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_7-of-12"
+          >
+            <div class="slds-grid slds-wrap">
+              <div
+                class="slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_4-of-12"
+              >
+                <div
+                  class="headerRow slds-p-left_medium slds-p-top_x-small slds-p-bottom_xx-small right-border"
+                >
+                  <b>{customerTypeLabel}</b>
+                </div>
+                <div class="vl">
+                  <div
+                    class="slds-p-top_medium slds-p-bottom_medium slds-p-left_medium wrap-text"
+                  >
+                    <p>
+                      {exhibitorTypeLabel}
+                      <span class="tooltip"
+                        ><i
+                          class="fa fa-question-circle"
+                          style="color:grey;"
+                          onclick={showTooltipModal}
+                        ></i
+                      ></span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_8-of-12 slds-wrap"
+              >
+                <div
+                  class="headerRow slds-p-left_medium slds-p-top_x-small slds-p-bottom_xx-small right-border"
+                >
+                  <b>{accountContactsLabel}</b>
+                </div>
+                <div class="vl">
+                  <template if:true={accountContacts}>
+                    <div class="slds-p-top_medium wrap-text">
+                      <!-- Primary Contact -->
+                      <template
+                        if:true={accountContacts.Opportunity_Contact__c}
+                      >
+                        <div class="slds-p-bottom_medium slds-p-left_medium">
+                          <c-contact-display-utility
+                            type-of-contact={primaryContactLabel}
+                            contact={accountContacts}
+                          ></c-contact-display-utility>
+                        </div>
+                      </template>
+                      <!-- Billing Contact -->
+                      <template if:true={accountContacts.Billing_Contact__c}>
+                        <div class="slds-p-bottom_medium slds-p-left_medium">
+                          <c-contact-display-utility
+                            type-of-contact={billingContactLabel}
+                            contact={accountContacts}
+                          ></c-contact-display-utility>
+                        </div>
+                      </template>
+                      <!-- Operations Contact -->
+                      <template if:true={accountContacts.Operations_Contact__c}>
+                        <div class="slds-p-bottom_medium slds-p-left_medium">
+                          <c-contact-display-utility
+                            type-of-contact={operationsContactLabel}
+                            contact={accountContacts}
+                          ></c-contact-display-utility>
+                        </div>
+                      </template>
+                    </div>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_5-of-12"
+          >
+            <div
+              class="headerRow slds-p-left_large slds-p-top_x-small slds-p-bottom_xx-small right-border"
+            >
+              <b>{standsLabel}</b>
+            </div>
+            <div class="vl">
+              <template if:true={accountBooths}>
+                <div class="slds-p-top_large wrap-text">
+                  <template for:each={accountBooths} for:item="accountBooth">
+                    <div
+                      class="slds-p-left_large slds-p-bottom_medium slds-p-right_large"
+                      key={accountBooth.Id}
+                    >
+                      <template if:true={accountBooth.Booth_Number__c}>
+                        <lightning-layout>
+                          <lightning-layout-item flexibility="auto" size="6">
+                            <b>{standLabel} #:</b>
+                          </lightning-layout-item>
+                          <lightning-layout-item flexibility="auto" size="6">
+                            <b>{accountBooth.Booth_Number__c}</b>
+                          </lightning-layout-item>
+                        </lightning-layout>
+                      </template>
+                      <template if:true={accountBooth.Expocad_Booth__r}>
+                        <template
+                          if:true={accountBooth.Expocad_Booth__r.Dimensions__c}
+                        >
+                          <lightning-layout>
+                            <lightning-layout-item flexibility="auto" size="6"
+                              ><p>{dimensionsLabel}:</p></lightning-layout-item
+                            >
+                            <lightning-layout-item flexibility="auto" size="6"
+                              ><p>
+                                {accountBooth.Expocad_Booth__r.Dimensions__c}
+                              </p></lightning-layout-item
+                            >
+                          </lightning-layout>
+                        </template>
+                        <template
+                          if:true={accountBooth.Expocad_Booth__r.Matched_Product_Name__c}
+                        >
+                          <lightning-layout>
+                            <lightning-layout-item flexibility="auto" size="6"
+                              ><p>
+                                {classificationLabel}:
+                              </p></lightning-layout-item
+                            >
+                            <lightning-layout-item flexibility="auto" size="6"
+                              ><p>
+                                {accountBooth.Expocad_Booth__r.Matched_Product_Name__c}
+                              </p></lightning-layout-item
+                            >
+                          </lightning-layout>
+                        </template>
+                      </template>
+                    </div>
+                  </template>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_5-of-12"
+      >
+        <div class="slds-grid slds-wrap">
+          <div
+            class="slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_8-of-12"
+          >
+            <div
+              class="headerRow slds-p-left_large slds-p-top_x-small slds-p-bottom_xx-small right-border"
+            >
+              <b>{activityLabel}</b>
+            </div>
+            <div class="vl">
+              <div
+                class="slds-p-left_large slds-p-top_large slds-p-bottom_medium slds-p-right_large wrap-text"
+              >
+                <lightning-layout>
+                  <lightning-layout-item flexibility="auto" size="7"
+                    ><b>{requiredFormsLabel}:</b></lightning-layout-item
+                  >
+                  <lightning-layout-item flexibility="auto" size="5">
+                    <p>{formsStatus}</p>
+                  </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout class="slds-m-top_small">
+                  <lightning-layout-item flexibility="auto" size="7"
+                    ><b>{badgesLabel}</b></lightning-layout-item
+                  >
+                  <lightning-layout-item flexibility="auto" size="5"
+                    ><p>
+                      {badgesStatus}
+                    </p></lightning-layout-item
+                  >
+                </lightning-layout>
+                <lightning-layout class="slds-m-top_small">
+                  <lightning-layout-item flexibility="auto" size="7"
+                    ><b>{manualsLabel}</b></lightning-layout-item
+                  >
+                  <lightning-layout-item flexibility="auto" size="5"
+                    ><p>
+                      {manualsStatus}
+                    </p></lightning-layout-item
+                  >
+                </lightning-layout>
+                <lightning-layout class="slds-m-top_small">
+                  <lightning-layout-item flexibility="auto" size="7"
+                    ><b>{exhibitorProfileLabel}</b></lightning-layout-item
+                  >
+                  <lightning-layout-item flexibility="auto" size="5"
+                    ><p>
+                      {exhibitorProfileStatus}
+                    </p></lightning-layout-item
+                  >
+                </lightning-layout>
+                <lightning-layout class="slds-m-top_small">
+                  <lightning-layout-item flexibility="auto" size="7"
+                    ><b>{standContractorLabel}</b></lightning-layout-item
+                  >
+                  <lightning-layout-item flexibility="auto" size="5"
+                    ><p>
+                      {standContractorProfileStatus}
+                    </p></lightning-layout-item
+                  >
+                </lightning-layout>
+                <lightning-layout class="slds-m-top_small">
+                  <lightning-layout-item flexibility="auto" size="7"
+                    ><b>{lastLoginLabel}</b></lightning-layout-item
+                  >
+                  <lightning-layout-item flexibility="auto" size="5"
+                    >{lastLoginDate}</lightning-layout-item
+                  >
+                </lightning-layout>
+                <lightning-layout class="slds-m-top_small">
+                  <lightning-layout-item flexibility="auto" size="7"
+                    ><b>{lastEmailSentLabel}</b></lightning-layout-item
+                  >
+                  <lightning-layout-item flexibility="auto" size="5"
+                    >{lastEmailSentDate}</lightning-layout-item
+                  >
+                </lightning-layout>
+                <div class="slds-m-top_small">
+                  <p>
+                    <a href="" onclick={showMailResendConfirmationDialog}
+                      >{sendWelcomeEmailLabel}</a
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_4-of-12"
+          >
+            <div
+              class="headerRow slds-p-left_large slds-p-top_x-small slds-p-bottom_xx-small"
+            >
+              <b>{coExhibitorsLabel}</b>
+            </div>
+            <template if:true={agentOwnedCoExhibitors}>
+              <div class="slds-p-top_large wrap-text">
+                <template
+                  for:each={agentOwnedCoExhibitors}
+                  for:item="coExhibitor"
+                >
+                  <div
+                    class="slds-p-left_large slds-p-bottom_medium slds-p-right_large"
+                    key={coExhibitor.Id}
+                  >
+                    <a
+                      href=""
+                      onclick={navigateToCoExhibitorAccount}
+                      data-aid={coExhibitor.Id}
+                      >{coExhibitor.Name}</a
+                    >
+                  </div>
+                </template>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template if:true={showInModalMode}>
+    <div class="slds-grid slds-wrap">
+      <div
+        class="slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_5-of-12"
+      >
+        <div class="slds-grid slds-wrap">
+          <div
+            class="slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_5-of-12"
+          >
+            <div
+              class="headerRow slds-p-left_medium slds-p-top_x-small slds-p-bottom_xx-small right-border"
+            >
+              <b>{customerTypeLabel}</b>
+            </div>
+            <div class="vl">
+              <div
+                class="slds-p-top_medium slds-p-bottom_medium slds-p-left_medium"
+              >
+                <p>
+                  {exhibitorTypeLabel}
+                  <span class="tooltip"
+                    ><i
+                      class="fa fa-question-circle"
+                      style="color:grey;"
+                      onclick={showTooltipModal}
+                    ></i
+                  ></span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_7-of-12"
+          >
+            <div
+              class="headerRow slds-p-left_medium slds-p-top_x-small slds-p-bottom_xx-small right-border"
+            >
+              <b>{accountContactsLabel}</b>
+            </div>
+            <div class="vl">
+              <template if:true={accountContacts}>
+                <div class="slds-p-top_medium">
+                  <!-- Primary Contact -->
+                  <template if:true={accountContacts.Opportunity_Contact__c}>
+                    <div class="slds-p-bottom_medium slds-p-left_medium">
+                      <c-contact-display-utility
+                        type-of-contact={primaryContactLabel}
+                        contact={accountContacts}
+                      ></c-contact-display-utility>
+                    </div>
+                  </template>
+                  <!-- Billing Contact -->
+                  <template if:true={accountContacts.Billing_Contact__c}>
+                    <div class="slds-p-bottom_medium slds-p-left_medium">
+                      <c-contact-display-utility
+                        type-of-contact={billingContactLabel}
+                        contact={accountContacts}
+                      ></c-contact-display-utility>
+                    </div>
+                  </template>
+                  <!-- Operations Contact -->
+                  <template if:true={accountContacts.Operations_Contact__c}>
+                    <div class="slds-p-bottom_medium slds-p-left_medium">
+                      <c-contact-display-utility
+                        type-of-contact={operationsContactLabel}
+                        contact={accountContacts}
+                      ></c-contact-display-utility>
+                    </div>
+                  </template>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_7-of-12"
+      >
+        <div class="slds-grid slds-wrap">
+          <div
+            class="slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_5-of-12"
+          >
+            <div
+              class="headerRow slds-p-left_large slds-p-top_x-small slds-p-bottom_xx-small right-border"
+            >
+              <b>{standsLabel}</b>
+            </div>
+            <div class="vl">
+              <template if:true={accountBooths}>
+                <div class="slds-p-top_large">
+                  <template for:each={accountBooths} for:item="accountBooth">
+                    <div
+                      class="slds-p-left_large slds-p-right_large slds-p-bottom_large"
+                      key={accountBooth.Id}
+                    >
+                      <template if:true={accountBooth.Booth_Number__c}>
+                        <lightning-layout>
+                          <lightning-layout-item flexibility="auto" size="6">
+                            <b>{standLabel} #:</b>
+                          </lightning-layout-item>
+                          <lightning-layout-item flexibility="auto" size="6">
+                            <b>{accountBooth.Booth_Number__c}</b>
+                          </lightning-layout-item>
+                        </lightning-layout>
+                      </template>
+                      <template if:true={accountBooth.Expocad_Booth__r}>
+                        <template
+                          if:true={accountBooth.Expocad_Booth__r.Dimensions__c}
+                        >
+                          <lightning-layout>
+                            <lightning-layout-item flexibility="auto" size="6"
+                              ><p>{dimensionsLabel}:</p></lightning-layout-item
+                            >
+                            <lightning-layout-item flexibility="auto" size="6"
+                              ><p>
+                                {accountBooth.Expocad_Booth__r.Dimensions__c}
+                              </p></lightning-layout-item
+                            >
+                          </lightning-layout>
+                        </template>
+                        <template
+                          if:true={accountBooth.Expocad_Booth__r.Matched_Product_Name__c}
+                        >
+                          <lightning-layout>
+                            <lightning-layout-item flexibility="auto" size="6"
+                              ><p>
+                                {classificationLabel}:
+                              </p></lightning-layout-item
+                            >
+                            <lightning-layout-item flexibility="auto" size="6"
+                              ><p>
+                                {accountBooth.Expocad_Booth__r.Matched_Product_Name__c}
+                              </p></lightning-layout-item
+                            >
+                          </lightning-layout>
+                        </template>
+                      </template>
+                    </div>
+                  </template>
+                </div>
+              </template>
+            </div>
+          </div>
+          <div
+            class="slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_7-of-12"
+          >
+            <div
+              class="headerRow slds-p-left_large slds-p-top_x-small slds-p-bottom_xx-small"
+            >
+              <b>{activityLabel}</b>
+            </div>
+
+            <div
+              class="slds-p-left_large slds-p-top_large slds-p-right_large slds-p-bottom_large"
+            >
+              <lightning-layout>
+                <lightning-layout-item flexibility="auto" size="7"
+                  ><b>{requiredFormsLabel}:</b></lightning-layout-item
+                >
+                <lightning-layout-item flexibility="auto" size="5">
+                  <p>{formsStatus}</p>
+                </lightning-layout-item>
+              </lightning-layout>
+              <lightning-layout class="slds-m-top_small">
+                <lightning-layout-item flexibility="auto" size="7"
+                  ><b>{badgesLabel}</b></lightning-layout-item
+                >
+                <lightning-layout-item flexibility="auto" size="5"
+                  ><p>
+                    {badgesStatus}
+                  </p></lightning-layout-item
+                >
+              </lightning-layout>
+              <lightning-layout class="slds-m-top_small">
+                <lightning-layout-item flexibility="auto" size="7"
+                  ><b>{manualsLabel}</b></lightning-layout-item
+                >
+                <lightning-layout-item flexibility="auto" size="5"
+                  ><p>
+                    {manualsStatus}
+                  </p></lightning-layout-item
+                >
+              </lightning-layout>
+              <lightning-layout class="slds-m-top_small">
+                <lightning-layout-item flexibility="auto" size="7"
+                  ><b>{exhibitorProfileLabel}</b></lightning-layout-item
+                >
+                <lightning-layout-item flexibility="auto" size="5"
+                  ><p>
+                    {exhibitorProfileStatus}
+                  </p></lightning-layout-item
+                >
+              </lightning-layout>
+              <lightning-layout class="slds-m-top_small">
+                <lightning-layout-item flexibility="auto" size="7"
+                  ><b>{standContractorLabel}</b></lightning-layout-item
+                >
+                <lightning-layout-item flexibility="auto" size="5"
+                  ><p>
+                    {standContractorProfileStatus}
+                  </p></lightning-layout-item
+                >
+              </lightning-layout>
+              <lightning-layout class="slds-m-top_small">
+                <lightning-layout-item flexibility="auto" size="7"
+                  ><b>{lastLoginLabel}</b></lightning-layout-item
+                >
+                <lightning-layout-item flexibility="auto" size="5"
+                  >{lastLoginDate}</lightning-layout-item
+                >
+              </lightning-layout>
+              <lightning-layout class="slds-m-top_small">
+                <lightning-layout-item flexibility="auto" size="7"
+                  ><b>{lastEmailSentLabel}</b></lightning-layout-item
+                >
+                <lightning-layout-item flexibility="auto" size="5"
+                  >{lastEmailSentDate}</lightning-layout-item
+                >
+              </lightning-layout>
+              <div class="slds-m-top_small">
+                <p>
+                  <a href="" onclick={showMailResendConfirmationDialog}
+                    >{sendWelcomeEmailLabel}</a
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!--Resend Email modal start -->
+  <template if:true={showMailResendConfirmation}>
+    <template if:true={showMailSendingSpinner}>
+      <div class="mail-send-spinner">
+        <lightning-spinner
+          alternative-text="Loading"
+          size="medium"
+        ></lightning-spinner>
+      </div>
+    </template>
+    <section
+      role="dialog"
+      tabindex="-1"
+      aria-labelledby="mail-resend-header"
+      aria-modal="true"
+      aria-describedby="mail-resend-body"
+      class="slds-modal slds-fade-in-open"
+    >
+      <div class="slds-modal__container">
+        <!-- modal header start -->
+        <header class="slds-modal__header">
+          <h2
+            id="mail-resend-header"
+            class="slds-text-heading_small slds-hyphenate"
+          >
+            <span onclick={hideMailResendConfirmationDialog} class="close"
+              >&times;</span
+            >
+            {confirmLabel}
+          </h2>
+        </header>
+        <!-- modal body start -->
+        <div
+          class="slds-modal__content slds-p-around_medium"
+          id="mail-resend-body"
+        >
+          <!-- Modal Body -->
+          <p>{sendMailConfirmationString}</p>
+          <div class="slds-p-top_medium">
+            <lightning-button
+              variant="brand"
+              icon-name="utility:check"
+              label={yesLabel}
+              onclick={resendWelcomeMail}
+            >
+            </lightning-button>
+            &nbsp;&nbsp;
+            <lightning-button
+              variant="brand"
+              icon-name="utility:close"
+              label={cancelLabel}
+              onclick={hideMailResendConfirmationDialog}
+            >
+            </lightning-button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
+  <!-- Resend Email modal end -->
+
+  <!-- Status modal start -->
+  <template if:true={showStatusModal}>
+    <section
+      role="dialog"
+      tabindex="-1"
+      aria-labelledby="status-message-header"
+      aria-modal="true"
+      aria-describedby="status-body"
+      class="slds-modal slds-fade-in-open"
+    >
+      <div class="slds-modal__container">
+        <!-- modal header start -->
+        <header class="slds-modal__header">
+          <h2
+            id="status-message-header"
+            class="slds-text-heading_small slds-hyphenate"
+          >
+            <span onclick={hideStatusModalDialog} class="close">&times;</span>
+            {statusLabel}
+          </h2>
+        </header>
+        <!-- modal body start -->
+        <div class="slds-modal__content slds-p-around_medium" id="status-body">
+          <!-- Modal Body -->
+          <p>{statusMessage}</p>
+        </div>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
+  <!-- Status modal end -->
+
+  <!-- Exhibitor Type tooltip modal Start -->
+  <template if:true={showExhibitorTypeTooltip}>
+    <section
+      role="dialog"
+      tabindex="-1"
+      aria-labelledby="exhibitor-tooltip-header"
+      aria-modal="true"
+      aria-describedby="tooltip-body"
+      class="slds-modal slds-fade-in-open slds-modal--large customModal"
+    >
+      <div class="slds-modal__container">
+        <!-- modal body start -->
+        <div class="slds-modal__content slds-p-around_medium" id="tooltip-body">
+          <span onclick={hideTooltipModal} class="close">&times;</span>
+          <div
+            class="modal-body bodycompany "
+            style="max-height: 68vh;padding-right:5px;overflow-y: auto;overflow-x: hidden"
+          >
+            <div class="slds-grid slds-wrap">
+              <div class="slds-col slds-size_1-of-9 slds-m-right_small">
+                <div class="tooltip">
+                  <i
+                    class="fa fa-question-circle"
+                    style="font-size: large;"
+                  ></i>
+                </div>
+              </div>
+              <div class="slds-col slds-size_7-of-8">
+                <b>{exhibitorLabel}:&nbsp;</b>
+                {agentOwnExhibitorMessageLabel}
+                <br />
+                <br />
+
+                <b>{coExhibitorLabel}:&nbsp;</b>
+                {coExhibitorMessageLabel}
+                <br />
+                <br />
+
+                <b>{individualContractLabel}:&nbsp;</b>
+                {individualContractMessageLabel}
+                <br />
+                <br />
+
+                <i>{exhibitorCautionMessageLabel}</i>
+                <br />
+                <br />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
+  <!-- Exhibitor Type tooltip modal End -->
+</template>

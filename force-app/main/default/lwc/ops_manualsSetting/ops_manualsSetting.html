@@ -1,0 +1,58 @@
+<!--
+Created By		: Girikon(Garima[STL-151])
+Created On	 : September 12, 2019
+@description : This component is use to show and call all tabs for manual Settings section at Ops Admin Side.
+
+Modification log --
+Modified By	: 
+-->
+<template>
+    <article class="slds-card slds-p-around_medium">
+        <lightning-layout multiple-rows="false">
+            <lightning-layout-item size="12" class="slds-p-horizontal_medium slds-p-bottom_medium ">
+                <span class="slds-text-heading_medium" style="font-weight: bold;">{selectedEventName}</span>
+                <lightning-breadcrumbs>
+                    <lightning-breadcrumb label="Customer Centre" onclick={ccUrl}>
+                    </lightning-breadcrumb>
+                    <lightning-breadcrumb label="Customer Centre Settings" onclick={ccsettingUrl}>
+                    </lightning-breadcrumb>
+                    <lightning-breadcrumb label="Manuals">
+                    </lightning-breadcrumb>
+                </lightning-breadcrumbs>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" class="slds-p-horizontal_medium">
+
+                    <div class="slds-p-left_x-small">
+                        <lightning-tabset>
+                            <lightning-tab label="SETTINGS" value="t1">
+                                <div class="slds-p-left_small">
+                                    <lightning-tabset>
+                                        <lightning-tab label="General" onactive={tabSelect}>
+                                            <c-ops_manual-general></c-ops_manual-general>
+                                        </lightning-tab>
+                                        <lightning-tab label="Required Manuals" onactive={tabSelect}>
+                                            <c-ops_req-add-manuals condition={reqCondition} where-call-from="required"></c-ops_req-add-manuals>
+                                        </lightning-tab>
+                                        <lightning-tab label="Additional Manuals" onactive={tabSelect}>
+                                            <c-ops_req-add-manuals condition={addCondition} where-call-from="additional"></c-ops_req-add-manuals>
+                                            <!-- <c-ops_form-aditional-forms></c-ops_form-aditional-forms> -->
+                                        </lightning-tab>
+                                        <lightning-tab label="Permission" onactive={tabSelect}>
+                                            <c-ops_manual-Permissions></c-ops_manual-Permissions>
+                                        </lightning-tab>
+
+                                    </lightning-tabset>
+                                </div>
+                            </lightning-tab>
+                            <lightning-tab label="REPORTS" value="t2">
+                                <c-ops_manual-reports></c-ops_manual-reports>
+                                <!-- <c-ops_form-report></c-ops_form-report> -->
+                            </lightning-tab>
+
+                        </lightning-tabset>
+                    </div>
+            </lightning-layout-item>
+
+        </lightning-layout>
+    </article>
+</template>

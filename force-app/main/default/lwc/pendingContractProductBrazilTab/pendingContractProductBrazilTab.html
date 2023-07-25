@@ -1,0 +1,379 @@
+<template>
+    <template if:true={spinner}>
+        <lightning-spinner size="small" variant="brand"></lightning-spinner>
+    </template>
+    <div class={isViewForm}>
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="3" padding="horizontal_small">            
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                        <span class="slds-form-element__label">SSC SAP Client Code</span>
+                        <div class="slds-form-element__control">
+                            <div class="slds-form-element__static">
+                                {SSC_SAP_CLient_Code}
+                                <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                            </div>
+                        </div>
+                        <span class="slds-form-element__label">Opportunity Id</span>
+                        <div class="slds-form-element__control">
+                            <div class="slds-form-element__static">
+                                {opportunityId}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="9" padding="horizontal_small">
+                <lightning-record-view-form object-api-name="Opportunity" record-id={recordId}>
+                    <lightning-layout>
+                        <lightning-layout-item size="6">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                    <span class="slds-form-element__label">Contract Currency</span>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static">
+                                            <template if:true={oppObj}>
+                                                <template if:true={oppObj.SBQQ__PrimaryQuote__r}>
+                                                {oppObj.SBQQ__PrimaryQuote__r.CurrencyIsoCode}
+                                                </template>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                    <span class="slds-form-element__label">Customer purchase order
+                                        <lightning-helptext content="Main Order created by this opportunity"></lightning-helptext>
+                                    </span>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static">
+                                            <template if:true={oppObj}>
+                                                <template if:true={oppObj.Main_Order__r}>
+                                                    {oppObj.Main_Order__r.OrderNumber}
+                                                </template>
+                                            </template>
+                                            <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static">
+                                            <lightning-output-field field-name="StageName"></lightning-output-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                    <span class="slds-form-element__label">Opportunity Owner</span>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static">
+                                            <lightning-output-field field-name="OwnerId" variant="label-hidden"></lightning-output-field>
+                                            <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                        
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-record-view-form>
+            </lightning-layout-item>
+        </lightning-layout>
+        <div>
+         <c-Common-Data-Table-Brazil record-id={recordId}>
+        </c-Common-Data-Table-Brazil>
+     </div>
+        
+
+    <lightning-layout horizontal-align="space" class="slds-float_right">
+    <div class="slds-clearfix">
+        <div class="slds-float_right">
+            <strong class="slds-text-heading_small">Total: {isoCode} {totalAmount}</strong>
+        </div>
+    </div>
+    </lightning-layout>
+    </div>
+    <!--Edit Form-->
+    <div class={isEditForm}>
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="3" padding="horizontal_small">            
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                        <div class="slds-form-element__control">
+                            <div class="slds-form-element__static">
+                                <lightning-input onchange={handleFieldChange} type="text" label="SSC SAP Client Code" value={SSC_SAP_CLient_Code}></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                        <span class="slds-form-element__label">Opportunity Id</span>
+                        <div class="slds-form-element__control">
+                            <div class="slds-form-element__static">
+                                {opportunityId}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="9" padding="horizontal_small">
+                <lightning-record-edit-form class="my-form1" object-api-name="Opportunity" record-id={recordId} onsubmit={handleSubmit} onsuccess={handleSucess} onerror={handleError}>
+                    <lightning-layout multiple-rows="true">
+                        <lightning-layout-item size="6">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                    <span class="slds-form-element__label">Contract Currency</span>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static">
+                                            <template if:true={oppObj}>
+                                                <template if:true={oppObj.SBQQ__PrimaryQuote__r}>
+                                                    {oppObj.SBQQ__PrimaryQuote__r.CurrencyIsoCode}
+                                                </template>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static">
+                                            <template if:true={mainOrderId}>
+                                                <c-common-lookup onhandlelookup={setLookupField} label="Customer purchase order" 
+                                                object-label="Customer purchase order" help-text="Main Order created by this opportunity"
+                                                object-name="order" name-field-api="OrderNumber" field-name="mainOrder"  selected-item-id={mainOrderId}>
+                                                </c-common-lookup>
+                                            </template>
+                                            <template if:false={mainOrderId}>
+                                                <c-common-lookup onhandlelookup={setLookupField} label="Customer purchase order" 
+                                                object-label="Customer purchase order" help-text="Main Order created by this opportunity"
+                                                object-name="order" name-field-api="OrderNumber" field-name="mainOrder">
+                                                </c-common-lookup>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static">
+                                            <lightning-output-field field-name="StageName"></lightning-output-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-hint-parent">                                    
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static">
+                                            <template if:true={oppOwnerId}>
+                                                <c-common-lookup onhandlelookup={setLookupField} label="Opportunity Owner" 
+                                                object-label="Opportunity Owner" object-name="user" 
+                                                field-name="OwnerId" selected-item-id={oppOwnerId}></c-common-lookup>
+                                            </template>
+                                            <template if:false={oppOwnerId}>
+                                                <c-common-lookup onhandlelookup={setLookupField} label="Opportunity Owner" 
+                                                object-label="Opportunity Owner" object-name="user" 
+                                                field-name="OwnerId"></c-common-lookup>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                        
+                        </lightning-layout-item>
+                        <!--Cancel & Submit Button-->
+                        <lightning-layout-item size="12" padding="horizontal-small">
+                            <div class="slds-clearfix">
+                                <div class="slds-float_right">
+                                    <lightning-button type="submit" class="save-button" variant="brand" icon-name="utility:check" label="Update"></lightning-button>&nbsp;&nbsp;
+                                    <lightning-button label="Cancel" variant="destructive" icon-name="utility:close" onclick={viewForm}></lightning-button>
+                                </div>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-record-edit-form>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+    <div class="slds-m-top_small slds-m-bottom_small">
+    <!--Product Header-->
+  
+</div>
+
+    <!-- footer form-->
+    <div class={isViewForm}>
+        <lightning-layout multiple-rows="true" class="slds-m-top_medium">
+            <lightning-layout-item size="8" padding="horizontal_small">            
+                <lightning-record-view-form object-api-name="Opportunity" record-id={recordId}>
+                    <lightning-layout>
+                        <lightning-layout-item size="6">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static">
+                                            <lightning-output-field field-name="Payment_Schedule__c"></lightning-output-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static">
+                                            <lightning-output-field field-name="First_Payment_Due_Date__c"></lightning-output-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static">
+                                            <lightning-output-field field-name="SSC_Sales_Order_Number__c"></lightning-output-field>
+                                            <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__static">
+                                            <lightning-output-field field-name="SSC_Contract_Number__c"></lightning-output-field>
+                                            <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                        
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-record-view-form>
+            </lightning-layout-item>
+            <lightning-layout-item size="4" padding="horizontal_small">
+                <lightning-layout>
+                    <lightning-layout-item size="12">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                <span class="slds-form-element__label">SSC SAP Cobr Code</span>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        {SSC_SAP_Cobr_Code}
+                                        <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                <span class="slds-form-element__label">SSC SAP Ops Code</span>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        {SSC_SAP_Ops_Code}
+                                        <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+
+    <!--Edit form-->
+    <div class={isEditForm}>
+        <lightning-record-edit-form class="my-form2" object-api-name="Opportunity" record-id={recordId} onsubmit={handleSubmit2} onsuccess={handleSucess2} onerror={handleError2}>
+        <lightning-layout multiple-rows="true" class="slds-m-top_medium">
+            <lightning-layout-item size="8" padding="horizontal_small">
+                <lightning-layout>
+                    <lightning-layout-item size="6">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-output-field field-name="Payment_Schedule__c"></lightning-output-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-output-field field-name="First_Payment_Due_Date__c"></lightning-output-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-input-field field-name="SSC_Sales_Order_Number__c"></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-input-field field-name="SSC_Contract_Number__c"></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item size="4" padding="horizontal_small">
+                <lightning-layout>
+                    <lightning-layout-item size="12">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-input onchange={handleFieldChange} type="text" value={SSC_SAP_Cobr_Code} label="SSC SAP Cobr Code"></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-input onchange={handleFieldChange} type="text" value={SSC_SAP_Ops_Code} label="SSC SAP Ops Code"></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <!--Cancel & Submit Button-->
+            <lightning-layout-item size="12" padding="horizontal-small">
+                <div class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <lightning-button type="submit" class="save-button" variant="brand" icon-name="utility:check" label="Update"></lightning-button>&nbsp;&nbsp;
+                        <lightning-button label="Cancel" variant="destructive" icon-name="utility:close" onclick={viewForm}></lightning-button>
+                    </div>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-record-edit-form>
+    </div>
+</template>

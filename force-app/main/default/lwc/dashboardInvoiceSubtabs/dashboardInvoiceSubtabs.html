@@ -1,0 +1,95 @@
+<!--
+    Created By		: Girikon( Yash Gupta [STL-25] )
+    Created On		: 8/2/2019
+    @description 	: This component is used to show the list of Invoices related tabs.
+    Modified By		: Girikon( Yash Gupta 10/9/2019 ]
+-->
+<template>
+    <div class="slds-card slds-p-around_small">
+        <lightning-tabset>
+            <lightning-tab label="Not Posted">
+                <!--Table for not posted invoice-->
+                <template if:true={notPostedCond}>
+                    <c-common-table filter1-label="Event Edition" filter-field1="blng__Order__r.Opportunity.EventEdition__r.Name" condition={notPostedCond}
+                        fields="Name,Invoice_Number_SFDC__c,blng__DueDate__c,CustomOrderNumber__c,Contract_Number__c,Event_Edition_Name__c,blng__InvoiceDate__c,blng__Account__r.Name,blng__InvoiceStatus__c,CreatedDate"
+                        object-name="blng__Invoice__c" object-label="Invoice" is-multi-language="true" custom-label="-1,1"
+                        fields-label="Invoice Number,Sequential Number,Due Date,CustomOrderNumber,Contract Number,Event Edition Name,Invoice Date,Account,Status,Created Date">
+                    </c-common-table>
+                </template>
+            </lightning-tab>        
+            <lightning-tab label="Not Paid">
+                <!--Table for not paid invoice-->
+                <template if:true={notPaidCond}>
+                    <c-common-table filter1-label="Event Edition" filter-field1="blng__Order__r.Opportunity.EventEdition__r.Name" condition={notPaidCond}
+                        fields="Name,Invoice_Number_SFDC__c,blng__DueDate__c,CustomOrderNumber__c,Contract_Number__c,Event_Edition_Name__c,blng__Account__r.Name,Invoice_Payment_Status__c,blng__InvoiceStatus__c,CreatedDate"
+                        object-name="blng__Invoice__c" object-label="Invoice" is-multi-language="true" custom-label="-1,1"
+                        fields-label="Invoice Number,Sequential Number,Due Date,CustomOrderNumber,Contract Number,Event Edition Name,Account,Invoice Payment Status,Status,Created Date">
+                    </c-common-table>
+                </template>
+            </lightning-tab>
+            <lightning-tab label="Not on SAP">
+                <!--Table for Not on SAP invoice-->
+                <template if:true={notOnSapCond}>
+                    <c-common-table  condition={notOnSapCond}
+                        fields="Name,Invoice_Number_SFDC__c,blng__DueDate__c,Event_Edition_Name__c,CustomOrderNumber__c,Contract_Number__c,blng__Account__r.Name,CreatedDate"
+                        object-name="blng__Invoice__c" object-label="Invoice" is-multi-language="true" custom-label="-1,1"
+                        fields-label="Invoice Number,Sequential Number,Due Date,Event Edition Name,CustomOrderNumber,Contract Number,Account,Created Date">
+                    </c-common-table>
+                </template>
+            </lightning-tab>
+            <lightning-tab label="Invoice With Tax Error">
+                    <!--Table for Invoice With Tax Error-->
+                    <template if:true={invTaxErrorCond}>
+                            <c-common-table filter1-label="Event Edition" filter-field1="blng__Order__r.Opportunity.EventEdition__r.Name" condition={invTaxErrorCond}
+                            fields="Name,Invoice_Number_SFDC__c,blng__DueDate__c,CustomOrderNumber__c,Event_Edition_Name__c,Contract_Number__c,blng__Account__r.Name,Invoice_Line_Error__c,CreatedDate"
+                            object-name="blng__Invoice__c" object-label="Invoice" is-multi-language="true" custom-label="-1,1"
+                            fields-label="Invoice Number,Sequential Number,Due Date,CustomOrderNumber,Event Edition Name,Contract Number,Account,Invoice Line Error,Created Date">
+                        </c-common-table>
+                    </template>
+            </lightning-tab>
+            <lightning-tab label="Sent Invoices">
+                <!--Table for Sent Invoices-->
+                <template if:true={sentInvoiceCond}>
+                    <c-common-table onopenlinkbutton={handleOpenlinkbutton} open-link-button-text="Click To Send Email" filter1-label="Event Edition" filter-field1="blng__Order__r.Opportunity.EventEdition__r.Name" condition={sentInvoiceCond}
+                        fields="Invoice_Number_SFDC__c,Name,blng__DueDate__c,CustomOrderNumber__c,Contract_Number__c,Event_Edition_Name__c,blng__Account__r.Name,blng__InvoiceStatus__c,Invoice_Emailed_Date__c,CreatedDate"
+                        object-name="blng__Invoice__c" date-filter-field-name = "Invoice_Emailed_Date__c" object-label="Invoice" is-multi-language="true" custom-label="-1,0" date-filter="true" date-filter-label="Invoice Emailed Date"
+                        fields-label="Sequential Number,Invoice Number,Due Date,CustomOrderNumber,Contract Number,Event Edition Name,Account,Status,Invoice Emailed Date,Created Date">
+                    </c-common-table>
+                </template>
+            </lightning-tab>
+            <lightning-tab label="Draft Invoice">
+                <!--Table for Draft Invoice-->
+                <div class="slds-card slds-p-around_small">
+                    <lightning-tabset>
+                        <lightning-tab label="Non-Zero Value Invoices">
+                            <c-invoice-non-zero is-multi-language="true" custom-label="-1,1"></c-invoice-non-zero>
+                        </lightning-tab>
+                        <lightning-tab label="Zero Value Invoices">
+                            <c-invoice-zero is-multi-language="true" custom-label="-1,1"></c-invoice-zero>
+                        </lightning-tab>
+                    </lightning-tabset>
+                </div> 
+            </lightning-tab>
+            <lightning-tab label="BA review Required">
+                <!--Table for BA review Required-->
+                <c-ba-review-required-dashboard object-name="blng__Invoice__c" object-label="Invoice"
+                fields="Name,Invoice_Number_SFDC__c,blng__DueDate__c,CustomOrderNumber__c,Contract_Number__c,Event_Edition_Name__c,blng__Account__r.Name,blng__InvoiceStatus__c,blng__InvoiceDate__c,BA_approved__c,CreatedDate" 
+                fields-label={baReviewRequiredLabels}>
+                </c-ba-review-required-dashboard>
+            </lightning-tab>
+            <lightning-tab label="Credit Note">
+                <!--Table for Credit Note-->
+                <template if:true={creditNoteCond}>
+                    <c-common-table condition={creditNoteCond} filter1-label="Event Edition" filter-field1="blng__RelatedInvoice__r.blng__Order__r.Opportunity.EventEdition__r.Name"
+                        fields="Name,Credit_Number_SFDC__c,blng__TotalAmount__c,blng__RelatedInvoice__r.Event_Edition_Name__c,blng__RelatedInvoice__r.Name,CreatedDate"
+                        object-name="blng__CreditNote__c" object-label="Credit Note" is-multi-language="true" custom-label="-1,3,4"
+                        fields-label={creditNoteFields}>
+                    </c-common-table>
+                </template>
+            </lightning-tab>
+        </lightning-tabset>
+    </div>
+    <template if:true={spinner}>
+        <lightning-spinner variant="brand" size="small"></lightning-spinner>
+    </template>
+</template>

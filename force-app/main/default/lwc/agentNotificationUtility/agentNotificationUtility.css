@@ -1,0 +1,24 @@
+/**
+ * Created By: {Girikon(Abhishek)}
+ * Created On: 02/09/2019
+ * Description/Purpose: C2E-4 : It is used to Notification to Exhibitors
+ */
+.msg {
+  background-color: #fef0c6;
+  border: 1px solid #f6d77d;
+  width: 100%;
+  padding: 10px;
+  color: #000;
+  font-size: 13px;
+  margin: 10px 0px;
+  text-align: center;
+}
+
+.close {
+  line-height: 0 !important;
+}
+
+.bold-uppercase {
+  text-transform: uppercase;
+  font-weight: bold;
+}

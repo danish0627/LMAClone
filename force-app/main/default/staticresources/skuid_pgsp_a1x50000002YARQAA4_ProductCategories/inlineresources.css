@@ -1,0 +1,176 @@
+.nx-basicfieldeditor-section-body{
+    line-height: 3em;
+}
+.nx-template{
+        font-weight: bold;
+}
+
+ /* to disable table link*/
+.nx-fieldtext{
+        pointer-events: none;
+    cursor: default;
+}
+.cke_chrome {
+    display: block;
+    padding: 0;
+    border: 1px solid #a1a1a1;
+    box-shadow: none;
+}
+/*
+.ui-dialog .ui-dialog-titlebar .ui-button.ui-dialog-titlebar-close{
+    display:none;
+}
+*/
+x:-moz-any-link, .cke_inner {
+    position: relative;
+    /* margin-top: -200px;
+     width: 250px;*/
+    
+    margin-top: -150px;
+    width: 450px;
+    margin-left: -350px;
+
+}
+
+.WordCountCSS{
+    
+    margin-top:127px;
+    margin-right:84%;
+    
+}
+.WordCountCSS1{
+    
+    margin-right:84%;
+    
+}
+.WordcountCss2{
+   
+}
+#closePopup    {background:#828282; color:#fff; border:none; font-weight: 600; padding: 3px; float: right; cursor: pointer;}
+
+
+/*Table scroll
+
+.nx-list.nx-skootable-data+.nx-list-footer{
+    display:none;
+    
+}
+
+*/
+.bradcom {
+    margin: 0px !important;
+
+background-image: url("../resource/bredcom_arrow") !important;
+background-repeat: no-repeat !important;
+background-position: right !important;
+color: #000 !important;
+border : none !important;
+padding: 0px !important;
+background-color: transparent !important;
+}
+
+.bradcom:hover {
+    background-image: url("../resource/bredcom_arrow_hover") !important;
+    background-repeat: no-repeat !important;
+    background-position: right !important;
+    background-color: transparent !important;
+}
+
+.bradcom span{
+line-height: 40px !important;
+width: auto !important;
+font-weight: 400 !important;
+}
+.BradComBorder {
+    border-top : 1px solid #ccc !important;
+    border-bottom : 1px solid #ccc !important;
+}
+
+.BradComBorder .sk-button-action{
+    margin-top : 0px !important;
+}
+.nx-actionselect-label{
+    position: absolute;
+    color: #0288d1;
+    top: 0px;
+    font-weight: normal;
+    font-size: 1.5em;
+    margin-left:-120px;
+  
+    text-transform: none
+}
+
+div.nx-actionselect {
+    cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+    color: white;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: .81em;
+    /*margin: 0 700px 6px 0;*/
+    box-shadow: 0 0 6px 2px #DDD;
+    vertical-align: middle;
+    margin-left: 0px;
+    
+}
+.nx-basicfieldeditor-column .nx-basicfieldeditor-section-wrapper .nx-basicfieldeditor-section .nx-basicfieldeditor-item .nx-field.halignright input[type=checkbox] {
+        margin-right: 45px;
+}
+.nx-basicfieldeditor-column .nx-basicfieldeditor-section-wrapper .nx-basicfieldeditor-section .nx-basicfieldeditor-item .nx-field.halignright  input:not([type="radio"]):not([type="checkbox"]) {
+       width:45px;
+       margin-right: 35px;
+}
+.HeaderBroder .nx-basicfieldeditor-section .nx-basicfieldeditor-section-header{
+    border-bottom-color: #005fb2;
+    border-bottom-width: 2px;
+}
+
+
+/*-- Enable CSS-1 and disable below CSS-2 will correct the 'Default and Upgrade items' page alignment --*/
+/*----CSS-1: Enable this CSS ----*/
+
+.nx-basicfieldeditor-item-label{
+    padding: .5rem .5rem .5rem 0!important;
+}
+.nx-editor input[type=checkbox]{
+    margin-top: 0!important;
+}
+
+.nx-field .flex-text-wrap pre, .nx-field .nx-richtext-input, .nx-field input, .nx-field textarea{
+height:auto!important;
+}
+
+.wordCount{
+    padding-top: 97px;
+}
+
+/*-----------------*/
+
+
+
+/*----CSS-2: Disable this CSS----*/
+/*
+.nx-editor input[type=checkbox] {
+    display: inline-block;
+    background-color: inherit;
+    width: 20px;
+    margin-top: 5px;
+    padding: 0;
+    border: 0 solid white;
+}
+
+.nx-basicfieldeditor-section-body {
+    line-height: 1em; 
+}
+
+.wordCount{
+    padding-top: 87px; 
+}
+*/
+/*-----------------*/
+.hideTextArea{
+    display:none;
+}

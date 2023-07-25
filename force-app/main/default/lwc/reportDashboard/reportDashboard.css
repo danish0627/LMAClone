@@ -1,0 +1,14 @@
+.report-head {
+  background: #003c4d;
+  color: #fff;
+  font-size: 20px;
+  margin-bottom: 7px;
+}
+.report-link{
+    color:#003c4d;
+    cursor:hand;
+}
+.report-table{
+    border-collapse: collapse;
+    border: 1px solid #003c4d;
+}

@@ -1,0 +1,59 @@
+<template>
+        <table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="slds-text-align_right" scope="col" style="width: 3.25rem;"></th>					
+                        <th aria-label="Name" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                            <a id="Name" class="slds-th__action slds-text-link_reset"  role="button" tabindex="-1">					          	
+                                <div class="slds-grid slds-grid_vertical-align-center">
+                                    <span class="slds-truncate" title="LEVELVALUE">LEVELVALUE</span>
+                                </div>
+                            </a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={tableData} for:item="item" for:index="ind">
+                        <tr key={item.Id} aria-selected="false" class="slds-hint-parent">
+                            <td class="slds-text-align_right" role="gridcell" >
+                                <lightning-button-icon icon-name="utility:delete" alternative-text="Delete" variant="bare" value={item.RecordId}  data-recid={item.RecordId} onclick={DeleteModel}></lightning-button-icon>   
+                            </td>
+                            <td tabindex="0">
+                                <div class="slds-truncate"  style="white-space: normal">
+                                    <template if:true={item.Levels_Master__r}>
+                                            {item.Levels_Master__r.LevelValue__c}
+                                    </template>
+                                   
+                                </div>
+                            </td>
+                        </tr>
+                        
+                    </template>
+                </tbody>
+        
+            </table>
+
+            <template if:true={error}>
+                    <div class="slds-align_absolute-center">No {objectLabel} to Display</div>
+                </template>
+                    <template if:true={openDeleteModel}>
+                            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                <div class="slds-modal__container">
+                                    <header class="slds-modal__header">
+                                        <button onclick={noDelete} class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                                            <lightning-icon icon-name="utility:close" variant="bare" size="small"></lightning-icon>
+                                        </button>
+                                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Confirmation</h2>
+                                    </header>
+                                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                        <div class="slds-text-color_error slds-text-heading_small slds-text-align_center"> Do you really want to delete record?</div>
+                                    </div>
+                                    <footer class="slds-modal__footer">
+                                        <button class="slds-button slds-button_neutral" onclick={noDelete}>No</button>
+                                        <button class="slds-button slds-button_brand" onclick={yesDeleteSingleRecord}>Yes</button>
+                                    </footer>
+                                </div>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open"></div>
+                        </template>
+                    </template>

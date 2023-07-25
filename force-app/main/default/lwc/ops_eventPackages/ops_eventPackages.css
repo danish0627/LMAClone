@@ -1,0 +1,25 @@
+.marginBottom
+{
+    margin-bottom: 24px;
+}
+.packages
+{
+    overflow-x: auto;
+}
+.packagesTable{
+    /* clear: both;
+    overflow: hidden; */
+    white-space: nowrap;
+}
+.packages table th
+{
+    padding-right:20px;
+}
+.packages table td
+{
+    height: 37px;
+}
+.leftForm
+{
+    margin-right: -200px;
+}

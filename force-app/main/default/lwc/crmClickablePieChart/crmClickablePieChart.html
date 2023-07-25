@@ -1,0 +1,22 @@
+<template>
+    <template if:true={showParent}>
+        <lightning-card variant="narrow" title={chartTitle} class="card-chart">
+            <div slot="actions">                
+                <lightning-button-menu menu-alignment="right" icon-name="utility:settings" alternative-text="Show menu" onselect={handleSelect}>
+                    <lightning-menu-item label="Download PNG Image" value="png"></lightning-menu-item>
+                    <lightning-menu-item label="Download JPG Image" value="jpg"></lightning-menu-item>
+                </lightning-button-menu>
+            </div>        
+            <div class="slds-align_absolute-center">
+                <div class="canvas-holder slds-align_absolute-center" style="text-align: center">		
+                    <canvas class="commonChart" width={chartWidth} height={chartHeight} onclick={chartClick} style="text-align: center"></canvas>
+                </div>                        
+                <div class="chartjs-tooltip" lwc:dom="manual"></div>
+                <div class="legend" lwc:dom="manual"></div>
+            </div>    
+        </lightning-card>
+    </template>
+    <template if:false={showParent}>
+        <c-crm-clickable-doughnut-chart object-name={objectName} field-name="StageName" condition={tempCondition} is-clickable onshowpiechart={handleShowPieChartEvent} is-parent-chart="true"  chart-datas={doughnutChartData} chart-title="Opportunities- Stage"></c-crm-clickable-doughnut-chart>
+    </template>
+</template>

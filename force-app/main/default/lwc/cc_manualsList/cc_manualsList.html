@@ -1,0 +1,66 @@
+<!-- Created By		: Girikon(Garima[STL-20])
+Created On		: July 31 2019
+@description 	: This LWC is created for calling cc_manuals component with different rendering condition to manuals page in Customer Center.
+
+Modification log 
+Modified By		: Girikon() 
+-->
+
+<template>
+	<template if:true={spinner}>
+		<lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+	</template> 
+
+	<section class="exhg-middle-content">
+		<div class="container">
+			<!-- <template if:true={eventDtls}> -->
+				<div class="row">
+					<div class="col-sm-12">
+						<lightning-breadcrumbs>
+							<lightning-breadcrumb label="Home" onclick={homeUrl}></lightning-breadcrumb>
+							<lightning-breadcrumb label="Manuals">
+							</lightning-breadcrumb>
+						</lightning-breadcrumbs>
+					</div>
+				</div>
+			<!-- </template> -->
+			<br/>
+			<template if:true={eventDtls}>
+				<div class="row">
+					<div class="col-sm-12">
+						<div style="width:100%;">
+							<h1 class="welcome-note">{eventDtls.Manuals_Title__c}</h1>
+						</div>
+						<div style="width:100%;">
+							<lightning-formatted-rich-text value={eventDtls.Welcome_Text_Manuals__c}>
+							</lightning-formatted-rich-text>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<template if:true={showAgentMessage}>
+					<div>
+						<c-agent-Notification-Utility event-code={eventcode} message={label.AgentMessage}>
+						</c-agent-Notification-Utility>
+					</div>
+				</template>
+				<div class="clearfix"></div>
+				<div class="row">
+					<div class="col-sm-12 col-xs-12 ">
+
+						<template if:true={condition1}>
+							<c-cc_manuals condition={condition1} manualtype="Required" show-spinner=true></c-cc_manuals>
+						</template>
+					</div><br></br>
+					<div class="col-sm-12 col-xs-12 slds-m-bottom_medium">
+						<template if:true={condition2}>
+							<c-cc_manuals condition={condition2} manualtype="Additional" show-spinner=false> </c-cc_manuals>
+						</template>
+					</div>
+				</div>
+			</template>
+		</div>
+	</section>
+	<div class="clearfix"></div>
+
+</template>

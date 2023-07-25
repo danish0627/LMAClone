@@ -1,0 +1,511 @@
+<!--
+Created By	 : (SUNIL [STL-139])
+Created On	 : Sep 10, 2019
+@description : This component is use to show navigation section in Customer Center Settings home page.
+
+Modification log --
+Modified By	: [Aishwarya BK-14358 28 Apr 2021]
+-->
+<template>
+    <template if:true={objHomeNav}>
+        <div if:true={isLoading} class="slds-is-relative">
+            <lightning-spinner variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+        <table class="navigation">
+            <thead>
+                <tr>
+                    <th scope="col"><span class="slds-truncate"></span></th>
+                    <th scope="col"><span class="slds-truncate"><a>Title</a></span></th>
+                    <th scope="col"><span class="slds-truncate"><a>Subtitle</a></span></th>
+                    <th scope="col"><span class="slds-truncate"><a>Redirect URL</a></span></th>
+                    <th scope="col"><span class="slds-truncate"><a>Is Visible?</a></span></th>
+                    <th scope="col"><span class="slds-truncate"><a>Is Available?</a></span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Forms</td>
+                    <td>
+                        <lightning-input name="formstitle" variant="label-hidden" value={objHomeNav.Forms_Title__c}
+                            onchange={onChangeHandleForms}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input name="formssubtitle" variant="label-hidden"
+                            value={objHomeNav.Forms_Sub_Title__c} onchange={onChangeHandleForms}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input type="url" variant="label-hidden" name="formsurl"
+                            value={objHomeNav.Forms_Redirect_URL__c} placeholder="http://www.url.com"
+                            onchange={onChangeHandleForms}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input type="checkbox" variant="label-hidden" name="isvisible"
+                            onchange={onChangeHandleForms} checked={objHomeNav.Is_Form_Visible__c}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input type="checkbox" name="isavailable" variant="label-hidden"
+                            onchange={onChangeHandleForms} checked={objHomeNav.Is_Form_Active__c}></lightning-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Manuals</td>
+                    <td>
+                        <lightning-input name="manualstitle" variant="label-hidden" value={objHomeNav.Manuals_Title__c}
+                            onchange={onChangeHandleManuals}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input name="manualssubtitle" variant="label-hidden"
+                            value={objHomeNav.Manuals_Sub_Title__c} onchange={onChangeHandleManuals}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input name="manualsurl" variant="label-hidden"
+                            value={objHomeNav.Manuals_Redirect_URL__c} placeholder="http://www.url.com"
+                            onchange={onChangeHandleManuals}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input type="checkbox" variant="label-hidden" name="isvisible"
+                            onchange={onChangeHandleManuals} checked={objHomeNav.Is_Manual_Visible__c}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input type="checkbox" name="isavailable" variant="label-hidden"
+                            onchange={onChangeHandleManuals} checked={objHomeNav.Is_Manual_Active__c}></lightning-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Badges</td>
+                    <td>
+                        <lightning-input name="badgestitle" variant="label-hidden" value={objHomeNav.Badges_Title__c}
+                            onchange={onChangeHandleBadges}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input name="badgessubtitle" variant="label-hidden"
+                            value={objHomeNav.Badges_Sub_Title__c} onchange={onChangeHandleBadges}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input name="badgesurl" variant="label-hidden"
+                            value={objHomeNav.Badges_Redirect_URL__c} placeholder="http://www.url.com"
+                            onchange={onChangeHandleBadges}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input type="checkbox" variant="label-hidden" onchange={onChangeHandleBadges}
+                            name="isvisible" checked={objHomeNav.Is_Customer_Badges_Visible__c}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input type="checkbox" onchange={onChangeHandleBadges} variant="label-hidden"
+                            name="isavailable" checked={objHomeNav.Is_Customer_Badges_Active__c}></lightning-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Product Catalogue</td>
+                    <td>
+                        <lightning-input name="pctitle" variant="label-hidden" value={objHomeNav.E_Commerce_Title__c}
+                            onchange={onChangeHandleProductCatalog}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input name="pcsubtitle" variant="label-hidden"
+                            value={objHomeNav.E_Commerce_Sub_Title__c} onchange={onChangeHandleProductCatalog}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="pcurl"
+                            value={objHomeNav.E_Commerce_Redirect_URL__c} placeholder="http://www.url.com"
+                            onchange={onChangeHandleProductCatalog}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="isvisible" type="checkbox"
+                            onchange={onChangeHandleProductCatalog} checked={objHomeNav.Is_E_Commerce_Visible__c}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="isavailable" type="checkbox"
+                            onchange={onChangeHandleProductCatalog} checked={objHomeNav.Is_E_Commerce_Active__c}>
+                        </lightning-input>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Accounts & Billing</td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="abtitle"
+                            value={objHomeNav.Accounts_and_Billing_Title__c} onchange={onChangeHandleAccountAndBilling}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="absubtitle"
+                            value={objHomeNav.Accounts_and_Billing_Sub_Title__c}
+                            onchange={onChangeHandleAccountAndBilling}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="aburl"
+                            value={objHomeNav.Accounts_and_Billing_Redirect_URL__c} placeholder="http://www.url.com"
+                            onchange={onChangeHandleAccountAndBilling}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isvisible"
+                            onchange={onChangeHandleAccountAndBilling}
+                            checked={objHomeNav.Is_Account_and_Billing_Visible__c}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isavailable"
+                            onchange={onChangeHandleAccountAndBilling}
+                            checked={objHomeNav.Is_Account_and_Billing_Active__c}></lightning-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Exhibitor Profile</td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="eptitle"
+                            value={objHomeNav.Exhibitor_Directory_Title__c} onchange={onChangeHandleExibitorProfile}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="epsubtitle"
+                            value={objHomeNav.Exhibitor_Directory_Sub_Title__c}
+                            onchange={onChangeHandleExibitorProfile}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="epurl"
+                            value={objHomeNav.Exhibitor_Directory_Redirect_URL__c} placeholder="http://www.url.com"
+                            onchange={onChangeHandleExibitorProfile}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isvisible"
+                            onchange={onChangeHandleExibitorProfile}
+                            checked={objHomeNav.Is_Customer_Profile_Visible__c}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isavailable"
+                            onchange={onChangeHandleExibitorProfile} checked={objHomeNav.Is_Customer_Profile_Active__c}>
+                        </lightning-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Upload Center</td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="uploadcentertitle"
+                            value={objHomeNav.Upload_Center_Title__c} onchange={onChangeHandleUploadCenter}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="uploadcentersubtitle"
+                            value={objHomeNav.Upload_Center_Sub_Title__c} onchange={onChangeHandleUploadCenter}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="uploadcenterurl"
+                            value={objHomeNav.Upload_Center_Redirect_URL__c} placeholder="http://www.url.com"
+                            onchange={onChangeHandleUploadCenter}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isvisible"
+                            onchange={onChangeHandleUploadCenter} checked={objHomeNav.Is_Upload_Center_Visible__c}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isavailable"
+                            onchange={onChangeHandleUploadCenter} checked={objHomeNav.Is_Upload_Center_Active__c}>
+                        </lightning-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Projex SSO
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="freemantitle" value={objHomeNav.Freeman_Title__c}
+                            onchange={onChangeHandleFreeman}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="freemansubtitle"
+                            value={objHomeNav.Freeman_Sub_Title__c} onchange={onChangeHandleFreeman}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="freemanurl"
+                            value={objHomeNav.Freeman_Redirect_Url__c} placeholder="http://www.url.com"
+                            onchange={onChangeHandleFreeman}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isvisible"
+                            onchange={onChangeHandleFreeman} checked={objHomeNav.Is_Freeman_Visible__c}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isavailable"
+                            onchange={onChangeHandleFreeman} checked={objHomeNav.Is_Freeman_Active__c}>
+                        </lightning-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Custom Page 1</td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="custompage1title"
+                            value={objHomeNav.Custom_1_Title__c} onchange={onChangeHandleCustomPage1}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="custompage1subtitle"
+                            value={objHomeNav.Custom_1_Sub_Title__c} onchange={onChangeHandleCustomPage1}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="custompage1url"
+                            value={objHomeNav.Custom_1_Redirect_URL__c} placeholder="http://www.url.com"
+                            onchange={onChangeHandleCustomPage1}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isvisible"
+                            onchange={onChangeHandleCustomPage1} checked={objHomeNav.Is_Custom_1_Visible__c}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isavailable"
+                            onchange={onChangeHandleCustomPage1} checked={objHomeNav.Is_Custom_1_Active__c}>
+                        </lightning-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Custom Page 2</td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="custompage2title"
+                            value={objHomeNav.Custom_2_Title__c} onchange={onChangeHandleCustomPage2}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="custompage2subtitle"
+                            value={objHomeNav.Custom_2_Sub_Title__c} onchange={onChangeHandleCustomPage2}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="custompage2url"
+                            value={objHomeNav.Custom_2_Redirect_URL__c} placeholder="http://www.url.com"
+                            onchange={onChangeHandleCustomPage2}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isvisible"
+                            onchange={onChangeHandleCustomPage2} checked={objHomeNav.Is_Custom_2_Visible__c}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isavailable"
+                            onchange={onChangeHandleCustomPage2} checked={objHomeNav.Is_Custom_2_Active__c}>
+                        </lightning-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Custom Page 3</td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="custompage3title"
+                            value={objHomeNav.Custom_3_Title__c} onchange={onChangeHandleCustomPage3}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="custompage3subtitle"
+                            value={objHomeNav.Custom_3_Sub_Title__c} onchange={onChangeHandleCustomPage3}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="custompage3url"
+                            value={objHomeNav.Custom_3_Redirect_URL__c} placeholder="http://www.url.com"
+                            onchange={onChangeHandleCustomPage3}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isvisible"
+                            onchange={onChangeHandleCustomPage3} checked={objHomeNav.Is_Custom_3_Visible__c}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isavailable"
+                            onchange={onChangeHandleCustomPage3} checked={objHomeNav.Is_Custom_3_Active__c}>
+                        </lightning-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Stand Contractors</td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="sctitle"
+                            value={objHomeNav.Stand_Contractor_Title__c} onchange={onChangeHandleStandContructor}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="scsubtitle"
+                            value={objHomeNav.Stand_Contractor_Sub_Title__c} onchange={onChangeHandleStandContructor}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="scurl"
+                            value={objHomeNav.Stand_Contractor_Redirect_URL__c} placeholder="http://www.url.com"
+                            onchange={onChangeHandleStandContructor}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isvisible"
+                            onchange={onChangeHandleStandContructor}
+                            checked={objHomeNav.Is_Stand_Contractor_Visible__c}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isavailable"
+                            onchange={onChangeHandleStandContructor} checked={objHomeNav.Is_Stand_Contractor_Active__c}>
+                        </lightning-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        My Exhibitors</td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="myexibitortitle"
+                            value={objHomeNav.My_Exhibitor_Title__c} onchange={onChangeHandleMyExibitor}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="myexibitorsubtitle"
+                            value={objHomeNav.My_Exhibitor_Sub_Title__c} onchange={onChangeHandleMyExibitor}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="myexibitorurl"
+                            value={objHomeNav.My_Exhibitor_Redirect_URL__c} placeholder="http://www.url.com"
+                            onchange={onChangeHandleMyExibitor}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isvisible"
+                            onchange={onChangeHandleMyExibitor} checked={objHomeNav.Is_My_Exhibitor_Visible__c}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isavailable"
+                            onchange={onChangeHandleMyExibitor} checked={objHomeNav.Is_My_Exhibitor_Active__c}>
+                        </lightning-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Subcontractors</td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="subcontructortitle"
+                            value={objHomeNav.Subcontractor_Title__c} onchange={onChangeHandleSubcontractor}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="subcontructorsubtitle"
+                            value={objHomeNav.Subcontractor_Sub_Title__c} onchange={onChangeHandleSubcontractor}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="subcontructorurl"
+                            value={objHomeNav.Subcontractor_Redirect_Url__c} placeholder="http://www.url.com"
+                            onchange={onChangeHandleSubcontractor}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isvisible"
+                            onchange={onChangeHandleSubcontractor} checked={objHomeNav.Is_SubContractors_Visible__c}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isavailable"
+                            onchange={onChangeHandleSubcontractor} checked={objHomeNav.Is_SubContractors_Active__c}>
+                        </lightning-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Agent Owned Exhibitors ( My Exhibitors)</td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="agentownedtitle"
+                            value={objHomeNav.Agent_Own_Exhibitor_Title__c} onchange={onChangeHandleAgentOwn}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="agentownedsubtitle"
+                            value={objHomeNav.Agent_Own_Exhibitor_Sub_Title__c} onchange={onChangeHandleAgentOwn}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="agentownedurl"
+                            value={objHomeNav.Agent_Own_Exhibitor_Redirect_URL__c} placeholder="http://www.url.com"
+                            onchange={onChangeHandleAgentOwn}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isvisible"
+                            onchange={onChangeHandleAgentOwn} checked={objHomeNav.Is_Agent_Own_Exhibitor_Visible__c}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isavailable"
+                            onchange={onChangeHandleAgentOwn} checked={objHomeNav.Is_Agent_Own_Exhibitor_Active__c}>
+                        </lightning-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        SSO Link</td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="ssolinktitle" value={objHomeNav.Gorrilla_Title__c}
+                            onchange={onChangeHandleSSOLink}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="ssolinksubtitle"
+                            value={objHomeNav.Gorrilla_Sub_Title__c} onchange={onChangeHandleSSOLink}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" name="ssolinkurl"
+                            value={objHomeNav.Gorrilla_Redirect_Url__c} placeholder="http://www.url.com"
+                            onchange={onChangeHandleSSOLink}></lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isvisible"
+                            onchange={onChangeHandleSSOLink} checked={objHomeNav.Is_Gorrilla_Visible__c}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" name="isavailable"
+                            onchange={onChangeHandleSSOLink} checked={objHomeNav.Is_Gorrilla_Active__c}>
+                        </lightning-input>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        Event Code Required For SSO Link</td>
+                    <td>
+                        <lightning-input variant="label-hidden" type="checkbox" onchange={onChangeHandleEventCode}
+                            checked={objHomeNav.Is_EventCode_Required__c}></lightning-input>
+                    </td>
+                </tr>
+                    <tr>
+                        <td> Enable Feedback</td> 
+                        <td>
+                            <lightning-input variant="label-hidden" type="checkbox" onchange={onChangeHandleFeedback}
+                               name="feedbackenable" checked={objHomeNav.Enable_Feedback__c}></lightning-input>
+                        </td>
+                        <td>
+                            <lightning-input variant="label-hidden" name="feedbacktitle" value={objHomeNav.Feedback_Sub_Title__c}
+                                onchange={onChangeHandleFeedback}></lightning-input>
+                        </td>
+                        <td>
+                            <lightning-input variant="label-hidden" name="feedbacklinkurl"
+                                value={objHomeNav.Feedback_Redirect_URL__c} placeholder="http://www.url.com"
+                                onchange={onChangeHandleFeedback}></lightning-input>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <div class="slds-p-top_large">
+            <lightning-button variant="brand" label="Save" title="Save" onclick={saveBtnClick}
+                class="slds-m-left_x-small"></lightning-button>
+            <lightning-button label="Cancel" title="Neutral action" onclick={cancelBtnClick}
+                class="slds-m-left_x-small"></lightning-button>
+        </div>
+    </template>
+</template>

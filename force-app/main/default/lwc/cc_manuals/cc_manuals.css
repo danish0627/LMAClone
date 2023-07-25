@@ -1,0 +1,70 @@
+.selected{
+    color:orange;
+}
+.detail-rows{    height: auto;    display: inline-block;}
+.slds-hide{
+    display:none;
+}
+.slds-card__body{
+    border-top: 1px solid #e1e1e1;
+}
+
+.pagesize-btn-container{
+    width: 100px;
+    display: inline-block;
+    margin: 0px 10px;
+}
+.slds-modal:focus {
+    border: 0px;
+    outline: 0px;
+}
+.search-box{width: auto;float:right;}
+.slds-th__action .slds-icon-text-default {
+    fill: rgb(0, 112, 210);
+}
+/*.THIS .slds-no-flex{width: 100%}*/
+.slds-th__action:hover svg{fill: rgb(0, 112, 210)}
+.pagesize{
+    width: 80px;
+    display: inline-block;
+    margin: 0px 2px;
+    margin-right: 2px;
+}
+.req-bold-text{font-size: 20px; font-weight: 700; text-transform: uppercase; color: #555; padding: 15px 0px !important;}
+
+footer lightning-input {
+    float: right;
+    margin-left: 10px;
+}
+/* .slds-icon-utility-arrowdown  {
+    position: absolute;
+    right: 10px;
+} */
+.slds-modal__content {
+    overflow: hidden;
+    overflow-y: hidden;
+}
+.slds-float_left{
+    float:left;
+}
+.addManual{margin-bottom: -41px;margin-top: 4rem;}
+.slds-truncate{
+    text-overflow: inherit !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+}
+/* BK-14060
+.slds-modal__footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+} 
+*/ 
+
+/* .slds-p-left_xx-small{
+    right : 40px
+} */
+/* .slds-is-resizable .slds-th__action:hover {
+    box-shadow: none;
+} */

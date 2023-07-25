@@ -1,0 +1,51 @@
+<template>
+    <template if:true={showData}>
+    <lightning-record-view-form record-id={sContractId} object-api-name="Contract">
+        <lightning-layout multiple-rows=true>
+            <lightning-layout-item size="6">
+                <p class="slds-p-left_large slds-m-bottom_large heading">Contract Detail</p>
+            </lightning-layout-item>
+            <lightning-layout-item size="6">
+                <p class="slds-p-left_large slds-m-bottom_large heading"> Additional Information</p>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" class='layout-right'>
+                <lightning-output-field  class="slds-m-left_large outputField" field-name="ContractNumber">
+                </lightning-output-field>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" class='layout-left'>
+                <lightning-output-field class="slds-m-left_large  outputField" field-name="AccountId">
+                </lightning-output-field>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" class='layout-right'>
+                <lightning-output-field class="slds-m-left_large outputField" field-name="StartDate">
+                </lightning-output-field>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" class='layout-left'>
+                <lightning-output-field class="slds-m-left_large outputField" field-name="ActivatedDate">
+                </lightning-output-field>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" class='layout-right'>
+                <lightning-output-field class="slds-m-left_large outputField" field-name="SBQQ__MasterContract__c">
+                </lightning-output-field>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" class='layout-left'>
+                <lightning-output-field class="slds-m-left_large outputField" field-name="SBQQ__Quote__c">
+                </lightning-output-field>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" class='layout-right'>
+                <lightning-output-field class="slds-m-left_large outputField" field-name="ContractTerm">
+                </lightning-output-field>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" class='layout-left'>
+                <lightning-output-field class="slds-m-left_large outputField" field-name="Primary_Quote__c">
+                </lightning-output-field>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" class='layout-right'>
+                <lightning-output-field class="slds-m-left_large outputField" field-name="SBQQ__ActiveContract__c">
+                </lightning-output-field>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-record-view-form>
+    <div class="clearfix"></div>
+</template>
+</template>

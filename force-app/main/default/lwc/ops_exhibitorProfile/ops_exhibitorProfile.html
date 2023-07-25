@@ -1,0 +1,58 @@
+<template>
+<article class="slds-card slds-p-around_medium">
+<lightning-layout multiple-rows="false">
+<lightning-layout-item size="12" class="slds-p-horizontal_medium slds-p-bottom_medium ">
+<span class ="slds-text-heading_medium" style="font-weight: bold;">{selectedEventName}</span>
+<lightning-breadcrumbs >
+    <lightning-breadcrumb
+        label="Customer Centre"
+        onclick={goToCustomerCenter}>
+    </lightning-breadcrumb>
+    <lightning-breadcrumb
+        label="Customer Centre Settings"
+        onclick={goToCustomerCenterSetting}>
+    </lightning-breadcrumb>
+    <lightning-breadcrumb   
+        label="Exhibitor Profile">
+    </lightning-breadcrumb>
+    </lightning-breadcrumbs>
+</lightning-layout-item>
+<lightning-layout-item size="12" class="slds-p-horizontal_medium">
+    <lightning-card>
+            
+        <div class="slds-p-left_x-small">
+        <lightning-tabset>
+            <lightning-tab label="SETTINGS" value="t1">
+                <div class="slds-p-left_small">
+                    <lightning-tabset>
+                        <lightning-tab label="General"  >
+                            <c-ops_form-exhibitor ></c-ops_form-exhibitor>
+                        </lightning-tab>
+                        <lightning-tab label="Default And Upgrade Items" >
+                                <!--
+                                <c-ops_default-item></c-ops_default-item>
+                                --> 
+                        </lightning-tab>
+                        <lightning-tab label="Product categories">
+                               
+                            <template if:true={eventId}>
+                                    <c-ops_product-categories event-id={eventId}></c-ops_product-categories>
+                            </template>
+
+                        </lightning-tab>
+                    </lightning-tabset>
+                </div>
+            </lightning-tab>
+            <lightning-tab label="REPORT" value="t2" onactive={tabSelect}>
+                report
+            </lightning-tab>
+            <lightning-tab label="Emails" value="t3" onactive={tabSelect}>
+                    Emails
+                </lightning-tab>
+        </lightning-tabset>
+    </div>
+    </lightning-card>
+</lightning-layout-item>
+</lightning-layout>
+</article>
+</template>

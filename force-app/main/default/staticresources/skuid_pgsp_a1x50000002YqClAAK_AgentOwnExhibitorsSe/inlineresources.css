@@ -1,0 +1,104 @@
+#div.nx-basicfieldeditor-section-body>div.nx-basicfieldeditor-item>.nx-field, div.nx-basicfieldeditor-item>.nx-field {
+    width: 70%;
+    /* margin: 0px; */
+}
+
+#FieldEditor{
+    font-weight:bold;
+    line-height:2.2em;
+    font-size:15px;
+}
+
+#FieldEditor.nx-field{
+ margin-top:13px;   
+}
+
+#FieldEditor1{
+    font-weight:bold;
+    line-height:2.2em;
+    font-size:15px;
+}
+
+#FieldEditor1.nx-field{
+ margin-top:13px;   
+}
+
+.nx-basicfieldeditor-item.MainCSS{
+ margin-top:16px !important;   
+}
+
+/*For Sorting*/
+.nx-skootable-order-icon-wrapper
+{
+    float:left;
+    margin-right: 10px;
+}
+
+.cke_chrome {
+    display: block;
+    padding: 0;
+    border: 1px solid #a1a1a1;
+    box-shadow: none;
+}
+.ui-dialog .ui-widget-header {
+    border-bottom: 0px;
+}
+#sk-18BRW4-260{
+    font-weight:bold;
+    color: #16325c;
+    font-size: 13pt;
+}
+#sk-17YI73-445{
+    font-size: 11pt;
+    font-weight: normal;
+    color: #54698d;
+    margin-bottom:4%;
+}
+.servicename{
+    font-size: 11pt;
+    
+}
+.visibleclass{
+    font-size: 11pt;
+    font-weight: normal;
+    color: #54698d;
+}
+.nx-field .input{
+    margin-top: 4%;
+}
+#sk-2l8RKS-301 {
+    font-size: 10pt;
+    color: #0070d2;
+}
+.bradcom {
+    margin: 0px !important;
+
+background-image: url("../resource/bredcom_arrow") !important;
+background-repeat: no-repeat !important;
+background-position: right !important;
+color: #000 !important;
+border : none !important;
+padding: 0px !important;
+background-color: transparent !important;
+}
+
+.bradcom:hover {
+    background-image: url("../resource/bredcom_arrow_hover") !important;
+    background-repeat: no-repeat !important;
+    background-position: right !important;
+    background-color: transparent !important;
+}
+
+.bradcom span{
+line-height: 40px !important;
+width: auto !important;
+font-weight: 400 !important;
+}
+.BradComBorder {
+    border-top : 1px solid #ccc !important;
+    border-bottom : 1px solid #ccc !important;
+}
+
+.BradComBorder .sk-button-action{
+    margin-top : 0px !important;
+}

@@ -1,0 +1,101 @@
+<template>
+    <template if:true={spinner}>
+        <lightning-spinner size="small" variant="brand"></lightning-spinner>
+    </template>
+    <lightning-layout multiple-rows="true">
+        <lightning-layout-item size="6" padding="around-small">
+             
+            <template if:true={visibility.boothContact}>
+                <template if:true={expoCadBoothMapping}>
+                    <div><strong>Contant Information</strong></div>
+                    <lightning-record-edit-form density="compact" class="form1" object-api-name="Opportunity_ExpoCAD_Booth_Mapping__c" record-id={expoCadBoothMapping.Id}>
+                        <div class="slds-form-element slds-form-element_horizontal">
+                            <label class="slds-form-element__label" for="horizontal-input-id-02">Stand#</label>
+                            <div class="slds-form-element__control">
+                                <lightning-output-field field-name="Booth_Number__c" variant="label-hidden"></lightning-output-field>
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-form-element_horizontal">
+                            <label class="slds-form-element__label" for="horizontal-input-id-02">Exhibiting As</label>
+                            <div class="slds-form-element__control">
+                                <lightning-input-field field-name="Display_Name__c" variant="label-hidden"></lightning-input-field>
+                            </div>
+                        </div>
+                    </lightning-record-edit-form>
+                </template>
+            </template>
+
+            <template if:true={visibility.boothContact}>
+                <template if:true={boothContactInfo}>
+                    <lightning-record-edit-form density="compact" class="form2" object-api-name="BoothContactInfo__c" record-id={boothContactInfo.Id} onsubmit={handleSubmit2} onsuccess={handleSuccess2} onerror={handleError2}>
+                        <lightning-input-field field-name="First_Name__c"></lightning-input-field>   
+                        <lightning-input-field field-name="Last_Name__c"></lightning-input-field>
+                        <lightning-input-field field-name="Address__c"></lightning-input-field>
+                        <lightning-input-field field-name="P_O_Box__c"></lightning-input-field>
+                        <lightning-input-field field-name="City__c"></lightning-input-field>
+                        <lightning-input-field field-name="State__c"></lightning-input-field>
+                        <lightning-input-field field-name="Zip_Code__c"></lightning-input-field>
+                        <lightning-input-field field-name="Country__c"></lightning-input-field>
+                        <lightning-input-field field-name="Telephone__c"></lightning-input-field>
+                        <lightning-input-field field-name="Fax__c"></lightning-input-field>
+                        <lightning-input-field field-name="Email__c"></lightning-input-field>
+                        <lightning-input-field field-name="CC_Email__c" class="CC_Email"></lightning-input-field>
+                        <lightning-input-field field-name="Website__c"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </template>
+                <template if:false={boothContactInfo}>
+                    <div class="slds-p-top_large">
+                        <strong style="color:red">No contact information found.</strong>
+                    </div>
+                </template>
+            </template>
+            <br/>
+            
+            <template if:true={visibility.social}>
+                <template if:true={expoCadBoothMapping}>
+                    <div><strong>Social</strong></div>
+                    <lightning-record-edit-form  density="compact" class="form3" object-api-name="Opportunity_ExpoCAD_Booth_Mapping__c" record-id={expoCadBoothMapping.Id}>                    
+                        <lightning-input-field field-name="FaceBook__c"></lightning-input-field>
+                        <lightning-input-field field-name="LinkedIn__c"></lightning-input-field>
+                        <lightning-input-field field-name="Twitter__c"></lightning-input-field>
+                        <lightning-input-field field-name="Instagram__c"></lightning-input-field>
+                        <lightning-input-field field-name="YouTube__c"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </template>
+            </template>
+        </lightning-layout-item>
+        <lightning-layout-item size="6" padding="around-small">
+            
+            <template if:true={visibility.logo}>
+                <div class="slds-p-around_small"><strong>Booth Logo</strong></div>
+                <template if:false={attachment}>
+                    <p style="margin-left:20px;">No Booth Logo Uploaded </p>
+                </template>
+                <template if:true={attachment}>
+                    <p style="margin-left:20px;">{attachment.Name} <a onclick={openFile} href="javascript:void(0);"  target="_blank" ><b>(Download)</b></a></p>
+                </template>
+                <br/>
+            </template>
+
+            <template if:true={expoCadBoothMapping}>
+                <lightning-record-edit-form class="form4" object-api-name="Opportunity_ExpoCAD_Booth_Mapping__c" record-id={expoCadBoothMapping.Id}>                    
+                    <template if:true={visibility.webDesc}>
+                        <lightning-input-field field-name="Web_Description__c"></lightning-input-field>
+                    </template>
+                    <template if:true={visibility.printScreen}>
+                        <lightning-input-field field-name="Print_Description__c"></lightning-input-field>
+                    </template>
+                </lightning-record-edit-form>
+            </template>
+        </lightning-layout-item>
+        <lightning-layout-item size="11" padding="around-small">
+            <template if:true={buttonVisibility}>
+                <div class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <lightning-button icon-name="utility:check" label="Update" variant="brand" onclick={submitForm}></lightning-button>
+                    </div>
+                </div>
+            </template>            
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

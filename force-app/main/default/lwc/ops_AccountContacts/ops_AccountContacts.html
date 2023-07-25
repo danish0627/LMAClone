@@ -1,0 +1,40 @@
+<!--
+Created By	 : (SUNIL [STL-158])
+Created On	 : Sep 19, 2019
+@description : This component is use to show Account Contacts in customer center settings ops admin side .
+
+Modification log --
+Modified By	: 
+-->
+<!-- Updating Api Version for ticket no: EMEA-200 -->
+<template>
+    <article class="slds-card slds-p-around_medium">
+        <lightning-layout multiple-rows="false">
+            <lightning-layout-item size="12" class="slds-p-horizontal_medium slds-p-bottom_medium ">
+                <span class="slds-text-heading_medium" style="font-weight: bold;">{selectedEventName}</span>
+                <lightning-breadcrumbs>
+                    <lightning-breadcrumb label="Customer Centre" onclick={goToCustomerCenter}>
+                    </lightning-breadcrumb>
+                    <lightning-breadcrumb label="Customer Centre Settings" onclick={goToCustomerCenterSetting}>
+                    </lightning-breadcrumb>
+                    <lightning-breadcrumb label="Account Contacts">
+                    </lightning-breadcrumb>
+                </lightning-breadcrumbs>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" class="slds-p-horizontal_medium">
+                <lightning-tabset>
+                    <lightning-tab label="SETTINGS" value="t1">
+                        <lightning-tabset>
+                            <lightning-tab label="General">
+                                <c-ops_account-contacts-general></c-ops_account-contacts-general>
+                            </lightning-tab> 
+                            <lightning-tab label="Contact Management">
+                               <c-ops_account-contacts-management></c-ops_account-contacts-management>
+                            </lightning-tab>
+                        </lightning-tabset>
+                    </lightning-tab>
+                </lightning-tabset>
+            </lightning-layout-item>
+        </lightning-layout>
+    </article>
+</template>

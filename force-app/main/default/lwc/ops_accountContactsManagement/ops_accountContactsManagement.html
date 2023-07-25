@@ -1,0 +1,36 @@
+<template>
+    <article class="slds-card">
+        <div if:true={isLoading} class="slds-is-relative">
+            <lightning-spinner variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+        <lightning-layout multiple-rows="true" >
+            <lightning-layout-item size="12">
+                <lightning-record-edit-form onsuccess={onSuccess} onsubmit={onSubmit} onload={onLoad} onerror={onError}
+                     density="compact" class="contactForm"  record-id={esId} object-api-name="Event_Settings__c">
+                    <lightning-messages></lightning-messages>
+                    <lightning-input-field field-name="Is_Primary_Contact_Visibile__c" value="true" disabled></lightning-input-field>
+                    <lightning-input-field field-name="AccountPrimaryContactDescription__c"></lightning-input-field>
+                    <lightning-input-field field-name="Is_Invoice_Contact_Visible__c" value="true" disabled></lightning-input-field>
+                    <lightning-input-field field-name="AccountInvoiceContactDescription__c"></lightning-input-field>
+                    <lightning-input-field field-name="Is_Health_And_Safety_Contact_Visible__c"></lightning-input-field>
+                    <lightning-input-field field-name="AccountHealthSafetyContactDescription__c">
+                    </lightning-input-field>
+                    <span if:false={isLoading} class="divider"></span>
+                    <lightning-input-field field-name="Is_Operations_Contact_Visible__c" value="true" disabled></lightning-input-field>
+                    <lightning-input-field field-name="AccountOperationsContactDescription__c"></lightning-input-field>
+                    <span if:false={isLoading} class="subtitle">{label.Booth_Contact_Visibility_Description}</span>
+                    <span if:false={isLoading} class="message">{label.Booth_Contact_Description}</span>
+                    <lightning-input-field field-name="Is_Booth_Contact_Visible__c"></lightning-input-field>
+                    <lightning-input-field field-name="AccountBoothContactDescription__c"></lightning-input-field>
+                    <span if:false={isLoading} class="subtitle">{label.Booth_Contact_Visibility_Description}</span>
+                    <span if:false={isLoading} class="message">{label.Operation_Contact_Description}</span>
+                    <div class="slds-p-left_small slds-p-top_xx-large">
+                        <lightning-button label="Save" variant="brand" type="submit"></lightning-button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <lightning-button label="Cancel" variant="neutral" onclick={cancel}></lightning-button>
+                    </div>
+                </lightning-record-edit-form>
+            </lightning-layout-item>
+        </lightning-layout>
+    </article>
+</template>

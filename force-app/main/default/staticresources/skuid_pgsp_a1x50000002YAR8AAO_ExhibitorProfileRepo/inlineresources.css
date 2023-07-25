@@ -1,0 +1,141 @@
+#div.nx-basicfieldeditor-section-body>div.nx-basicfieldeditor-item>.nx-field, div.nx-basicfieldeditor-item>.nx-field {
+    width: 70%;
+    /* margin: 0px; */
+}
+
+#FieldEditor{
+    font-weight:bold;
+    line-height:2.2em;
+    font-size:15px;
+}
+
+#FieldEditor.nx-field{
+ margin-top:13px;   
+}
+
+#FieldEditor1{
+    font-weight:bold;
+    line-height:2.2em;
+    font-size:15px;
+}
+
+#FieldEditor1.nx-field{
+ margin-top:13px;   
+}
+
+.nx-basicfieldeditor-item.MainCSS{
+ margin-top:16px !important;   
+}
+.ui-dialog .ui-dialog-titlebar .ui-button.ui-dialog-titlebar-close .ui-icon {
+    visibility: visible !important; /* Use important in order to increase the Close size on Popup Window*/
+    font-size:25px;
+}
+.ui-dialog .ui-widget-header{
+    border-bottom: 0px !important;
+}
+#sk-CBE-2587{
+    margin-left: 40px;
+    margin-top: 20px;
+}
+.bradcom {
+    margin: 0px !important;
+
+background-image: url("../resource/bredcom_arrow") !important;
+background-repeat: no-repeat !important;
+background-position: right !important;
+color: #000 !important;
+border : none !important;
+padding: 0px !important;
+background-color: transparent !important;
+}
+
+.bradcom:hover {
+    background-image: url("../resource/bredcom_arrow_hover") !important;
+    background-repeat: no-repeat !important;
+    background-position: right !important;
+    background-color: transparent !important;
+}
+
+.bradcom span{
+line-height: 40px !important;
+width: auto !important;
+font-weight: 400 !important;
+}
+.BradComBorder {
+    border-top : 1px solid #ccc !important;
+    border-bottom : 1px solid #ccc !important;
+}
+
+.BradComBorder .sk-button-action{
+    margin-top : 0px !important;
+}
+.approved {
+    background: lightgreen;
+}
+.rejected
+{
+    background: red;
+}
+.yesButton .sk-button-action{
+    margin-top:14px;
+
+}
+.yesColor  {
+    background: gray !important;
+    
+}
+.approveColor{
+    background: lightgreen !important;
+}
+.rejectColor{
+    background: red !important;
+}
+.cancelColor{
+    background: gray !important;
+}
+.appRejColor{
+    background: lightgray !important;
+}
+.height
+{
+    height:25px;
+}
+
+.tableFooter .nx-list-footer .nx-list-footer-center {
+    visibility: hidden;
+}
+.ui-dialog .ui-dialog-titlebar .ui-button.ui-dialog-titlebar-close .ui-icon  {
+  
+    visibility: hidden;
+}
+.nx-conditioncontainer
+{
+    float:left;
+}
+.nx-basicfieldeditor-section-header{
+        padding-left: 0;
+}
+h1 { 
+    font-size: 30px;
+    font-weight: normal;
+    color: #333333;
+}
+h2 { 
+    font-size: 22px;
+    font-weight: bold;
+    color: #333333;
+}
+h3 { 
+    font-size: 14px;
+    font-weight: bold;
+    color: #333333;
+}
+p {
+    font-size:14px;
+    padding:0;
+}
+.cc-product-listings-added-text {
+    text-align: center;
+    font-size: 1.3em;
+    padding-bottom: 20px;
+}

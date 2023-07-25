@@ -1,0 +1,1807 @@
+<template>
+    <template if:true={isShowProductAgg_brasil}>
+         <div>
+        <template if:true={shoWAct}>
+        <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+            <lightning-layout-item size="9">
+            </lightning-layout-item>
+            <lightning-layout-item size="2" alignment-bump="right">
+                <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey}
+                    class="slds-float_right search-box" onchange={reloadData}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="1" alignment-bump="right">
+                <button class="slds-button slds-button_icon slds-button_icon-brand" title="Search" onclick={handleKeyChange}>
+                    <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+                </button>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+
+    <lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+        <lightning-layout-item size="12">
+            <lightning-datatable data={finalTableData} columns={columns} key-field="Id" hide-checkbox-column="true"
+                                 onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                                selected-rows={selectedRows}>
+            </lightning-datatable>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+            <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+                <tr style="border-block: 1px solid #e1e1e1">
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%;padding-left: 5px;">   
+                        {isoCode}  {totalAmount1}                     
+                        <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                    </td>
+                </tr>
+            </table>
+      
+</lightning-layout><br/><br/>
+
+    <lightning-layout horizontal-align="space" class="slds-float_left">
+                    Show  
+                    <lightning-combobox options={pagesizeList} value={pagesizeToVisible} label="Page Size" variant="label-hidden" onchange={onPageSizeChange} class="pagesize"></lightning-combobox> 
+                    Product per page.
+    </lightning-layout>
+
+    <lightning-layout horizontal-align="space" class="slds-float_right">
+
+        Showing Page {page} of {totalPage}
+
+        <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+            onclick={firstHandler} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+            onclick={previousHandler} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+        &nbsp;
+
+        <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+            onclick={nextHandler} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+            onclick={lastHandler} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    </lightning-layout>
+    </div><br/><br/>
+      </template>
+     <template if:true={isShowProductAgg_brasil1}>
+          <div>
+        <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+            <lightning-layout-item size="9">
+            </lightning-layout-item>
+            <lightning-layout-item size="2" alignment-bump="right">
+                <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey1}
+                    class="slds-float_right search-box" onchange={reloadData_A}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="1" alignment-bump="right">
+                <button class="slds-button slds-button_icon slds-button_icon-brand" title="Find" onclick={handleKeyChange1}>
+                    <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+                </button>
+            </lightning-layout-item>
+        </lightning-layout>
+    <lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+        <lightning-layout-item size="12">
+            <lightning-datatable data={finalTableData1} columns={columns} key-field="Id" hide-checkbox-column="true"
+                                 onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                                >
+            </lightning-datatable>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+    
+            <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+                <tr style="border-block: 1px solid #e1e1e1">
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%;padding-left: 5px;">   
+                        {isoCode} {totalAmount2}                     
+                        <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                    </td>
+                </tr>
+            </table>    
+</lightning-layout><br/><br/>
+    <lightning-layout horizontal-align="space" class="slds-float_left">
+                    Show  
+                    <lightning-combobox options={pagesizeList1} value={pagesizeToVisible1} label="Page Size" variant="label-hidden" onchange={onPageSizeChange1} class="pagesize"></lightning-combobox> 
+                    Product per page.
+    </lightning-layout>
+
+    <lightning-layout horizontal-align="space" class="slds-float_right">
+
+        Showing Page {page} of {totalPage}
+
+        <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+            onclick={firstHandler1} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+            onclick={previousHandler1} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+        &nbsp;
+
+        <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+            onclick={nextHandler1} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+            onclick={lastHandler1} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    </lightning-layout>
+    </div><br/><br/>
+      </template>
+    <template if:true={isShowProductAgg_brasil2}>
+        <div>
+        <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+            <lightning-layout-item size="9">
+            </lightning-layout-item>
+            <lightning-layout-item size="2" alignment-bump="right">
+                <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey2}
+                    class="slds-float_right search-box" onchange={reloadData_B}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="1" alignment-bump="right">
+                <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindB" onclick={handleKeyChange2}>
+                    <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+                </button>
+            </lightning-layout-item>
+        </lightning-layout>
+    <lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+        <lightning-layout-item size="12">
+            <lightning-datatable data={finalTableData2} columns={columns} key-field="Id" hide-checkbox-column="true"
+                                 onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                                >
+            </lightning-datatable>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+      
+            <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+                <tr style="border-block: 1px solid #e1e1e1">
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%;padding-left: 5px;">   
+                        {isoCode} {totalAmount3}                     
+                        <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                    </td>
+                </tr>
+            </table> 
+      
+</lightning-layout><br/><br/>
+
+    <lightning-layout horizontal-align="space" class="slds-float_left">
+                    Show  
+                    <lightning-combobox options={pagesizeList2} value={pagesizeToVisible2} label="Page Size" variant="label-hidden" onchange={onPageSizeChange2} class="pagesize"></lightning-combobox> 
+                    Product per page.
+    </lightning-layout>
+
+    <lightning-layout horizontal-align="space" class="slds-float_right">
+
+        Showing Page {page} of {totalPage}
+
+        <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+            onclick={firstHandler2} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+            onclick={previousHandler2} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+        &nbsp;
+
+        <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+            onclick={nextHandler2} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+            onclick={lastHandler2} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+    </lightning-layout>
+     </div><br/><br/>
+      </template>
+    <template if:true={isShowProductAgg_brasil3}>
+        <div>
+        <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+            <lightning-layout-item size="9">
+            </lightning-layout-item>
+            <lightning-layout-item size="2" alignment-bump="right">
+                <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey3}
+                    class="slds-float_right search-box" onchange={reloadData_C}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="1" alignment-bump="right">
+                <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindC" onclick={handleKeyChange3}>
+                    <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+                </button>
+            </lightning-layout-item>
+        </lightning-layout>
+    <lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+        <lightning-layout-item size="12">
+            <lightning-datatable data={finalTableData3} columns={columns} key-field="Id" hide-checkbox-column="true"
+                                 onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                                >
+            </lightning-datatable>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+     
+            <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+                <tr style="border-block: 1px solid #e1e1e1">
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%;padding-left: 5px;">   
+                        {isoCode} {totalAmount4}                     
+                        <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                    </td>
+                </tr>
+            </table>
+          
+</lightning-layout><br/><br/>
+
+    <lightning-layout horizontal-align="space" class="slds-float_left">
+                    Show  
+                    <lightning-combobox options={pagesizeList3} value={pagesizeToVisible3} label="Page Size" variant="label-hidden" onchange={onPageSizeChange3} class="pagesize"></lightning-combobox> 
+                    Product per page.
+    </lightning-layout>
+
+    <lightning-layout horizontal-align="space" class="slds-float_right">
+
+        Showing Page {page} of {totalPage}
+
+        <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+            onclick={firstHandler3} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+            onclick={previousHandler3} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+        &nbsp;
+
+        <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+            onclick={nextHandler3} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+            onclick={lastHandler3} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+    </lightning-layout>
+    </div><br/><br/>
+      </template>
+    <template if:true={isShowProductAgg_brasil4}>
+        <div>
+        <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+            <lightning-layout-item size="9">
+            </lightning-layout-item>
+            <lightning-layout-item size="2" alignment-bump="right">
+                <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey4}
+                    class="slds-float_right search-box" onchange={reloadData_D}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="1" alignment-bump="right">
+                <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindD" onclick={handleKeyChange4}>
+                    <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+                </button>
+            </lightning-layout-item>
+        </lightning-layout>
+    <lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+        <lightning-layout-item size="12">
+            <lightning-datatable data={finalTableData4} columns={columns} key-field="Id" hide-checkbox-column="true"
+                                 onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                                >
+            </lightning-datatable>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+      
+            <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+                <tr style="border-block: 1px solid #e1e1e1">
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%;padding-left: 5px;">   
+                        {isoCode} {totalAmount5}                     
+                        <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                    </td>
+                </tr>
+            </table>
+         
+</lightning-layout><br/><br/>
+
+    <lightning-layout horizontal-align="space" class="slds-float_left">
+                    Show  
+                    <lightning-combobox options={pagesizeList4} value={pagesizeToVisible4} label="Page Size" variant="label-hidden" onchange={onPageSizeChange4} class="pagesize"></lightning-combobox> 
+                    Product per page.
+    </lightning-layout>
+
+    <lightning-layout horizontal-align="space" class="slds-float_right">
+
+        Showing Page {page} of {totalPage}
+
+        <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+            onclick={firstHandler4} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+            onclick={previousHandler4} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+        &nbsp;
+
+        <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+            onclick={nextHandler4} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+            onclick={lastHandler4} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+    </lightning-layout>
+    </div><br/><br/>
+      </template>
+    <template if:true={isShowProductAgg_brasil5}>
+          <div>
+        <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+            <lightning-layout-item size="9">
+            </lightning-layout-item>
+            <lightning-layout-item size="2" alignment-bump="right">
+                <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey5}
+                    class="slds-float_right search-box" onchange={reloadData_E}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="1" alignment-bump="right">
+                <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindE" onclick={handleKeyChange5}>
+                    <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+                </button>
+            </lightning-layout-item>
+        </lightning-layout>
+    <lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+        <lightning-layout-item size="12">
+            <lightning-datatable data={finalTableData5} columns={columns} key-field="Id" hide-checkbox-column="true"
+                                 onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                                >
+            </lightning-datatable>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+    
+            <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+                <tr style="border-block: 1px solid #e1e1e1">
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%;padding-left: 5px;">   
+                        {isoCode} {totalAmount6}                     
+                        <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                    </td>
+                </tr>
+            </table>
+        
+</lightning-layout><br/><br/>
+
+    <lightning-layout horizontal-align="space" class="slds-float_left">
+                    Show  
+                    <lightning-combobox options={pagesizeList5} value={pagesizeToVisible5} label="Page Size" variant="label-hidden" onchange={onPageSizeChange5} class="pagesize"></lightning-combobox> 
+                    Product per page.
+    </lightning-layout>
+
+    <lightning-layout horizontal-align="space" class="slds-float_right">
+
+        Showing Page {page} of {totalPage}
+
+        <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+            onclick={firstHandler5} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+            onclick={previousHandler5} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+        &nbsp;
+
+        <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+            onclick={nextHandler5} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+            onclick={lastHandler5} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+    </lightning-layout>
+      </div><br/><br/>
+      </template>
+    <template if:true={isShowProductAgg_brasil6}>
+          <div>
+        <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+            <lightning-layout-item size="9">
+            </lightning-layout-item>
+            <lightning-layout-item size="2" alignment-bump="right">
+                <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey6}
+                    class="slds-float_right search-box" onchange={reloadData_F}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="1" alignment-bump="right">
+                <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindF" onclick={handleKeyChange6}>
+                    <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+                </button>
+            </lightning-layout-item>
+        </lightning-layout>
+    <lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+        <lightning-layout-item size="12">
+            <lightning-datatable data={finalTableData6} columns={columns} key-field="Id" hide-checkbox-column="true"
+                                 onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                                >
+            </lightning-datatable>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+    
+            <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+                <tr style="border-block: 1px solid #e1e1e1">
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%;padding-left: 5px;">   
+                        {isoCode} {totalAmount7}                     
+                        <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                    </td>
+                </tr>
+            </table>
+        
+</lightning-layout><br/><br/>
+
+    <lightning-layout horizontal-align="space" class="slds-float_left">
+                    Show  
+                    <lightning-combobox options={pagesizeList6} value={pagesizeToVisible6} label="Page Size" variant="label-hidden" onchange={onPageSizeChange6} class="pagesize"></lightning-combobox> 
+                    Product per page.
+    </lightning-layout>
+
+    <lightning-layout horizontal-align="space" class="slds-float_right">
+
+        Showing Page {page} of {totalPage}
+
+        <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+            onclick={firstHandler6} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+            onclick={previousHandler6} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+        &nbsp;
+
+        <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+            onclick={nextHandler6} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+            onclick={lastHandler6} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+    </lightning-layout>
+      </div><br/><br/>
+      </template>
+    <template if:true={isShowProductAgg_brasil7}>          
+      <div>
+        <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+            <lightning-layout-item size="9">
+            </lightning-layout-item>
+            <lightning-layout-item size="2" alignment-bump="right">
+                <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey7}
+                    class="slds-float_right search-box" onchange={reloadData_G}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="1" alignment-bump="right">
+                <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindG" onclick={handleKeyChange7}>
+                    <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+                </button>
+            </lightning-layout-item>
+        </lightning-layout>
+    <lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+        <lightning-layout-item size="12">
+            <lightning-datatable data={finalTableData7} columns={columns} key-field="Id" hide-checkbox-column="true"
+                                 onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                                >
+            </lightning-datatable>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+    
+            <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+                <tr style="border-block: 1px solid #e1e1e1">
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%;padding-left: 5px;">   
+                        {isoCode} {totalAmount8}                     
+                        <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                    </td>
+                </tr>
+            </table>
+        
+</lightning-layout><br/><br/>
+
+    <lightning-layout horizontal-align="space" class="slds-float_left">
+                    Show  
+                    <lightning-combobox options={pagesizeList7} value={pagesizeToVisible7} label="Page Size" variant="label-hidden" onchange={onPageSizeChange7} class="pagesize"></lightning-combobox> 
+                    Product per page.
+    </lightning-layout>
+
+    <lightning-layout horizontal-align="space" class="slds-float_right">
+
+        Showing Page {page} of {totalPage}
+
+        <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+            onclick={firstHandler7} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+            onclick={previousHandler7} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+        &nbsp;
+
+        <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+            onclick={nextHandler7} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+            onclick={lastHandler7} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+    </lightning-layout>
+    </div><br/><br/>
+      </template>
+    <template if:true={isShowProductAgg_brasil8}>
+          <div>
+        <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+            <lightning-layout-item size="9">
+            </lightning-layout-item>
+            <lightning-layout-item size="2" alignment-bump="right">
+                <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey8}
+                    class="slds-float_right search-box" onchange={reloadData_H}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="1" alignment-bump="right">
+                <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindH" onclick={handleKeyChange8}>
+                    <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+                </button>
+            </lightning-layout-item>
+        </lightning-layout>
+    <lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+        <lightning-layout-item size="12">
+            <lightning-datatable data={finalTableData8} columns={columns} key-field="Id" hide-checkbox-column="true"
+                                 onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                                >
+            </lightning-datatable>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+    
+            <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+                <tr style="border-block: 1px solid #e1e1e1">
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%;padding-left: 5px;">   
+                        {isoCode} {totalAmount9}                     
+                        <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                    </td>
+                </tr>
+            </table>
+        
+</lightning-layout><br/><br/>
+
+    <lightning-layout horizontal-align="space" class="slds-float_left">
+                    Show  
+                    <lightning-combobox options={pagesizeList8} value={pagesizeToVisible8} label="Page Size" variant="label-hidden" onchange={onPageSizeChange8} class="pagesize"></lightning-combobox> 
+                    Product per page.
+    </lightning-layout>
+
+    <lightning-layout horizontal-align="space" class="slds-float_right">
+
+        Showing Page {page} of {totalPage}
+
+        <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+            onclick={firstHandler8} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+            onclick={previousHandler8} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+        &nbsp;
+
+        <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+            onclick={nextHandler8} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+            onclick={lastHandler8} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+    </lightning-layout>
+    </div><br/><br/>
+      </template>
+      
+    <template if:true={isShowProductAgg_brasil9}>
+           <div>
+        <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+            <lightning-layout-item size="9">
+            </lightning-layout-item>
+            <lightning-layout-item size="2" alignment-bump="right">
+                <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey9}
+                    class="slds-float_right search-box" onchange={reloadData_I}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="1" alignment-bump="right">
+                <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindI" onclick={handleKeyChange9}>
+                    <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+                </button>
+            </lightning-layout-item>
+        </lightning-layout>
+    <lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+        <lightning-layout-item size="12">
+            <lightning-datatable data={finalTableData9} columns={columns} key-field="Id" hide-checkbox-column="true"
+                                 onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                                >
+            </lightning-datatable>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+            <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+                <tr style="border-block: 1px solid #e1e1e1">
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%;padding-left: 5px;">   
+                        {isoCode} {totalAmount10}                     
+                        <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                    </td>
+                </tr>
+            </table>
+        
+</lightning-layout><br/><br/>
+
+    <lightning-layout horizontal-align="space" class="slds-float_left">
+                    Show  
+                    <lightning-combobox options={pagesizeList9} value={pagesizeToVisible9} label="Page Size" variant="label-hidden" onchange={onPageSizeChange9} class="pagesize"></lightning-combobox> 
+                    Product per page.
+    </lightning-layout>
+
+    <lightning-layout horizontal-align="space" class="slds-float_right">
+
+        Showing Page {page} of {totalPage}
+
+        <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+            onclick={firstHandler9} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+            onclick={previousHandler9} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+        &nbsp;
+
+        <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+            onclick={nextHandler9} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+            onclick={lastHandler9} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+    </lightning-layout>
+     </div><br/><br/>
+      </template>
+
+    <template if:true={isShowProductAgg_brasil10}>
+           <div>
+        <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+            <lightning-layout-item size="9">
+            </lightning-layout-item>
+            <lightning-layout-item size="2" alignment-bump="right">
+                <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey10}
+                    class="slds-float_right search-box" onchange={reloadData_J}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="1" alignment-bump="right">
+                <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindJ" onclick={handleKeyChange10}>
+                    <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+                </button>
+            </lightning-layout-item>
+        </lightning-layout>
+    <lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+        <lightning-layout-item size="12">
+            <lightning-datatable data={finalTableData10} columns={columns} key-field="Id" hide-checkbox-column="true"
+                                 onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                                >
+            </lightning-datatable>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+    
+            <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+                <tr style="border-block: 1px solid #e1e1e1">
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%;padding-left: 5px;">   
+                        {isoCode} {totalAmount11}                     
+                        <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                    </td>
+                </tr>
+            </table>
+        
+</lightning-layout><br/><br/>
+
+    <lightning-layout horizontal-align="space" class="slds-float_left">
+                    Show  
+                    <lightning-combobox options={pagesizeList10} value={pagesizeToVisible10} label="Page Size" variant="label-hidden" onchange={onPageSizeChange10} class="pagesize"></lightning-combobox> 
+                    Product per page.
+    </lightning-layout>
+
+    <lightning-layout horizontal-align="space" class="slds-float_right">
+
+        Showing Page {page} of {totalPage}
+
+        <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+            onclick={firstHandler10} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+            onclick={previousHandler10} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+        &nbsp;
+
+        <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+            onclick={nextHandler10} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+            onclick={lastHandler10} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+    </lightning-layout>
+     </div><br/><br/>
+      </template>
+    <template if:true={isShowProductAgg_brasil11}>
+           <div>
+        <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+            <lightning-layout-item size="9">
+            </lightning-layout-item>
+            <lightning-layout-item size="2" alignment-bump="right">
+                <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey11}
+                    class="slds-float_right search-box" onchange={reloadData_K}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="1" alignment-bump="right">
+                <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindK" onclick={handleKeyChange11}>
+                    <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+                </button>
+            </lightning-layout-item>
+        </lightning-layout>
+    <lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+        <lightning-layout-item size="12">
+            <lightning-datatable data={finalTableData11} columns={columns} key-field="Id" hide-checkbox-column="true"
+                                 onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                                >
+            </lightning-datatable>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+    
+            <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+                <tr style="border-block: 1px solid #e1e1e1">
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%">&nbsp;</td>
+                    <td style="width:12.5%;padding-left: 5px;">   
+                        {isoCode} {totalAmount12}                     
+                        <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                    </td>
+                </tr>
+            </table>
+        
+</lightning-layout><br/><br/>
+
+    <lightning-layout horizontal-align="space" class="slds-float_left">
+                    Show  
+                    <lightning-combobox options={pagesizeList11} value={pagesizeToVisible11} label="Page Size" variant="label-hidden" onchange={onPageSizeChange11} class="pagesize"></lightning-combobox> 
+                    Product per page.
+    </lightning-layout>
+
+    <lightning-layout horizontal-align="space" class="slds-float_right">
+
+        Showing Page {page} of {totalPage}
+
+        <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+            onclick={firstHandler11} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+            onclick={previousHandler11} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+        &nbsp;
+
+        <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+            onclick={nextHandler11} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+        <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+            onclick={lastHandler11} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+    </lightning-layout>
+     </div><br/><br/>
+      </template>
+    <template if:true={isShowProductAgg_brasil12}>
+         <div>
+    <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+        <lightning-layout-item size="9">
+        </lightning-layout-item>
+        <lightning-layout-item size="2" alignment-bump="right">
+            <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey12}
+                class="slds-float_right search-box" onchange={reloadData_L}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="1" alignment-bump="right">
+            <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindL" onclick={handleKeyChange12}>
+                <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+            </button>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+    <lightning-layout-item size="12">
+        <lightning-datatable data={finalTableData12} columns={columns} key-field="Id" hide-checkbox-column="true"
+                             onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                            >
+        </lightning-datatable>
+    </lightning-layout-item>
+</lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+        <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+            <tr style="border-block: 1px solid #e1e1e1">
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%;padding-left: 5px;">   
+                    {isoCode} {totalAmount13}                     
+                    <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                </td>
+            </tr>
+        </table>
+    
+</lightning-layout><br/><br/>
+
+<lightning-layout horizontal-align="space" class="slds-float_left">
+                Show  
+                <lightning-combobox options={pagesizeList12} value={pagesizeToVisible12} label="Page Size" variant="label-hidden" onchange={onPageSizeChange12} class="pagesize"></lightning-combobox> 
+                Product per page.
+</lightning-layout>
+
+<lightning-layout horizontal-align="space" class="slds-float_right">
+    Showing Page {page} of {totalPage}
+
+    <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+        onclick={firstHandler12} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+        onclick={previousHandler12} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+    &nbsp;
+
+    <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+        onclick={nextHandler12} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+        onclick={lastHandler12} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+</lightning-layout>
+ </div><br/><br/>
+  </template>
+
+<template if:true={isShowProductAgg_brasil13}>
+     <div>
+    <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+        <lightning-layout-item size="9">
+        </lightning-layout-item>
+        <lightning-layout-item size="2" alignment-bump="right">
+            <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey13}
+                class="slds-float_right search-box" onchange={reloadData_M}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="1" alignment-bump="right">
+            <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindM" onclick={handleKeyChange13}>
+                <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+            </button>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+    <lightning-layout-item size="12">
+        <lightning-datatable data={finalTableData13} columns={columns} key-field="Id" hide-checkbox-column="true"
+                             onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                            >
+        </lightning-datatable>
+    </lightning-layout-item>
+</lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+        <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+            <tr style="border-block: 1px solid #e1e1e1">
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%;padding-left: 5px;">   
+                    {isoCode} {totalAmount14}                     
+                    <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                </td>
+            </tr>
+        </table>
+    
+</lightning-layout><br/><br/>
+
+<lightning-layout horizontal-align="space" class="slds-float_left">
+                Show  
+                <lightning-combobox options={pagesizeList13} value={pagesizeToVisible13} label="Page Size" variant="label-hidden" onchange={onPageSizeChange13} class="pagesize"></lightning-combobox> 
+                Product per page.
+</lightning-layout>
+
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+    Showing Page {page} of {totalPage}
+
+    <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+        onclick={firstHandler13} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+        onclick={previousHandler13} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+    &nbsp;
+
+    <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+        onclick={nextHandler13} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+        onclick={lastHandler13} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+</lightning-layout>
+</div><br/><br/>
+  </template>
+
+<template if:true={isShowProductAgg_brasil14}>
+      <div>
+    <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+        <lightning-layout-item size="9">
+        </lightning-layout-item>
+        <lightning-layout-item size="2" alignment-bump="right">
+            <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey14}
+                class="slds-float_right search-box" onchange={reloadData_N}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="1" alignment-bump="right">
+            <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindN" onclick={handleKeyChange14}>
+                <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+            </button>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+    <lightning-layout-item size="12">
+        <lightning-datatable data={finalTableData14} columns={columns} key-field="Id" hide-checkbox-column="true"
+                             onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                            >
+        </lightning-datatable>
+    </lightning-layout-item>
+</lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+        <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+            <tr style="border-block: 1px solid #e1e1e1">
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%;padding-left: 5px;">   
+                    {isoCode} {totalAmount15}                     
+                    <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                </td>
+            </tr>
+        </table>
+</lightning-layout><br/><br/>
+
+<lightning-layout horizontal-align="space" class="slds-float_left">
+                Show  
+                <lightning-combobox options={pagesizeList14} value={pagesizeToVisible14} label="Page Size" variant="label-hidden" onchange={onPageSizeChange14} class="pagesize"></lightning-combobox> 
+                Product per page.
+</lightning-layout>
+
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+    Showing Page {page} of {totalPage}
+
+    <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+        onclick={firstHandler14} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+        onclick={previousHandler14} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+    &nbsp;
+
+    <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+        onclick={nextHandler14} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+        onclick={lastHandler14} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+</lightning-layout>
+</div><br/><br/>
+  </template>
+
+<template if:true={isShowProductAgg_brasil15}>
+    <div>  
+    <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+        <lightning-layout-item size="9">
+        </lightning-layout-item>
+        <lightning-layout-item size="2" alignment-bump="right">
+            <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey15}
+                class="slds-float_right search-box" onchange={reloadData_O}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="1" alignment-bump="right">
+            <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindO" onclick={handleKeyChange15}>
+                <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+            </button>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+    <lightning-layout-item size="12">
+        <lightning-datatable data={finalTableData15} columns={columns} key-field="Id" hide-checkbox-column="true"
+                             onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                            >
+        </lightning-datatable>
+    </lightning-layout-item>
+</lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+        <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+            <tr style="border-block: 1px solid #e1e1e1">
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%;padding-left: 5px;">   
+                    {isoCode} {totalAmount16}                     
+                    <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                </td>
+            </tr>
+        </table>
+    
+</lightning-layout><br/><br/>
+
+<lightning-layout horizontal-align="space" class="slds-float_left">
+                Show  
+                <lightning-combobox options={pagesizeList15} value={pagesizeToVisible15} label="Page Size" variant="label-hidden" onchange={onPageSizeChange15} class="pagesize"></lightning-combobox> 
+                Product per page.
+</lightning-layout>
+
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+    Showing Page {page} of {totalPage}
+
+    <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+        onclick={firstHandler15} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+        onclick={previousHandler15} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+    &nbsp;
+
+    <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+        onclick={nextHandler15} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+        onclick={lastHandler15} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+</lightning-layout>
+</div><br/><br/>
+  </template>
+  
+<template if:true={isShowProductAgg_brasil16}>
+     <div>
+    <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+        <lightning-layout-item size="9">
+        </lightning-layout-item>
+        <lightning-layout-item size="2" alignment-bump="right">
+            <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey16}
+                class="slds-float_right search-box" onchange={reloadData_P}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="1" alignment-bump="right">
+            <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindP" onclick={handleKeyChange16}>
+                <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+            </button>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+    <lightning-layout-item size="12">
+        <lightning-datatable data={finalTableData16} columns={columns} key-field="Id" hide-checkbox-column="true"
+                             onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                            >
+        </lightning-datatable>
+    </lightning-layout-item>
+</lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+        <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+            <tr style="border-block: 1px solid #e1e1e1">
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%;padding-left: 5px;">   
+                    {isoCode} {totalAmount17}                     
+                    <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                </td>
+            </tr>
+        </table>
+    
+</lightning-layout><br/><br/>
+
+<lightning-layout horizontal-align="space" class="slds-float_left">
+                Show  
+                <lightning-combobox options={pagesizeList16} value={pagesizeToVisible16} label="Page Size" variant="label-hidden" onchange={onPageSizeChange16} class="pagesize"></lightning-combobox> 
+                Product per page.
+</lightning-layout>
+
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+    Showing Page {page} of {totalPage}
+
+    <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+        onclick={firstHandler16} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+        onclick={previousHandler16} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+    &nbsp;
+
+    <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+        onclick={nextHandler16} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+        onclick={lastHandler16} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+</lightning-layout>
+</div><br/><br/>
+  </template>
+  
+<template if:true={isShowProductAgg_brasil17}>
+     <div>
+    <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+        <lightning-layout-item size="9">
+        </lightning-layout-item>
+        <lightning-layout-item size="2" alignment-bump="right">
+            <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey17}
+                class="slds-float_right search-box" onchange={reloadData_Q}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="1" alignment-bump="right">
+            <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindQ" onclick={handleKeyChange17}>
+                <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+            </button>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+    <lightning-layout-item size="12">
+        <lightning-datatable data={finalTableData17} columns={columns} key-field="Id" hide-checkbox-column="true"
+                             onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                            >
+        </lightning-datatable>
+    </lightning-layout-item>
+</lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+        <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+            <tr style="border-block: 1px solid #e1e1e1">
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%;padding-left: 5px;">   
+                    {isoCode} {totalAmount18}                     
+                    <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                </td>
+            </tr>
+        </table>
+    
+</lightning-layout><br/><br/>
+
+<lightning-layout horizontal-align="space" class="slds-float_left">
+                Show  
+                <lightning-combobox options={pagesizeList17} value={pagesizeToVisible17} label="Page Size" variant="label-hidden" onchange={onPageSizeChange17} class="pagesize"></lightning-combobox> 
+                Product per page.
+</lightning-layout>
+
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+    Showing Page {page} of {totalPage}
+
+    <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+        onclick={firstHandler17} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+        onclick={previousHandler17} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+    &nbsp;
+
+    <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+        onclick={nextHandler17} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+        onclick={lastHandler17} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+</lightning-layout>
+ </div><br/><br/>
+  </template>
+<template if:true={isShowProductAgg_brasil18}>
+      <div>
+    <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+        <lightning-layout-item size="9">
+        </lightning-layout-item>
+        <lightning-layout-item size="2" alignment-bump="right">
+            <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey18}
+                class="slds-float_right search-box" onchange={reloadData_R}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="1" alignment-bump="right">
+            <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindR" onclick={handleKeyChange18}>
+                <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+            </button>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+    <lightning-layout-item size="12">
+        <lightning-datatable data={finalTableData18} columns={columns} key-field="Id" hide-checkbox-column="true"
+                             onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                            >
+        </lightning-datatable>
+    </lightning-layout-item>
+</lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+        <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+            <tr style="border-block: 1px solid #e1e1e1">
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%;padding-left: 5px;">   
+                    {isoCode} {totalAmount19}                     
+                    <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                </td>
+            </tr>
+        </table>
+    
+</lightning-layout><br/><br/>
+
+<lightning-layout horizontal-align="space" class="slds-float_left">
+                Show  
+                <lightning-combobox options={pagesizeList18} value={pagesizeToVisible18} label="Page Size" variant="label-hidden" onchange={onPageSizeChange18} class="pagesize"></lightning-combobox> 
+                Product per page.
+</lightning-layout>
+
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+    Showing Page {page} of {totalPage}
+
+    <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+        onclick={firstHandler18} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+        onclick={previousHandler18} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+    &nbsp;
+
+    <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+        onclick={nextHandler18} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+        onclick={lastHandler18} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+</lightning-layout>
+ </div><br/><br/>
+  </template>
+
+<template if:true={isShowProductAgg_brasil19}>
+      <div>
+    <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+        <lightning-layout-item size="9">
+        </lightning-layout-item>
+        <lightning-layout-item size="2" alignment-bump="right">
+            <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey19}
+                class="slds-float_right search-box" onchange={reloadData_S}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="1" alignment-bump="right">
+            <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindS" onclick={handleKeyChange19}>
+                <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+            </button>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+    <lightning-layout-item size="12">
+        <lightning-datatable data={finalTableData19} columns={columns} key-field="Id" hide-checkbox-column="true"
+                             onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                            >
+        </lightning-datatable>
+    </lightning-layout-item>
+</lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+        <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+            <tr style="border-block: 1px solid #e1e1e1">
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%;padding-left: 5px;">   
+                    {isoCode} {totalAmount20}                     
+                    <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                </td>
+            </tr>
+        </table>
+    
+</lightning-layout><br/><br/>
+
+<lightning-layout horizontal-align="space" class="slds-float_left">
+                Show  
+                <lightning-combobox options={pagesizeList19} value={pagesizeToVisible19} label="Page Size" variant="label-hidden" onchange={onPageSizeChange19} class="pagesize"></lightning-combobox> 
+                Product per page.
+</lightning-layout>
+
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+    Showing Page {page} of {totalPage}
+
+    <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+        onclick={firstHandler19} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+        onclick={previousHandler19} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+    &nbsp;
+
+    <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+        onclick={nextHandler19} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+        onclick={lastHandler19} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+</lightning-layout>
+  </div><br/><br/>
+  </template>
+
+<template if:true={isShowProductAgg_brasil20}>
+    <div>
+    <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+        <lightning-layout-item size="9">
+        </lightning-layout-item>
+        <lightning-layout-item size="2" alignment-bump="right">
+            <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey20}
+                class="slds-float_right search-box" onchange={reloadData_T}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="1" alignment-bump="right">
+            <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindT" onclick={handleKeyChange20}>
+                <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+            </button>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+    <lightning-layout-item size="12">
+        <lightning-datatable data={finalTableData20} columns={columns} key-field="Id" hide-checkbox-column="true"
+                             onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                            >
+        </lightning-datatable>
+    </lightning-layout-item>
+</lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+        <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+            <tr style="border-block: 1px solid #e1e1e1">
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%;padding-left: 5px;">   
+                    {isoCode} {totalAmount21}                     
+                    <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                </td>
+            </tr>
+        </table>
+    
+</lightning-layout><br/><br/>
+
+<lightning-layout horizontal-align="space" class="slds-float_left">
+                Show  
+                <lightning-combobox options={pagesizeList20} value={pagesizeToVisible20} label="Page Size" variant="label-hidden" onchange={onPageSizeChange20} class="pagesize"></lightning-combobox> 
+                Product per page.
+</lightning-layout>
+
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+    Showing Page {page} of {totalPage}
+
+    <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+        onclick={firstHandler20} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+        onclick={previousHandler20} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+    &nbsp;
+
+    <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+        onclick={nextHandler20} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+        onclick={lastHandler20} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+</lightning-layout>
+</div><br/><br/>
+  </template>
+  
+<template if:true={isShowProductAgg_brasil21}>
+      <div>
+    <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+        <lightning-layout-item size="9">
+        </lightning-layout-item>
+        <lightning-layout-item size="2" alignment-bump="right">
+            <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey21}
+                class="slds-float_right search-box" onchange={reloadData_U}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="1" alignment-bump="right">
+            <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindU" onclick={handleKeyChange21}>
+                <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+            </button>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+    <lightning-layout-item size="12">
+        <lightning-datatable data={finalTableData21} columns={columns} key-field="Id" hide-checkbox-column="true"
+                             onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                            >
+        </lightning-datatable>
+    </lightning-layout-item>
+</lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+        <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+            <tr style="border-block: 1px solid #e1e1e1">
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%;padding-left: 5px;">   
+                    {isoCode} {totalAmount22}                     
+                    <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                </td>
+            </tr>
+        </table> 
+</lightning-layout><br/><br/>
+
+<lightning-layout horizontal-align="space" class="slds-float_left">
+                Show  
+                <lightning-combobox options={pagesizeList21} value={pagesizeToVisible21} label="Page Size" variant="label-hidden" onchange={onPageSizeChange21} class="pagesize"></lightning-combobox> 
+                Product per page.
+</lightning-layout>
+
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+    Showing Page {page} of {totalPage}
+
+    <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+        onclick={firstHandler21} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+        onclick={previousHandler21} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+    &nbsp;
+
+    <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+        onclick={nextHandler21} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+        onclick={lastHandler21} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+</lightning-layout>
+</div><br/><br/>
+  </template>
+  
+<template if:true={isShowProductAgg_brasil22}>
+      <div>
+    <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+        <lightning-layout-item size="9">
+        </lightning-layout-item>
+        <lightning-layout-item size="2" alignment-bump="right">
+            <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey22}
+                class="slds-float_right search-box" onchange={reloadData_V}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="1" alignment-bump="right">
+            <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindV" onclick={handleKeyChange22}>
+                <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+            </button>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+    <lightning-layout-item size="12">
+        <lightning-datatable data={finalTableData22} columns={columns} key-field="Id" hide-checkbox-column="true"
+                             onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                            >
+        </lightning-datatable>
+    </lightning-layout-item>
+</lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+        <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+            <tr style="border-block: 1px solid #e1e1e1">
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%;padding-left: 5px;">   
+                    {isoCode} {totalAmount23}                     
+                    <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                </td>
+            </tr>
+        </table>
+    
+</lightning-layout><br/><br/>
+<lightning-layout horizontal-align="space" class="slds-float_left">
+                Show  
+                <lightning-combobox options={pagesizeList22} value={pagesizeToVisible22} label="Page Size" variant="label-hidden" onchange={onPageSizeChange22} class="pagesize"></lightning-combobox> 
+                Product per page.
+</lightning-layout>
+
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+    Showing Page {page} of {totalPage}
+
+    <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+        onclick={firstHandler22} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+        onclick={previousHandler22} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+    &nbsp;
+
+    <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+        onclick={nextHandler22} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+        onclick={lastHandler22} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+</lightning-layout>
+  </div><br/><br/>
+  </template>
+
+<template if:true={isShowProductAgg_brasil23}>
+      <div>
+    <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+        <lightning-layout-item size="9">
+        </lightning-layout-item>
+        <lightning-layout-item size="2" alignment-bump="right">
+            <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey23}
+                class="slds-float_right search-box" onchange={reloadData_W}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="1" alignment-bump="right">
+            <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindW" onclick={handleKeyChange23}>
+                <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+            </button>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+    <lightning-layout-item size="12">
+        <lightning-datatable data={finalTableData23} columns={columns} key-field="Id" hide-checkbox-column="true"
+                             onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                            >
+        </lightning-datatable>
+    </lightning-layout-item>
+</lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+        <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+            <tr style="border-block: 1px solid #e1e1e1">
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%;padding-left: 5px;">   
+                    {isoCode} {totalAmount24}                     
+                    <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                </td>
+            </tr>
+        </table>
+    
+</lightning-layout><br/><br/>
+
+<lightning-layout horizontal-align="space" class="slds-float_left">
+                Show  
+                <lightning-combobox options={pagesizeList23} value={pagesizeToVisible23} label="Page Size" variant="label-hidden" onchange={onPageSizeChange23} class="pagesize"></lightning-combobox> 
+                Product per page.
+</lightning-layout>
+
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+    Showing Page {page} of {totalPage}
+
+    <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+        onclick={firstHandler23} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+        onclick={previousHandler23} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+    &nbsp;
+
+    <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+        onclick={nextHandler23} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+        onclick={lastHandler23} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+</lightning-layout>
+</div><br/><br/>
+  </template>
+  
+
+<template if:true={isShowProductAgg_brasil24}>
+      <div>
+    <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+        <lightning-layout-item size="9">
+        </lightning-layout-item>
+        <lightning-layout-item size="2" alignment-bump="right">
+            <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey24}
+                class="slds-float_right search-box" onchange={reloadData_X}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="1" alignment-bump="right">
+            <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindX" onclick={handleKeyChange24}>
+                <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+            </button>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+    <lightning-layout-item size="12">
+        <lightning-datatable data={finalTableData24} columns={columns} key-field="Id" hide-checkbox-column="true"
+                             onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                            >
+        </lightning-datatable>
+    </lightning-layout-item>
+</lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+        <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+            <tr style="border-block: 1px solid #e1e1e1">
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%;padding-left: 5px;">   
+                    {isoCode} {totalAmount25}                     
+                    <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                </td>
+            </tr>
+        </table>
+    
+</lightning-layout><br/><br/>
+
+<lightning-layout horizontal-align="space" class="slds-float_left">
+                Show  
+                <lightning-combobox options={pagesizeList24} value={pagesizeToVisible24} label="Page Size" variant="label-hidden" onchange={onPageSizeChange24} class="pagesize"></lightning-combobox> 
+                Product per page.
+</lightning-layout>
+
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+    Showing Page {page} of {totalPage}
+
+    <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+        onclick={firstHandler24} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+        onclick={previousHandler24} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+    &nbsp;
+
+    <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+        onclick={nextHandler24} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+        onclick={lastHandler24} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+</lightning-layout>
+ </div><br/><br/>
+  </template>
+
+<template if:true={isShowProductAgg_brasil25}>
+      <div>
+    <lightning-layout horizontal-align="spread" style="margin-bottom: 10px;">
+        <lightning-layout-item size="9">
+        </lightning-layout-item>
+        <lightning-layout-item size="2" alignment-bump="right">
+            <lightning-input type="search" label="Search" placeholder="Search" variant="label-hidden" value={searchKey25}
+                class="slds-float_right search-box" onchange={reloadData_Y}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="1" alignment-bump="right">
+            <button class="slds-button slds-button_icon slds-button_icon-brand" title="FindY" onclick={handleKeyChange25}>
+                <lightning-icon icon-name="utility:search" size="xx-small" variant="bare"></lightning-icon>
+            </button>
+        </lightning-layout-item>
+    </lightning-layout>
+<lightning-layout class="slds-m-bottom_small common-table" multiple-rows="true">
+
+    <lightning-layout-item size="12">
+        <lightning-datatable data={finalTableData25} columns={columns} key-field="Id" hide-checkbox-column="true"
+                             onsave={handleSave} draft-values={draftValues} show-row-number-column="false"
+                            >
+        </lightning-datatable>
+    </lightning-layout-item>
+</lightning-layout>
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+        <table style="width:100%" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+            <tr style="border-block: 1px solid #e1e1e1">
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%">&nbsp;</td>
+                <td style="width:12.5%;padding-left: 5px;">   
+                    {isoCode} {totalAmount26}                     
+                    <!--<lightning-formatted-number value={totalAmount} format-style="currency" currency-code="USD" currency-display-as="code"></lightning-formatted-number>--> (SUM)
+                </td>
+            </tr>
+        </table>
+    
+</lightning-layout><br/><br/>
+<lightning-layout horizontal-align="space" class="slds-float_left">
+                Show  
+                <lightning-combobox options={pagesizeList25} value={pagesizeToVisible25} label="Page Size" variant="label-hidden" onchange={onPageSizeChange25} class="pagesize"></lightning-combobox> 
+                Product per page.
+</lightning-layout>
+
+<lightning-layout horizontal-align="space" class="slds-float_right">
+
+    Showing Page {page} of {totalPage}
+
+    <lightning-button-icon title="First" class="frst-btn" size="large" icon-name="utility:jump_to_left"
+        onclick={firstHandler25} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Previous" class="prev-btn" size="medium" icon-name="utility:chevronleft"
+        onclick={previousHandler25} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>
+    &nbsp;
+
+    <lightning-button-icon title="Next" class="next-btn" size="medium" icon-name="utility:chevronright"
+        onclick={nextHandler25} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+
+    <lightning-button-icon title="Last" class="last-btn" size="large" icon-name="utility:jump_to_right"
+        onclick={lastHandler25} variant="border-inverse" style="background:lightgreen"></lightning-button-icon>&nbsp;
+</lightning-layout>
+  </div><br/><br/>  
+  </template>
+
+</template>

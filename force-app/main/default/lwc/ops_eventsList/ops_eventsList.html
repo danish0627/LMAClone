@@ -1,0 +1,21 @@
+<template>
+    <div class="slds-card slds-p-around_medium">
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="9"  class="slds-p-horizontal_medium slds-p-bottom_medium ">
+                <span class ="slds-text-heading_medium slds-p-bottom_medium" style="font-weight: bold;display: block;">Event Editions Assigned to you</span>
+                    <template if:true={qryCondition} >
+                        <c-events-list-custom-table pagesize =20 condition={qryCondition} fields="Name,Part_of_Series__r.Name,Start_Date__c,End_Date__c" object-name="Event_Edition__c"
+                            object-label="Event Edition" toggle-filter-label="Current Event" toggle-filter-condition="End_Date__c &gt;=TODAY "
+                            fields-label="EVENT EDITION NAME,EVENT SERIES,START DATE,END DATE" is-open-link="true"
+                            onopenlink={navigatetoEvent} filter1-label="Event Edition" filter-field1="Part_of_Series__r.Name" sort-by-field--name="Name"  sort-by-name="Name" sort-type="asc">
+                        </c-events-list-custom-table>
+                    </template>
+            </lightning-layout-item>
+            <lightning-layout-item size="3" class="slds-p-horizontal_small globallinks">
+                <span class ="slds-text-heading_medium slds-p-bottom_medium" style="font-weight: bold;display: block;">Global Assets</span>
+                    <a class="slds-m-bottom_small" onclick={navigatetoForms} >Form Templates</a> 
+                    <a class="slds-m-bottom_small" onclick={navigatetoEmails}>Email Templates</a>    
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+</template>

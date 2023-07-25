@@ -1,0 +1,52 @@
+.hideTableFooter .nx-list-footer {
+    text-align: center;
+    visibility: hidden;
+    padding: 6px;
+    color: #AAA;
+}
+
+.test .nx-basicfieldeditor-section-body{
+    padding-left:10px;
+}
+#sk-3jGn5q-93 .ui-button.ui-widget.ui-state-default.ui-corner-all{
+     z-index:  100;
+}
+
+
+.tallField{
+    
+margin-left:-4px;
+
+}
+
+.tallfield2{
+    width: 99%
+}
+
+.tallfield3subject{
+    margin-left: -5px;
+    width: 99.8%;
+}
+.fixed{
+    top: 0;
+    z-index :999;
+    right: 10px;
+}
+.nx-editor-contents-template {
+    background: #f5f5f5 !important;
+    padding: 1px 0 !important;
+    margin-bottom: 8px !important;
+}
+.ui-dialog-content .ui-widget-content{
+    width: auto;
+    min-height: 38px;
+    max-height: none;
+    height: 333px;
+    overflow-y: scroll;
+}
+
+.TableScroll{
+    overflow-x:scroll !important;
+    width:100%;
+    display:block;
+}

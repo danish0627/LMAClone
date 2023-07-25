@@ -1,0 +1,17 @@
+.heading{
+    color: #16325c;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+}
+.outputField{
+    flex-basis: 0%;
+    border-bottom: 1px solid rgb(221,219,218);
+    margin-bottom: 0;
+}
+.layout-right{
+    padding-right: 1.5rem;
+}
+.layout-left{
+    padding-right: 2rem;
+}

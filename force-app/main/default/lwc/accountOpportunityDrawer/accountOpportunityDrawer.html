@@ -1,0 +1,410 @@
+<!--
+    Created By		: Girikon( Yash Gupta [STL-123] )
+    Created On		: 9/4/2019
+    @description 	: This Component is used to show the drawer tab data of opportunity from account page.
+    Modified By		: Girikon( Yash Gupta 9/4/2019 ]
+-->
+
+<template>
+    <template if:true={spinner}>
+        <lightning-spinner size="small" variant="brand"></lightning-spinner>
+    </template>    
+    <template if:true={relatedRecordId}>        
+    	<lightning-tabset>
+            <lightning-tab label="Opportunity Details" id="1">      
+                <!-- Start View Form -->
+                <div class={isViewForm}>                    
+                <lightning-record-view-form density="comfy" record-id={relatedRecordId} object-api-name="Opportunity">
+                    <c-forms-placeholder is-show={showPlaceholder}></c-forms-placeholder>
+                    <div class={className}>
+                        <lightning-layout multiple-rows="true">
+                            <lightning-layout-item size="6" padding="around-small">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="Name" class="form_element_border"></lightning-output-field>
+                                                <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="Opportunity_Contact__c" class="form_element_border"></lightning-output-field>
+                                                <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="Billing_Contact__c" class="form_element_border"></lightning-output-field>
+                                                <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="Agreement_Contact__c" class="form_element_border"></lightning-output-field>
+                                                <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>   
+                                
+
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <span class="slds-form-element__label">Opportunity Type</span>
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="Type" variant="label-hidden" class="form_element_border"></lightning-output-field>
+                                                <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <span class="slds-form-element__label">Partner Account</span>
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="Partner_Account__c" variant="label-hidden"></lightning-output-field>
+                                                <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="Parent_Opportunity__c" class="form_element_border"></lightning-output-field>
+                                                <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" padding="around-small">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="StageName" class="form_element_border"></lightning-output-field>
+                                                <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="Status__c" class="form_element_border"></lightning-output-field>
+                                                <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <span class="slds-form-element__label">Opportunity Owner</span>
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="OwnerId" variant="label-hidden"></lightning-output-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="CloseDate" class="form_element_border"></lightning-output-field>
+                                                <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="Probability" class="form_element_border"></lightning-output-field>
+                                                <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="Amount" class="form_element_border"></lightning-output-field>
+                                                <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="Revenue_Estimate__c" class="form_element_border"></lightning-output-field>
+                                                <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="Booth_ID__c" class="form_element_border"></lightning-output-field>
+                                                <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="Booth_Status__c" class="form_element_border"></lightning-output-field>
+                                                <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element__static">
+                                                <lightning-output-field field-name="Is_Barter_Opportunity__c" class="form_element_border"></lightning-output-field>
+                                                <lightning-button-icon icon-name="utility:edit" class="edit" icon-class="slds-button__icon_hint" variant="bare" alternative-text="Edit Record" onclick={editRecord}></lightning-button-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                </lightning-record-view-form>
+            </div>
+        <!-- End View Form -->  
+            
+        <!-- Start Edit Form -->  
+        <div class={isEditForm}>
+            <lightning-record-edit-form class="my-form1" object-api-name="Opportunity" onload={handleEditFormLoad} record-id={relatedRecordId} onsubmit={handleSubmit} onsuccess={handleSucess} onerror={handleError}>
+                <lightning-layout multiple-rows="true" class="slds-m-top_medium">                        
+                    <lightning-layout-item size="6" padding="horizontal_small">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-input-field field-name="Name" class="form_element_border" disabled={isCurrentNonAdminProfile}></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-input-field field-name="Opportunity_Contact__c" class="form_element_border" disabled={isCurrentNonAdminProfile}></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <!--<lightning-input-field field-name="Billing_Contact__c" class="form_element_border" disabled={isCurrentNonAdminProfile}></lightning-input-field>-->
+                                        <c-common-lookup label="Invoice Contact" object-label="Contact" object-name="contact" field-name="Name" name-field-api="Name" selected-item-id={billingContactId} onhandlelookup={setLookupField} help-text="Billing/Invoice Contact"></c-common-lookup>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-input-field field-name="Agreement_Contact__c" class="form_element_border" disabled={isCurrentNonAdminProfile}></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>   
+                        
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <span class="slds-form-element__label">Opportunity Type</span>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-input-field field-name="Type" variant="label-hidden" class="form_element_border" disabled={isCurrentNonAdminProfile}></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <span class="slds-form-element__label">Partner Account</span>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-input-field field-name="Partner_Account__c" variant="label-hidden" disabled={isCurrentNonAdminProfile}></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <c-common-lookup label="Parent Opportunity" object-label="Opportunity" object-name="opportunity" field-name="Name" name-field-api="Name" selected-item-id={opportunityId} onhandlelookup={setOpportunityLookupField} help-text="Parent Opportunity"></c-common-lookup>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" padding="horizontal_small">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-input-field field-name="StageName" class="form_element_border" disabled={isCurrentNonAdminProfile}></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-input-field field-name="Status__c" class="form_element_border" disabled={isCurrentNonAdminProfile}></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <span class="slds-form-element__label">Opportunity Owner</span>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-output-field field-name="OwnerId" variant="label-hidden"></lightning-output-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-input-field field-name="CloseDate" class="form_element_border" disabled={isCurrentNonAdminProfile}></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-input-field field-name="Probability" class="form_element_border" disabled={isCurrentNonAdminProfile}></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-input-field field-name="Amount" class="form_element_border" disabled={isCurrentNonAdminProfile}></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-input-field field-name="Revenue_Estimate__c" class="form_element_border" disabled={isCurrentNonAdminProfile}></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-input-field field-name="Booth_ID__c" class="form_element_border" disabled={isCurrentNonAdminProfile}></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-input-field field-name="Booth_Status__c" class="form_element_border" disabled={isCurrentNonAdminProfile}></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                        <lightning-input-field field-name="Is_Barter_Opportunity__c" class="form_element_border" disabled={isCurrentNonAdminProfile}></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>   
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small">
+                        <div class="slds-clearfix">
+                            <div class="slds-float_right">                                
+                                <lightning-button label="Cancel" variant="destructive" icon-name="utility:close" onclick={viewForm}></lightning-button>&nbsp;&nbsp;
+                                <lightning-button type="submit" class="save-button" variant="brand" icon-name="utility:check" label="Update"></lightning-button>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-record-edit-form>
+        </div>
+            <!-- End Edit Form -->
+        </lightning-tab>
+
+            <lightning-tab label="Quotes" id="2">
+                <div class="default-height">
+                    <c-common-table hide-per-page condition={condition1} 
+                    fields="Name,CreatedDate,SBQQ__NetAmount__c,SBQQ__Status__c,SBQQ__Primary__c"
+                    object-name="SBQQ__Quote__c" is-multi-language="true" custom-label="-1" object-label="Quote"></c-common-table>
+                </div>
+            </lightning-tab>
+
+            <lightning-tab label="Quote Documents" id="3">
+                <div class="default-height">
+                    <c-common-table hide-per-page condition={condition2} 
+                    fields="Name,CreatedDate,SBQQ__Quote__r.Name,SBQQ__CustomerAmount__c,Primary_Contact_Email__c"
+                    object-name="SBQQ__QuoteDocument__c" fields-label="Document Name,Created Date,Quote,Customer Amount,Primary Contact Email" is-multi-language="true" custom-label="-1" object-label="Quote Document"></c-common-table>
+                </div>
+            </lightning-tab>
+
+            <lightning-tab label="Documents Turn-Around-Time" id="4">
+                <div class="default-height">
+                    <c-common-table hide-per-page condition={condition3} 
+                    fields="Name,Document_Sent_Date__c,Document_Status__c,TAT_Calcualted__c"
+                    object-name="Quote_Template_TAT__c" is-multi-language="true" custom-label="-1" object-label="Quote Document TAT"></c-common-table>
+                </div>
+            </lightning-tab>
+        </lightning-tabset>
+    </template>
+</template>

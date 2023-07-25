@@ -1,0 +1,65 @@
+<!--
+    Created By		: Girikon( Yash Gupta [STL-23] )
+    Created On		: 8/2/2019
+    @description 	: This component is used show the various tabs of SSC Dashboard.
+    Modified By		: Girikon( Yash Gupta 8/23/2019 ]
+    Updating Api Version for ticket no: EMEA-200
+-->
+<template>
+    <template if:true={notSSCDeshboardMember}>
+        <div class="slds-card">
+           <p>You are not a part of any SSC Dashboard Team.</p>
+        </div>
+    </template>
+
+        <div class="slds-card slds-p-around_small" style="min-height:500px;max-height:auto;">
+        <lightning-tabset>
+        <template if:true={isSSCTeamMember}>   
+            <lightning-tab label="Pending Contracts">
+                <c-pending-contract-dashboard></c-pending-contract-dashboard>
+            </lightning-tab> 
+
+            <lightning-tab label="Approved Contracts" onactive={handleTabClick}>
+                <c-approved-contract-dashboard></c-approved-contract-dashboard>
+            </lightning-tab>
+            
+            <lightning-tab label="Rejected Contracts" onactive={handleTabClick}>
+                <c-rejected-contract-dashboard></c-rejected-contract-dashboard>
+            </lightning-tab>
+        
+            <lightning-tab label="Amendment Requests">
+                <template if:true={amendRequestCondition}>
+                    <c-amendment-requests condition={amendRequestCondition} condition-delegate={conditionDelegateOpp} filter1-label="Event Edition" filter-field1="EventEdition__r.Name" is-multi-language="true" custom-label="-1" ></c-amendment-requests>
+                </template>
+            </lightning-tab>
+            <template if:true={isSSCProfile}>
+                <lightning-tab label="Incomplete Amended Opportunities">
+                    <c-incomplete-amended-opportunity-tab is-multi-language="true" custom-label="-1"></c-incomplete-amended-opportunity-tab>
+                </lightning-tab>
+            </template>
+            <lightning-tab label="Invoices">
+                <c-dashboard-invoice-subtabs></c-dashboard-invoice-subtabs>
+            </lightning-tab>
+            <template if:true={isSSCProfile}>
+                <lightning-tab label="Reports">
+                        <c-report-dashboard></c-report-dashboard>
+                </lightning-tab>
+            </template>
+        </template>
+
+            <template if:true={isSalesOpsTeamMember}>
+                <lightning-tab label="Pending Contracts">
+                    <c-pending-contract-dashboard-sales-ops is-sales-ops-team-member={isSalesOpsTeamMember}></c-pending-contract-dashboard-sales-ops>
+                </lightning-tab>
+                <lightning-tab label="Approved Contracts">
+                    <c-approved-contract-dashboard-sales-ops></c-approved-contract-dashboard-sales-ops>
+                </lightning-tab>
+                <lightning-tab label="Rejected Contracts" onactive={handleTabClick}>
+                    <c-rejected-contract-dashboard-sales-ops></c-rejected-contract-dashboard-sales-ops>
+                </lightning-tab>
+            </template>
+
+        </lightning-tabset>
+        </div>
+
+</template>

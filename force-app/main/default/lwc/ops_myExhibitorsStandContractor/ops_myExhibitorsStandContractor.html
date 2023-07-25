@@ -1,0 +1,57 @@
+<template>
+        <article class="slds-card slds-p-around_medium">
+            <lightning-layout multiple-rows="false">
+                <lightning-layout-item size="12" class="slds-p-horizontal_medium slds-p-bottom_medium ">
+                    <span class="slds-text-heading_medium" style="font-weight: bold;">{selectedEventName}</span>
+                    <lightning-breadcrumbs>
+                        <lightning-breadcrumb label="Customer Centre" onclick={goToCustomerCenter}>
+                        </lightning-breadcrumb>
+                        <lightning-breadcrumb label="Customer Centre Settings" onclick={goToCustomerCenterSetting}>
+                        </lightning-breadcrumb>
+                        <lightning-breadcrumb label="My Exhibitors - Stand Contractor">
+                        </lightning-breadcrumb>
+                    </lightning-breadcrumbs>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" class="slds-p-horizontal_medium">
+                    <lightning-card>
+                        <div class="slds-p-left_x-small">
+                            <lightning-tabset>
+                                <lightning-tab label="SETTINGS" value="t1">
+                                    <div class="slds-p-left_small">
+                                        <lightning-tabset>
+                                            <lightning-tab label="General">
+                                                <c-ops_my-exhibitors-stand-con-general></c-ops_my-exhibitors-stand-con-general>
+                                            </lightning-tab>
+                                            <lightning-tab label="Details Page">
+                                                <div class="slds-p-left_small">
+                                                    <lightning-tabset>
+                                                        <lightning-tab label="Tab 1">
+                                                            <c-ops_my-exhibitors-stand-con-tab1></c-ops_my-exhibitors-stand-con-tab1>
+                                                        </lightning-tab>
+                                                        <lightning-tab label="Tab 2">
+                                                                <c-ops_my-exhibitors-stand-con-tab2></c-ops_my-exhibitors-stand-con-tab2>
+                                                        </lightning-tab>
+                                                        <lightning-tab label="Tab 3">
+                                                                <c-ops_my-exhibitors-stand-con-tab3></c-ops_my-exhibitors-stand-con-tab3>
+                                                        </lightning-tab>
+                                                        <lightning-tab label="Tab 4">
+                                                                <c-ops_my-exhibitors-stand-con-tab4></c-ops_my-exhibitors-stand-con-tab4>
+                                                        </lightning-tab>
+    
+                                                    </lightning-tabset>
+                                                </div>
+                                            </lightning-tab>
+                                            <lightning-tab label="Stand Design Attachments">
+                                                <c-ops_my-exhibitors-stand-con-designs></c-ops_my-exhibitors-stand-con-designs>
+                                            </lightning-tab>
+    
+                                        </lightning-tabset>
+                                    </div>
+                                </lightning-tab>
+                            </lightning-tabset>
+                        </div>
+                    </lightning-card>
+                </lightning-layout-item>
+            </lightning-layout>
+        </article>
+    </template>

@@ -1,0 +1,31 @@
+.selected{
+    color:orange;
+}
+.detail-rows{    height: auto;    display: inline-block;}
+.slds-hide{
+    display:none;
+}
+.slds-card__body{
+    border-top: 1px solid #e1e1e1;
+}
+
+.pagesize-btn-container{
+    width: 100px;
+    display: inline-block;
+    margin: 0px 10px;
+}
+.slds-modal:focus {
+    border: 0px !important;
+    outline: 0px !important;
+}
+.search-box{width: 86%;display: inline-block;}
+/*.THIS .slds-no-flex{width: 100%}*/
+.slds-is-sortable__icon svg{fill: rgb(0, 112, 210)!important}
+.pagesize{
+    width: 80px;
+    display: inline-block;
+    margin: 0px 2px;
+}
+.slds-truncate {
+    white-space: normal;
+}

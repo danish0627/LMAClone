@@ -1,0 +1,67 @@
+<template>
+   <template if:true={spinner}>
+      <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+   </template>
+   <section class="exhg-middle-content">
+      <div class="container">
+         <template if:true={lstEventSetting}>
+            <div class="row">
+               <div class="col-sm-12">
+                  <lightning-breadcrumbs>
+                     <lightning-breadcrumb label="Home" onclick={homeUrl}></lightning-breadcrumb>
+                     <lightning-breadcrumb label="Forms">
+                     </lightning-breadcrumb>
+                  </lightning-breadcrumbs>
+               </div>
+            </div>
+         </template>
+         <br/>
+         <div class="row header">
+            <div class="col-sm-12">
+               <template if:true={lstEventSetting}>
+                  <div style="width:100%;">
+                     <h1 class="welcome-note">{lstEventSetting.Forms_Title__c}</h1>
+                  </div>
+                  <div style="width:100%;">
+                     <lightning-formatted-rich-text value={lstEventSetting.Welcome_Text_Forms__c}>
+                     </lightning-formatted-rich-text>
+                  </div>
+               </template>
+            </div>
+         </div>
+         <div class="clearfix"></div>
+         <template if:true={userType}>
+         <div>
+            <c-agent-Notification-Utility event-code={eventcode} message={label.AgentMessage}>
+            </c-agent-Notification-Utility>
+         </div>
+         </template>
+         <div class="clearfix"></div>
+         <div class="row">
+            <div class="col-sm-12 col-xs-12">
+               <template if:true={qryCondition}>
+                  <c-cc_create-customer-form-list-table object-name="User_Form_Action__c" condition={qryCondition}
+                     message={deadlineMessage} lsteventsetting={lstEventSetting} formtype='Required'
+                     sort-by-name="Form_Permission__r.Event_Edition_Form__r.Forms__r.Name" sort-type="asc">
+                  </c-cc_create-customer-form-list-table>
+               </template>
+            </div>
+            <br></br>
+         </div>
+         <div class="row">
+            <div class="col-sm-12 col-xs-12">
+               <div class="slds-m-top_medium">
+               </div>
+                <template if:true={qryConditionAddtional}>
+                  <c-cc_create-customer-form-list-table object-name="User_Form_Action__c"
+                     condition={qryConditionAddtional} message={deadlineMessage} lsteventsetting={lstEventSetting}
+                     formtype='Addtional' sort-by-name="Form_Permission__r.Event_Edition_Form__r.Forms__r.Name"
+                     sort-type="asc"></c-cc_create-customer-form-list-table>
+               </template> 
+            </div>
+            <br></br>
+         </div>
+      </div>
+   </section>
+   <div class="clearfix"></div>
+</template>

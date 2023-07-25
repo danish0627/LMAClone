@@ -1,0 +1,21 @@
+<template>
+  <template if:true={showNotificationFlag}>
+    <div class="msg">
+      <span onclick={hideNotification} class="close">&times;</span>
+      <template if:false={showShortMessage}>
+        <div class="slds-p-left_small slds-p-right_large">
+          <span class="bold-uppercase">{pleaseNoteLabel}:</span>&nbsp;
+          <lightning-formatted-rich-text
+            value={formattedMessage}
+          ></lightning-formatted-rich-text>
+          <span style="white-space: nowrap;"
+            ><a href={exhibitorURL}
+              >{myExhibitorsLabel}</a
+            ></span
+          >&nbsp;
+          <span style="text-transform: lowercase">{pageLabel}</span>
+        </div>
+      </template>
+    </div>
+  </template>
+</template>

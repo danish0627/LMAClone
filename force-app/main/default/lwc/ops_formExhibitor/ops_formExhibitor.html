@@ -1,0 +1,18 @@
+<template>
+<lightning-card >
+        <lightning-record-edit-form layout-type="Full" density="compact" record-id={recordId} object-api-name="Event_Settings__c" onsuccess={handleSuccess}>
+<template if:true={renderedComponent}>
+                <lightning-input-field field-name="Welcome_Text_Exhibitor_Profile__c"></lightning-input-field>
+               </template>
+        <lightning-input-field field-name="Event_Edition__r.Name" aria-label="Event"></lightning-input-field>
+
+        <template if:true={selectedEventName}>
+        </template>
+                
+            <div class="slds-p-left_small slds-p-top_xx-large">
+                            <lightning-button label="Save" variant="brand"  type="submit"></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <lightning-button label="Cancel" variant="neutral" onclick={cancelForm}></lightning-button>                                
+                    </div>
+            </lightning-record-edit-form>    
+</lightning-card>
+</template>

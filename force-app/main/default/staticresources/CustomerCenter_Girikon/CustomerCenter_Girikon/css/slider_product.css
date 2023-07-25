@@ -1,0 +1,28 @@
+/* Created by Girikon on Oct 14,2017 */
+/* Used for Product Carousel at product detail page in "Product Catalog" */
+.slider-container{font-family:Open Sans; width:auto!important;padding:0px 30px}
+/*.slick-slide{text-align: center;}*/
+.slider-container a span{color:#0072BC;font-size:14px;font-weight:600;}                
+.slider-container a{text-decoration:none;margin:0px auto;text-align:center}
+.slider-container a span:hover{text-decoration:underline}
+.slider-container .slider-row{width:690px!important}
+.slider-container img {width: 120px;height: 120px;padding: 5px;margin:0px auto;}   
+             
+/* Dots */
+/*.slider-container .slick-dots {text-align: center;margin: 0 0 10px 0;padding: 0;}
+.slider-container .slick-dots li {display: inline-block;margin-left: 4px;margin-right: 4px;}
+.slider-container .slick-dots li.slick-active button {background-color: black;}
+.slider-container .slick-dots li button {font: 0/0 a;text-shadow: none;color: transparent;background-color: #999;border: none; width: 15px;height: 15px;border-radius: 50%;}
+.slider-container .slick-dots li :hover {background-color: black;}*/
+
+/* Custom Arrow */
+.slider-container .prev {color: #999;position: absolute;top: 23%;left: 0em;}
+.slider-container .prev i{font-size: 30px;}
+.slider-container .prev :hover {cursor: pointer;color: black;}
+.slider-container .next {color: #999;position: absolute;top: 23%;right: 0em;}
+.slider-container .next i{font-size: 30px;}
+.slider-container .next :hover {cursor: pointer;color: black;}                
+@media screen and (max-width: 800px) {
+  .slider-container .next {display: block !important;}
+}
+.slick-slide{text-align:center !important;}

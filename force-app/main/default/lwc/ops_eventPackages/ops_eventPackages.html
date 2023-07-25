@@ -1,0 +1,219 @@
+<template>
+    <lightning-spinner if:true={isLoading} variant="brand" alternative-text="Loading" size="small"></lightning-spinner>
+    <lightning-layout class="packages">
+        <lightning-layout-item class="slds-m-right_large leftForm" size="4">
+            <lightning-record-edit-form layout-type="Compact" class="testform" onload={onload} onsubmit={onSubmit}
+                onsuccess={onSuccess} record-id={profileId} onerror={onError} density="compact"
+                object-api-name="Profile_Option_Visibility__c">
+                <lightning-messages></lightning-messages>
+                <table>
+                    <tr>
+                        <th>Profile Options Visibility</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Booth_Contact_Info__c"></lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Logo__c"></lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Web_Description__c"> </lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Print_Description__c"></lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Social_Media_Links__c"></lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Product_Categories__c"></lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Show_Hide_MatchMaking__c"></lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Product_Listing__c"></lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Show_Specials__c"></lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Videos__c"></lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Documents__c"></lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Booth_Schedule__c"></lightning-input-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-input-field field-name="Press_Release__c"></lightning-input-field>
+                        </td>
+                    </tr>
+                </table>
+                <div class="slds-p-top_large slds-hide">
+                    <lightning-button variant="brand" class="Save" type="submit" name="Save" label="Save">
+                    </lightning-button>
+                </div>
+            </lightning-record-edit-form>
+        </lightning-layout-item>
+        <template for:each={profilePackages} for:item="item" for:index="ind">
+            <lightning-layout-item class="slds-m-horizontal_large" key={item.Id}>
+                <lightning-record-edit-form layout-type="Compact" onload={onload} onerror={onError} density="Compact"
+                    onsubmit={onSubmit} onsuccess={onSuccess} record-id={item.Id}
+                    object-api-name="Profile_Package_Setting__c">
+                    <lightning-messages></lightning-messages>
+                    <table class="packagesTable">
+                        <tr>
+                            <th>
+                                {item.Product__r.Name}
+                            </th>
+                            <th>
+                                Word Count
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-input-field variant="label-hidden" field-name="Booth_Contact_Info__c">
+                                </lightning-input-field>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-input-field variant="label-hidden" field-name="Logo__c">
+                                </lightning-input-field>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-input-field variant="label-hidden" field-name="Web_Description__c">
+                                </lightning-input-field>
+                            </td>
+                            <td>
+                                <lightning-input-field variant="label-hidden" field-name="Web_Description_Limit__c">
+                                </lightning-input-field>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-input-field variant="label-hidden" field-name="Print_Description__c">
+                                </lightning-input-field>
+                            </td>
+                            <td>
+                                <lightning-input-field variant="label-hidden" field-name="Print_Description_Limit__c">
+                                </lightning-input-field>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-input-field variant="label-hidden" field-name="Social_Media_Links__c">
+                                </lightning-input-field>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-input-field variant="label-hidden" field-name="Product_Categories__c">
+                                </lightning-input-field>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-input-field variant="label-hidden" field-name="Show_Hide_MatchMaking__c">
+                                </lightning-input-field>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-input-field variant="label-hidden" field-name="Product_Listing__c"
+                                    class="test">
+                                </lightning-input-field>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-input-field variant="label-hidden" field-name="Show_Specials__c"
+                                    class="test">
+                                </lightning-input-field>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-input-field variant="label-hidden" field-name="Videos__c" class="test">
+                                </lightning-input-field>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-input-field variant="label-hidden" field-name="Documents__c" class="test">
+                                </lightning-input-field>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-input-field variant="label-hidden" field-name="Booth_Schedule__c"
+                                    class="test">
+                                </lightning-input-field>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-input-field variant="label-hidden" field-name="Press_Release__c"
+                                    class="test">
+                                </lightning-input-field>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+
+                    <div class="slds-p-top_large slds-hide">
+                        <lightning-button variant="brand" class="Save" type="submit" name="Save" label="Save">
+                        </lightning-button>
+                    </div>
+                </lightning-record-edit-form>
+            </lightning-layout-item>
+        </template>
+    </lightning-layout>
+    <lightning-layout>
+        <lightning-layout-item class="slds-m-top_large">
+            <lightning-button variant="brand" type="button" name="Save" label="Save" onclick={onsave}>
+            </lightning-button>
+            <lightning-button class="slds-m-left_x-small" label="Cancel" variant="neutral" onclick={cancel}>
+            </lightning-button>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

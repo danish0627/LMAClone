@@ -1,0 +1,56 @@
+<template>
+    <!--start filter-->
+    <div class="c-container">
+        <lightning-layout>
+            <lightning-layout-item flexibility="auto" padding="around-small">
+                <div class="slds-p-around_xx-small">
+                    <lightning-input type="text" maxlength="80"
+                        label="Package name" placeholder="Search by package name or org name"
+                        name="packageName" 
+                        value={packageName}
+                        onchange={filterChangeAction} variant="label-hidden"></lightning-input>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto" padding="around-small">                
+                <div class="slds-p-around_xx-small">
+                    <lightning-input type="Date"
+                        label="From Date" placeholder="Start Date (Nov 30, 2022)" 
+                        name="startDate" 
+                        value={startDate}
+                        onchange={filterChangeAction} variant="label-hidden"></lightning-input>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto" padding="around-small">
+                <div class="slds-p-around_xx-small">
+                    <lightning-input type="Date"
+                        label="To" placeholder="End Date (Nov 30, 2022)"
+                        name="endDate" 
+                        value={endDate}
+                        onchange={filterChangeAction} variant="label-hidden"></lightning-input>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto" padding="around-small">
+                <div class="slds-p-around_xx-small">
+                    <lightning-button type="brand"
+                        label="Filter" icon-name="utility:filterList" 
+                        variant="brand-outline" 
+                        onclick={searchAction} disabled={isBtnDisabled}></lightning-button> &nbsp;
+                    <lightning-button if:true={isBtnDisabled} icon-name="utility:refresh" label="Refresh" variant="brand-outline" onclick={reload}></lightning-button> 
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+    <!--end here-->
+    
+    <a if:true={downloadLink} class="backup-download-link slds-hide" href={downloadLink} target="_blank">Download</a>
+
+    <div class="fixed-height">
+        <lightning-spinner if:true={spinner} size="small" variant="brand"></lightning-spinner> 
+        <lightning-tree-grid
+            key-field="Id"
+            data={packageList}
+            columns={packageColumns}
+            hide-checkbox-column="true" onrowaction={handleAction}>
+        </lightning-tree-grid>
+    </div>    
+</template>

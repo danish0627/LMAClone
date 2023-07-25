@@ -1,0 +1,52 @@
+<template>
+    
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="6" padding="around-small">
+                <div class="slds-form__item" role="listitem">    
+                    <div class="slds-form-element slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                        <span class="slds-form-element__label">Available Currency</span>
+                        <div class="slds-form-element__control">
+                            <div class="slds-form-element__static">                    
+                                {savedCurrency} <!--<a class="change" onclick={showModal} style="margin-left: 32%;">Change</a>-->
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" padding="around-small">
+                <template if:true={showChangeLink}>
+                    <a class="change" onclick={showModal}>Change</a>
+                </template>
+            </lightning-layout-item>
+        </lightning-layout>
+        
+        <template if:true={isOpenModal}>
+            <!--###### MODAL BOX Start######--> 
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button onclick={hideModal} class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                            <lightning-icon icon-name="utility:close" size="small" variant="bare"></lightning-icon>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate modal-header">Alternate Currency</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <template if:true={spinner}>
+                            <lightning-spinner variant="brand" size="small"></lightning-spinner>
+                        </template>
+                        <lightning-layout multiple-rows="true">
+                            <lightning-layout-item size="12" padding="around-small">
+                                <lightning-radio-group name="radioGroup" label="" options={eventCurrecies} value={selectedCurrency} type="radio" onchange={handleSelection}></lightning-radio-group>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button icon-name="utility:close" label="Cancel" onclick={hideModal} variant="destructive"></lightning-button>&nbsp;&nbsp;
+                        <lightning-button icon-name="utility:check" label="Update" onclick={updateCurrency} variant="brand"></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            <!--###### MODAL BOX Part END header ######-->
+        </template>
+    </template>

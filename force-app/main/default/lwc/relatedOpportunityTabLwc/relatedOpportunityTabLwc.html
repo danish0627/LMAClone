@@ -1,0 +1,28 @@
+<!--
+    Created By		: Girikon(Yash Gupta)
+    Created On		: 2/8/2019
+    @description 	: This component is used to show the list of expocad booth and opportunity data based on param Id.
+    Modified By		: Girikon(Yash Gupta[2/8/2019])
+-->
+
+<template>
+    <div class="slds-card slds-p-around_small">
+        <lightning-tabset>
+            <lightning-tab label="Child Exhibitors">
+                <c-common-table condition={oppQryCondition} 
+                fields="Name,Account.Name,Amount,StageName,Status__c,CloseDate,(Select Booth_Number__c from Opportunity_ExpoCAD_Booth_Mapping__r)" 
+                object-name="Opportunity" object-label="Opportunity" is-multi-language="true" custom-label="0,5"
+                fields-label={oppLabel}>
+                </c-common-table>
+            </lightning-tab>
+
+            <lightning-tab label="Individual Contracts">
+                <c-common-table condition={individualContractCond}
+                fields="Name,Account.Name,Amount,StageName,Status__c,CloseDate" 
+                object-name="Opportunity" object-label="Opportunity" is-multi-language="true" custom-label="0,5"
+                fields-label={individualContractLabel}>
+                </c-common-table>
+            </lightning-tab> 
+        </lightning-tabset>
+    </div>
+</template>

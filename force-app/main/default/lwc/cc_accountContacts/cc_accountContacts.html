@@ -1,0 +1,452 @@
+<!-- Created By		: Girikon(Sunil[STL-21])
+Created On		: July 31 2019
+@description 	: This LWC is for Account Contact page in CC.
+
+Modification log --
+Modified By		: Girikon [Aishwarya BK-17453 26 Aug 2021]-->
+
+<template>
+    <section class="exhg-middle-content">
+        <template if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="medium"></lightning-spinner>
+        </template>
+        <template if:false={showSpinner}> 
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-xs-12">
+                        <div class="welcome-note-p">
+                            <lightning-breadcrumbs>
+                                <lightning-breadcrumb label={label.Home_Button} href='javascript:void(0);'
+                                    onclick={homeUrl}>
+                                </lightning-breadcrumb>
+                                <lightning-breadcrumb label="Account Contacts">
+                                </lightning-breadcrumb>
+                            </lightning-breadcrumbs>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1 class="welcome-note">{label.Account_Contacts}</h1>
+                        <lightning-formatted-rich-text class="welcome-note-p"
+                            value={eventSetting.Welcome_Text_Account_Contacts__c}>
+                        </lightning-formatted-rich-text>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-4 slds-p-right_medium">
+                        
+                            
+                        
+                        <div class="cc-acccountContactButtonBorder"></div>
+                        <!--
+                        <div class="cc-templateContainer">
+                                <lightning-layout multiple-rows="true">
+                                    <lightning-layout-item size="6">
+                                        <div class='nx-basicfieldeditor-item-label'>
+                                            <p>{label.Health_and_Safety}</p>
+                                        </div>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="6">
+                                        <template if:true={hNSContactTypeNull}>
+                                            <div
+                                                class='nx-basicfieldeditor-item-label nx-basicfieldeditor-item-label-extended'>
+                                                <a href='javascript:void(0);' name='hns'
+                                                    onclick={openNewUrl}>{healthAndSafetyContact.Name}
+                                                </a>
+                                            </div>
+                                        </template>
+                                        <template if:true={hNSContactTypeNotNull}>
+                                            <div
+                                                class='nx-basicfieldeditor-item-label nx-basicfieldeditor-item-label-extended'>
+                                                {healthAndSafetyContact.Name} <i class="fa  fa-chevron-right"></i>
+                                            </div>
+                                        </template>
+                                    </lightning-layout-item>
+
+                                </lightning-layout>
+                            </div>
+                        -->
+                        <div class="cc-acccountContactButtonBorderSAfety"></div>
+                            
+                            <div>
+                                <template if:true={opp1ContactUIHasData}>
+                                    <lightning-layout multiple-rows="true">
+                                        <lightning-layout-item size="6">
+                                            <div class="cc-accountContactBooth nx-editor nx-basicfieldeditor-item-label">
+                                                <lightning-formatted-rich-text value={label.Operations_Contact}>
+                                                </lightning-formatted-rich-text>
+                                            </div>
+                                            <b style="font-size: 12px;color:var(--lwc-brandTextLink,#2574A9);">This is the main point of contact for the event who receives access to the Exhibitor Portal, regular updates, monthly newsletters etc. 
+                                            </b>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="6">
+                                            
+                                            <div
+                                                class="nx-basicfieldeditor-item-label nx-basicfieldeditor-item-label-extended">
+                                                <template if:true={showOp1Link}>
+                                                    <a href='javascript:void(0)' name='opp1'
+                                                        onclick={openNewUrl}>{opp1ContactUI.Name}</a>
+                                                </template>
+                                                <template if:false={showOp1Link}>
+                                                    <div class="cc-acccountContactfield">
+                                                        {opp1ContactUI.Name} <i class="fa  fa-chevron-right"></i>
+                                                    </div>
+                                                </template>
+                                                 
+                                            </div>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                    <div class="cc-acccountContactButtonBorder"></div>
+                                </template>
+                                <template if:true={opp2ContactUIHasData}>
+                                    <lightning-layout multiple-rows="true">
+                                        <lightning-layout-item size="6">
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="6">
+                                            <div
+                                                class="nx-basicfieldeditor-item-label nx-basicfieldeditor-item-label-extended">
+                                                <template if:true={showOp2Link}>
+                                                    <a href='javascript:void(0)' name='opp2'
+                                                        onclick={openNewUrl}>{opp2ContactUI.Name}</a>
+                                                </template>
+                                                <template if:false={showOp2Link}>
+                                                    <div class="cc-acccountContactfield">
+                                                        {opp2ContactUI.Name} <i class="fa  fa-chevron-right"></i>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+
+                                    <div class="cc-acccountContactButtonBorder"></div>
+                                </template>
+                                <template if:true={opp3ContactUIHasData}>
+
+
+                                    <lightning-layout multiple-rows="true">
+                                        <lightning-layout-item size="6">
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="6">
+                                            <div
+                                                class="nx-basicfieldeditor-item-label nx-basicfieldeditor-item-label-extended">
+                                                <template if:true={showOp3Link}>
+                                                    <a href='javascript:void(0)' name='opp3'
+                                                        onclick={openNewUrl}>{opp3ContactUI.Name}</a>
+                                                </template>
+                                                <template if:false={showOp3Link}>
+                                                    <div class="cc-acccountContactfield">
+                                                        {opp3ContactUI.Name}
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+
+                                    <div class="cc-acccountContactButtonBorder"></div>
+                                </template>
+                                <template if:true={opp4ContactUIHasData}>
+                                    <lightning-layout multiple-rows="true">
+                                        <lightning-layout-item size="6">
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="6">
+                                            <div
+                                                class="nx-basicfieldeditor-item-label nx-basicfieldeditor-item-label-extended">
+                                                <template if:true={showOp4Link}>
+                                                    <a href='javascript:void(0)' name='opp4'
+                                                        onclick={openNewUrl}>{opp4ContactUI.Name}</a>
+                                                </template>
+                                                <template if:false={showOp4Link}>
+                                                    <div class="cc-acccountContactfield">
+                                                        {opp4ContactUI.Name}
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                    <div class="cc-acccountContactButtonBorder"></div>
+                                </template>
+                                <template if:true={opp5ContactUIHasData}>
+                                    <lightning-layout multiple-rows="true">
+                                        <lightning-layout-item size="6">
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="6">
+                                            <div
+                                                class="nx-basicfieldeditor-item-label nx-basicfieldeditor-item-label-extended">
+                                                <template if:true={showOp5Link}>
+                                                    <a href='javascript:void(0)' name='opp5'
+                                                        onclick={openNewUrl}>{opp5ContactUI.Name}</a>
+                                                </template>
+                                                <template if:true={showOp5Link}>
+                                                    <div class="cc-acccountContactfield">
+                                                        {opp5ContactUI.Name}
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                    <div class="cc-acccountContactButtonBorder"></div>
+                                </template>
+                                <div class="cc-acccountContactButtonBorderSAfety"></div>
+                            </div>
+
+                            <div class="cc-templateContainer">
+                                <lightning-layout multiple-rows="true">
+                                    <lightning-layout-item size="6">
+                                        <div class='nx-basicfieldeditor-item-label'>
+                                            <p>{label.Primary_Contact}</p>
+                                        </div>
+                                        <b style="font-size: 12px;color:var(--lwc-brandTextLink,#2574A9);">This is the person who is responsible for the purchase, 
+                                            signed the contract and will get notified for next year’s rebooking campaign. 
+                                        </b>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="6">
+                                        <template if:true={primaryContactTypeNull}>
+                                            <div
+                                                class='nx-basicfieldeditor-item-label nx-basicfieldeditor-item-label-extended'>
+                                                <a href='javascript:void(0);' name='primary'
+                                                    onclick={openNewUrl}>{primaryContact.Name} </a>
+                                            </div>
+                                        </template>
+                                        <template if:true={primaryContactTypeNotNull}>
+                                            <div
+                                                class='nx-basicfieldeditor-item-label nx-basicfieldeditor-item-label-extended'>
+                                                {primaryContact.Name} <i class="fa  fa-chevron-right"></i>
+                                            </div>
+                                        </template>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </div>
+                        
+                        <div class="cc-acccountContactButtonBorder"></div>
+                        
+                            <div class="cc-templateContainer">
+                                <lightning-layout multiple-rows="true">
+                                    <lightning-layout-item size="6">
+                                        <div class='nx-basicfieldeditor-item-label'>
+                                            <p>{label.Invoice_Contact}</p>
+                                        </div>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="6">
+                                        <template if:true={invoiceContactTypeNull}>
+                                            <div
+                                                class='nx-basicfieldeditor-item-label nx-basicfieldeditor-item-label-extended'>
+                                                <a href='javascript:void(0);' name='invoice'
+                                                    onclick={openNewUrl}>{invoiceContact.Name}
+                                                </a>
+                                            </div>
+                                        </template>
+                                        <template if:true={invoiceContactTypeNotNull}>
+                                            <div
+                                                class='nx-basicfieldeditor-item-label nx-basicfieldeditor-item-label-extended'>
+                                                {invoiceContact.Name} <i class="fa  fa-chevron-right"></i>
+                                            </div>
+                                        </template>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </div>
+                            <!--
+                            <div class="cc-accountContactBooth nx-editor nx-basicfieldeditor-item-label">
+                                <lightning-formatted-rich-text value={label.Booth_Contacts}>
+                                </lightning-formatted-rich-text>
+                            </div>
+                            <div class="nx-editor-contents-template">
+                                <div class="nx-template">
+                                    <div class="nx-field">
+                                        <div class="nx-fieldtext">
+                                            <lightning-formatted-rich-text class="welcome-note-p"
+                                                value={eventSetting.AccountBoothContactDescription__c}>
+                                            </lightning-formatted-rich-text>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            -->
+                            <!--
+                            <template if:false={expocadBoothUIHasNoData}>
+                                <template for:each={eventEditionAccountEventBooth} for:item='item'>
+                                    <lightning-layout key={item.BoothId} multiple-rows="true">
+                                        <lightning-layout-item size="6">
+                                            <div class="nx-basicfieldeditor-item-label">
+
+                                                {label.Booth}# {item.BoothName}:
+                                            </div>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="6">
+                                            <div
+                                                class="nx-basicfieldeditor-item-label nx-basicfieldeditor-item-label-extended">
+                                                <a href='javascript:void(0)' key={item.BoothId} name={item.BoothId}
+                                                    onclick={openNewUrl}>{item.BoothContactName}</a>
+                                            </div>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                </template>
+                            </template>
+                            -->
+                    </div>
+                    <div class="col-sm-8 col-xs-8 nx-page nx-page-content slds-p-left_medium">
+                        <div>
+                            <div class='nx-basicfieldeditor-item-label'>
+                                <template if:true={isPri}>
+                                    <lightning-formatted-rich-text value={label.Primary_Contact}>
+                                    </lightning-formatted-rich-text>
+                                    
+                                </template>
+                                <template if:true={isInv}>
+                                    <lightning-formatted-rich-text value={label.Invoice_Contact}>
+                                    </lightning-formatted-rich-text>
+                                </template>
+                                <!--
+                                <template if:true={isHnS}>
+                                    <lightning-formatted-rich-text value={label.Health_and_Safety}>
+                                    </lightning-formatted-rich-text>
+                                </template>
+                                -->
+                                <template if:true={isContainsOpp}>
+                                    <lightning-formatted-rich-text value={label.Operations_Contact}>
+                                    </lightning-formatted-rich-text>
+                                </template>
+                                <!--
+                                <template if:true={isBooth}>
+                                    {label.Booth_Contacts}- {boothNumber}
+                                </template>
+                                -->
+                                <hr class="slds-m-top_xxx-small slds-m-bottom_xxx-small">
+                            </div>
+
+                            <template if:true={isPri}>
+                                <template if:true={eventSetting.AccountPrimaryContactDescription__c}>
+                                    <div class="nx-basicfieldeditor-item-label-extended2">
+                                        <lightning-formatted-rich-text
+                                            value={eventSetting.AccountPrimaryContactDescription__c}>
+                                        </lightning-formatted-rich-text>
+                                    </div>
+                                </template>
+                            </template>
+                            <template if:true={isInv}>
+                                <template if:true={eventSetting.AccountInvoiceContactDescription__c}>
+                                    <div class="nx-basicfieldeditor-item-label-extended2">
+                                        <lightning-formatted-rich-text
+                                            value={eventSetting.AccountInvoiceContactDescription__c}>
+                                        </lightning-formatted-rich-text>
+                                    </div>
+                                </template>
+                            </template>
+                            <!--
+                            <template if:true={isHnS}>
+                                <template if:true={eventSetting.AccountInvoiceContactDescription__c}>
+                                    <div class="nx-basicfieldeditor-item-label-extended2">
+                                        <lightning-formatted-rich-text
+                                            value={eventSetting.AccountHealthSafetyContactDescription__c}>
+                                        </lightning-formatted-rich-text>
+                                    </div>
+                                </template>
+                            </template>
+                            -->
+                            <div class="login cc-WrapperUserCre">
+                                <div class="slds-grid slds-wrap">
+                                    <template if:true={isPri}>
+                                        <b style="font-size: 14px;">This is the person who is responsible for the purchase, signed the contract and will get notified for next year’s rebooking campaign. </b>
+                                    </template>
+                                    <template if:true={isContainsOpp}>
+                                        <b style="font-size: 14px;">This is the main point of contact for the event who receives access to the Exhibitor Portal, regular updates, monthly newsletters etc. </b>
+                                    </template>
+                                    <template if:true={isInv}>
+                                        <b style="font-size: 14px;"> </b>
+                                    </template>
+                                </div>
+                                
+                            </div>
+                            
+                            <template if:true={isFormDataAvailable}>
+                                <lightning-layout multiple-rows="true">
+                                   <lightning-layout-item size="12">
+                                        <lightning-input class='cc-account-contactsFName  cc-fieldBorder'
+                                            variant='label-inline' name='firstname' label='First Name'
+                                            value={contact.FirstName} disabled={readOnly}>
+                                        </lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12">
+                                        <lightning-input class='cc-account-contactsFName  cc-fieldBorder'
+                                            variant='label-inline' name='lastname' label='Last Name'
+                                            value={contact.LastName} disabled={readOnly}>
+                                        </lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12">
+                                        <lightning-input class='cc-account-contactsFName  cc-fieldBorder'
+                                            variant='label-inline' name='title' label="Title" value={contact.Title}
+                                            disabled={readOnly}>
+                                        </lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12">
+                                        <lightning-input class='cc-account-contactsFName  cc-fieldBorder'
+                                            variant='label-inline' name='address' label={label.Address}
+                                            value={contact.MailingStreet} disabled={readOnly}>
+                                        </lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12">
+                                        <lightning-input class='cc-account-City  cc-fieldBorder' variant='label-inline'
+                                            name='city' label={label.City} value={contact.MailingCity}
+                                            disabled={readOnly}>
+                                        </lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12">
+                                        <lightning-input class='cc-account-State  cc-fieldBorder' variant='label-inline'
+                                            name='state' label={label.State} value={contact.MailingState}
+                                            disabled={readOnly}>
+                                        </lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12">
+                                        <lightning-input class='cc-account-Zip  cc-fieldBorder' variant='label-inline'
+                                            name='zip' label={label.Zip} value={contact.MailingPostalCode}
+                                            disabled={readOnly}>
+                                        </lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12">
+                                        <lightning-input class='cc-account-contactsFName  cc-fieldBorder'
+                                            variant='label-inline' name='country' label={label.Country}
+                                            value={contact.MailingCountry} disabled={readOnly}>
+                                        </lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12">
+                                        <lightning-input class='cc-account-contactsFName  cc-fieldBorder'
+                                            variant='label-inline' name='email' label='Email' value={contact.Email}
+                                            disabled={readOnly}>
+                                        </lightning-input>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </template>
+ 
+                            <template if:true={readOnly}>
+                                <b style="font-size:16px; color:red;">Note: 
+                                    Should you require any changes, please contact our 
+                                    Customer Service team via Contact us tab</b>
+                            </template>
+                            <!--
+                            <template if:false={readOnly}>
+                                <div>
+                                    <lightning-layout multiple-rows="true">
+                                        <lightning-layout-item size="2">
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="5">
+                                            <lightning-button label='Save' onclick={onSave}></lightning-button>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="5">
+                                            <lightning-button class='viewFullBoothProfile'
+                                                label='View the Full Booth Profile'>
+                                            </lightning-button>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                </div>
+                            </template>
+                            -->
+                            <!-- </template> -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </template>
+    </section>
+    <div class="clearfix"></div>
+</template>

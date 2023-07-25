@@ -1,0 +1,308 @@
+   /* body */
+body {
+    /* black bg to keep white from showing under footer */
+    background-color: black;
+}
+
+/* global header (page title) */
+.cc-global-title .nx-pagetitle-maintitle{
+    font-size: 32px;
+    color: black;
+    font-weight: bold;
+}
+
+.cc-global-title .nx-pagetitle-subtitle {
+    font-size: 18px;
+    color: black;
+    font-weight: normal;
+}
+
+.cc-page-title{
+    margin-top:22px;
+    margin-bottom:10px;
+}
+.cc-page-description {
+    margin-top: 12px;
+    margin-bottom:20px;
+}
+/* Heading overides*/
+h1 { 
+    font-size: 30px;
+    font-weight: normal;
+    color: #333333;
+}
+h2 { 
+    font-size: 22px;
+    font-weight: bold;
+    color: #333333;
+}
+h3 { 
+    font-size: 14px;
+    font-weight: bold;
+    color: #333333;
+}
+p {
+    font-size:14px;
+    padding:0;
+}
+
+/* Tab active style overide*/
+li.ui-tabs-active a {
+    font-weight: bold;
+    font-size: 16px;
+    padding: 10px;
+    margin: 5px;
+}
+li.ui-tabs-active a:hover {
+    font-weight: bold;
+    font-size: 16px;
+    padding: 10px;
+    margin: 5px;
+}
+
+/* Tab top margin overide*/
+.ui-tabs-nav li  {
+    margin: 5px;
+}
+.ui-tabs-nav li a:hover  {
+    margin: 5px;
+}
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+    margin: 5px;
+}
+.ui-tabs .ui-tabs-nav li {
+    margin-left:0;
+    margin-top:11px;
+}
+
+/* Table bottem border overide option1 - conflicts with bottom dashed line
+.nx-skootable-data {
+    border-bottom: 2px solid #a1a1a1;
+}
+*/
+
+table.nx-skootable-data tbody td, 
+table.nx-skootable-data thead td {
+    border-bottom: 1px solid #ddd;
+}
+
+
+/* Table bottom border overide option2 underneath list footer*/
+.nx-list-footer {
+    border-bottom: 2px solid #a1a1a1;
+}
+
+/* remove table / queue / deck footers */
+.cc-no-footer .nx-list-footer {
+    display: none;
+}
+
+.nx-actionselect-arrow>div.ui-icon {
+    color:black;
+}
+.nx-actionselect-arrow>.ui-icon{
+        color:black;
+}
+.ui-icon-triangle-1-s:before {
+    color:black;
+}
+
+.ui-icon ui-icon-triangle-1-s {
+    color:black;
+}
+
+/* breadcrumb navigation style overide */
+.breadcrumb-nav {
+    font-size: 13px;
+    text-decoration: none;
+    color: #A1A1A1;
+    margin-top: 12px;
+    margin-bottom: 10px;
+}
+
+.nx-page .breadcrumb-nav a {
+    text-decoration: none;
+    color: #448CCB;
+}
+
+
+/* header utility nav */
+.cc-utility-nav .sk-navigation-item {
+    font-size: 14px;
+    font-weight: bold;
+    color: #000;
+}
+
+.cc-utility-nav .top-level {
+    margin-right: 0;
+    padding-right: 0;
+}
+
+
+/* main page content wrapper */
+.cc-content-wrapper {
+    margin: auto;
+    max-width:1140px;
+}
+
+.margin-bottom {
+    margin-bottom: 20px;
+}
+
+
+/* main nav */
+.cc-main-nav {
+    background-color: white;
+}
+/* main nav */
+.cc-main-nav {
+    background-color: white;
+}
+/* hide main nav icons */
+.cc-main-nav .sk-icon {
+    display:none;
+}
+
+
+/* prevent the dropnav menu from getting the fat borders */
+.cc-main-nav > .cc-main-nav.sk-dropnav {
+    border-width: 0 !important;
+}
+.cc-main-nav > .cc-main-nav.sk-dropnav:empty {
+    display:none;
+}
+.cc-main-nav .sk-navigation-item {
+    color: #555;
+    font-weight: 600;
+    margin-left: 0;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.cc-main-nav .sk-navigation-item:empty {
+    display:none;
+}
+/* selected menu item */
+.sk-navigation-item.cc-selected-item {
+    border-bottom: 4px solid black;
+    padding-bottom: 15px;
+    padding-top: 6px;
+    margin-bottom: -8px;
+    font-weight: bold;
+}
+.sk-navigation-item.cc-selected-item:empty {
+    display:none;
+}
+
+/* fixed center class for main nav (set with JS) */
+.fixed-top-center {
+    position: fixed;
+    top: 0; 
+    z-index: 10;
+    box-shadow: 0px 7px 9px -3px rgba(0,0,0,.25);
+}
+
+/* event selector override for field editor */
+.cc-collapse-field-padding .nx-basicfieldeditor-item {
+    padding-left: 0;
+    background-color: transparent;
+}
+
+.cc-collapse-field-padding .nx-field select{
+    width: 100%;
+    height: 30px;
+}
+
+
+
+/* custom download button styles */
+.cc-custom-button-style.nx-editor a,
+.cc-custom-button-style.nx-editor a:hover,
+.cc-custom-button-style.nx-editor a:visited {
+    color: black;
+    text-decoration: none;
+}
+
+/* branding color button */ 
+.cc-custom-button-style:hover,
+.ui-widget-content .ui-button.ui-state-default.ui-state-hover {
+    opacity: .8;
+}
+/*Remove button border*/
+.ui-button {
+    border: none !important;
+}
+/* footer styles */
+.cc-footer {
+    color:#898989;
+    background-color:black;
+    min-height: 110px;
+    font-weight: 300;
+    font-style: normal;
+    margin-top: 20px;
+}
+
+.cc-footer-title {
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.cc-footer-copy {
+    font-size: 13px;
+    margin-bottom: 10px;
+    color: #898989;
+}
+
+.cc-footer-padded-wrapper {
+    padding-left: 20px;
+}
+
+.cc-footer-social {
+    font-size: 25px;
+}
+
+.nx-page .cc-footer-social a,
+.nx-page .cc-footer-social a:hover {
+    color: white;
+}
+
+.nx-page .cc-footer-social a:hover {
+    opacity: .8;
+}
+
+
+/* popup / modal styles */
+.ui-dialog {
+    padding: 0;
+}
+/* Overide popup overlay*/
+.ui-dialog .ui-dialog-titlebar {
+    background:#fff;
+}
+.ui-dialog .ui-widget-header {
+    border: none;    
+}
+/*Hide table(s) action column icon. THIS WILL BREAK IF THE ACTION COLUMN IS NOT FIRST*/
+.cc-hidden-action-column td:nth-of-type(1) {
+    display: none;
+}
+.cc-hidden-action-column th:nth-of-type(1) {
+    display: none;
+}
+/*popup overlay*/
+.ui-widget-overlay {
+    opacity: .6;
+    background-color: #000;
+}
+.ui-widget-overlay .ui-front {
+    opacity: .6!important;
+    background-color: #000;    
+}
+.ui-widget-overlay.ui-front {
+    opacity: .6!important;
+    background-color: #000;    
+}
+.ui-widget-overlay {
+    background-image: none !important;
+}

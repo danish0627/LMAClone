@@ -1,0 +1,84 @@
+<!-- Created By		: Girikon(Sunil[STL-229])
+Created On		: Sep 14 2019
+@description 	: This component is use to show myExhibitor Stand Contractor tab 1 on ops admin side..
+
+Modification log --
+Modified By		: Girikon() -->
+
+<template>
+        <article class="slds-card " if:true={recordId}>
+                <div if:true={isLoading} class="slds-is-relative">
+                        <lightning-spinner variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+
+                <lightning-layout multiple-rows="true" class="slds-p-right_x-small slds-p-left_x-small">
+                        <lightning-layout-item size="12">
+                                <lightning-record-edit-form layout-type="Full" density="compact" record-id={recordId}
+                                        object-api-name="Event_Settings__c" onload={onLoad} onerror={onError}
+                                        class="globalForm" onsubmit={onSubmit} onsuccess={handleSuccess}>
+                                        <lightning-input-field field-name="Contractor_MyExhibitor_Detail_Tab_2__c">
+                                        </lightning-input-field>
+                                        <lightning-input-field field-name="Cont_MyExhibitor_Detail_Tab_2_Title__c">
+                                        </lightning-input-field>
+
+                                        <div class="mainDiv">
+                                                <div class="div1">
+                                                        <span class="slds-form-element__label">Set Stand Height Maximum
+                                                                <lightning-helptext class="slds-p-left_small"
+                                                                        content="The value selected will restrict the maximum height customers can enter for Stands">
+                                                                </lightning-helptext></span>
+                                                </div>
+                                                <div class="div2 tab2">
+                                                        <lightning-input-field
+                                                                field-name="Cont_MyExhibitor_Detail_Tab_2_Max_Stand__c"
+                                                                variant="label-hidden">
+                                                        </lightning-input-field>
+                                                </div>
+                                                <div class="div3 tab2">
+                                                        <lightning-input-field field-name="Max_Stand_Height_Decimal__c"
+                                                                variant="label-hidden">
+                                                        </lightning-input-field>
+                                                </div>
+                                                <div class="div4"></div>
+                                        </div>
+                                        <div class="mainDiv">
+                                                <div class="div1">
+                                                        <span class="slds-form-element__label">Set Rigging Height
+                                                                Maximum<lightning-helptext class="slds-p-left_small"
+                                                                        content="The value selected will restrict the maximum height customers can enter for Rigging">
+                                                                </lightning-helptext></span>
+                                                </div>
+                                                <div class="div2 tab2">
+                                                        <lightning-input-field
+                                                                field-name="Cont_MyExhibitor_Detail_Tab2_Max_Rigging__c"
+                                                                variant="label-hidden">
+                                                        </lightning-input-field>
+                                                </div>
+                                                <div class="div3 tab2">
+                                                        <lightning-input-field
+                                                                field-name="Max_Rigging_Height_Decimal__c"
+                                                                variant="label-hidden">
+                                                        </lightning-input-field>
+                                                </div>
+                                                <div class="div4"></div>
+                                        </div>
+
+                                        <template if:true={renderedComponent}>
+                                        <lightning-input-field field-name="Cont_MyExhibitor_Detail_Tab_2_Title_Intr__c">
+                                        </lightning-input-field>
+                                        </template>
+
+
+                                        <div class="slds-p-top_large">
+                                                <lightning-button label="Save" variant="brand" type="submit">
+                                                </lightning-button>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <lightning-button label="Cancel" variant="neutral" onclick={cancelForm}>
+                                                </lightning-button>
+                                                <p style="color:red;">{errorMessage}</p>
+                                        </div>
+                                </lightning-record-edit-form>
+                        </lightning-layout-item>
+                </lightning-layout>
+        </article>
+</template>

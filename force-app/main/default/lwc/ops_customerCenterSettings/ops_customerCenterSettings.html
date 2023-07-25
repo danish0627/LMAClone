@@ -1,0 +1,124 @@
+<template>
+    <article class="slds-card slds-p-around_medium" if:true={eventEditionDtls}>
+        <lightning-layout multiple-rows="false">
+            <lightning-layout-item size="12" class="slds-p-horizontal_medium slds-p-bottom_medium ">
+                <span class="slds-text-heading_medium" style="font-weight: bold;">{eventEditionDtls.Name}</span>
+
+                <lightning-breadcrumbs>
+                    <lightning-breadcrumb label="Customer Centre" onclick={goToCC}>
+                    </lightning-breadcrumb>
+                    <lightning-breadcrumb label="Customer Centre Settings">
+                    </lightning-breadcrumb>
+                </lightning-breadcrumbs>
+            </lightning-layout-item>
+            <lightning-layout-item size="4" class="slds-p-horizontal_medium">
+                <span class="slds-text-heading_medium slds-border_bottom" style="font-weight: bold;">Page Settings and
+                    Reporting</span>
+                <ul>
+                    <li class="slds-p-top_large">
+                        <a href={goToHome}>Home Page</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a href={goToForm}>Forms</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a href={goToManual}>Manuals</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a href={goToCustomerBadges}>Customer Badges</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a href={goToExhibitorProfile}>Exhibitor Profile</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a href={goToAccCons}>Account Contacts</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a href={gotoCustomPages}>Custom Pages</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a href={gotoStandCon}>Stand Contractor</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a href={gotoMyexhibitorStandCont}>My Exhibitors- Stand Contractor</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a href={gotoSubCon}>Subcontractors</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a href={gotoMyExhAgent}>My Exhibitors - Agent</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a href={gotoAgentExhibitors}>Agent - Exhibitor Details</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a href={gotoReports}>Reports</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a class="disabled">Financial and Billing</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a class="disabled">Upload Center</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a class="disabled">Product Catalogue</a>
+                    </li>
+                </ul>
+            </lightning-layout-item>
+            <lightning-layout-item size="4" class="slds-p-horizontal_medium">
+                <span class="slds-text-heading_medium slds-border_bottom" style="font-weight:bold"> General Settings
+                </span>
+                <ul>
+                    <li class="slds-p-top_large">
+                        <a href={goToEmailTemplate}>Email Templates</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a href={goToBranding}>Branding</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a href={goToFooter}>Footer</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a onclick={goToCustomerList}>Customer List</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a href={goToReferenceTags}>Reference Tags</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a href={navigatetoWelcomeEmail}>Welcome Email</a>
+                    </li>
+                    <li class="slds-p-top_large">
+                        <a class="disabled">Review Process</a>
+                    </li>
+                </ul>
+
+            </lightning-layout-item>
+            <lightning-layout-item size="4" class="slds-p-horizontal_medium">
+                <span class="slds-text-heading_medium slds-border_bottom" style="font-weight: bold;">Site Information
+                    and Settings</span>
+                <p class="slds-p-top_large">
+                    <b> Name : </b> {eventEditionDtls.Name}
+
+                </p>
+                <p class="slds-p-top_large">
+                    <b> Dates : </b>
+                    <lightning-formatted-date-time value={eventEditionDtls.startDate}></lightning-formatted-date-time> -
+                    <lightning-formatted-date-time value={eventEditionDtls.endDate}></lightning-formatted-date-time>
+
+                </p>
+                <p class="slds-p-top_large">
+                    <b> Venue : </b> {eventEditionDtls.venue}
+
+                </p>
+                <p class="slds-p-top_large">
+                    <b>Customer Center URL:
+                        <br><a href={siteUrl} target="_blank">{siteUrl}</a>
+                    </b>
+                </p>
+                <button class="slds-button slds-button_brand slds-m-top_medium" onclick={redirectToSetting}>Manage site
+                    settings </button>
+
+            </lightning-layout-item>
+        </lightning-layout>
+    </article>
+</template>

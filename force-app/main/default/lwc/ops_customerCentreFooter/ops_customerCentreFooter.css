@@ -1,0 +1,18 @@
+.topSpace{
+    margin-top: 10px;
+    display: table-cell;
+   }
+   .hideLoading{
+    display: none;
+}
+.slds-form-element__icon
+{
+    display: unset !important;
+}
+.tableHeaderTextColor{
+    color: #16325c;
+}
+.textFont{
+    font-size: 16px;
+    font-weight: 800 
+ }

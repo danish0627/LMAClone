@@ -1,0 +1,117 @@
+<template>
+    <template if:true={isOpen}>
+        <lightning-spinner size="small" variant="brand" if:true={spinner}></lightning-spinner>
+        <ol class="slds-setup-assistant">
+            <li class="slds-setup-assistant__item">
+                <article class="slds-setup-assistant__step">
+                    <div class="slds-setup-assistant__step-summary">
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                                <div class="slds-progress-ring slds-progress-ring_large">
+                                    <div class="slds-progress-ring__progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                        <svg viewBox="-1 -1 2 2">
+                                          <path class="slds-progress-ring__path" id="slds-progress-ring-path-2" d="M 1 0 A 1 1 0 0 0 1.00 -0.00 L 0 0"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="slds-progress-ring__content">1</div>
+                                </div>
+                            </div>
+                            <div class="slds-media__body slds-m-top_x-small">
+                                <div class="slds-media">
+                                    <div class="slds-setup-assistant__step-summary-content slds-media__body">
+                                        <h3 class="slds-setup-assistant__step-summary-title slds-text-heading_small">Create Connected App</h3>
+                                        <div class="setup-content">
+                                            <ol>                                                
+                                                <li>Go to App Setup > Apps > App Manager.</li>
+                                                <li>In Lightning Experience App Manager page, click the <strong>New Connected App</strong> button.</li>
+
+                                                <li>
+                                                    On the <strong>New Connected App</strong> page, fill the following required fields under <strong>Basic Information</strong>:
+                                                    <ul>
+                                                        <li>Connected App Name - <strong>RMA Integration</strong>.</li>
+                                                        <li>API name - RMA_Integration.</li>
+                                                        <li>Contact Email.</li>                                                        
+                                                    </ul>
+                                                </li>
+                                                <li>Go to <strong>API (Enable OAuth Settings)</strong>, and select <strong>Enable OAuth Settings</strong>.
+                                                    <ul>
+                                                        <li>
+                                                            In the <strong>Callback URL</strong> field, enter <strong>{callbackURL}</strong>                                                            
+                                                        
+                                                            <div class="slds-text-color_error"><strong>Note:</strong> <em>In case of custom domain URL change, please make related change in above <strong>section 4(a)</strong></em>. </div>
+                                                        </li>
+
+                                                        <li>In the <strong>Selected OAuth Scopes</strong> field, select following <strong>four permissions</strong>:-
+                                                            <p>1. Manage user data via APIs (api)</p>
+                                                            <p>2. Manage user data via Web browsers (web)</p>
+                                                            <p>3. Access the identity URL service (id, profile, email, address, phone)</p>
+                                                            <p>4. Perform requests at any time (refresh_token, offline_access)
+                                                            and then <strong>click Add</strong>.</p>
+                                                        </li>
+                                                        <li>
+                                                            <strong>Require Secret for Web Server Flow</strong> checkbox field should be <strong>checked</strong>.
+                                                        </li>
+                                                        <li>
+                                                            <strong>Require Secret for Refresh Token Flow</strong> checkbox field should be <strong>checked</strong>.
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                
+                                                <li>Click the <strong>Save button</strong> to save the new Connected App.</li>
+
+                                                <li>In the Connected Apps list, find the App that you just created, and then <strong>click Manage</strong>.</li>
+                                                <ul>
+                                                    <li>On the page that opens, click the <strong>Edit Policies</strong> button.</li>
+                                                    <li>Under <strong>OAuth policies</strong>, select <strong>All users may self-authorize</strong> in the <strong>Permitted Users list</strong>, and then click the Save button.</li>
+                                                </ul>
+                                                <li>Go back to the Connected Apps list, and click the App that you just created.</li>
+                                                <li>Go to <strong>API (Enable OAuth Settings)</strong>, and note down the <strong>Consumer Key</strong> and <strong>Consumer Secret</strong>, which will be used in <strong>step 2</strong>.</li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                    <div class="slds-media__figure slds-media__figure_reverse">
+                                        <button class="slds-button slds-button_outline-brand" onclick={gotoConnectedApp}>Go to Connected App</button>                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </li>
+            <li class="slds-setup-assistant__item">
+                <article class="slds-setup-assistant__step">
+                    <div class="slds-setup-assistant__step-summary">
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                                <div class="slds-progress-ring slds-progress-ring_large">
+                                    <div class="slds-progress-ring__progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                        <svg viewBox="-1 -1 2 2">
+                                          <path class="slds-progress-ring__path" id="slds-progress-ring-path-1" d="M 1 0 A 1 1 0 0 0 1.00 -0.00 L 0 0"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="slds-progress-ring__content">2</div>
+                                </div>
+                            </div>
+                            <div class="slds-media__body slds-m-top_x-small">
+                                <div class="slds-media">
+                                    <div class="slds-setup-assistant__step-summary-content slds-media__body">
+                                        <h3 class="slds-setup-assistant__step-summary-title slds-text-heading_small">Configure Consumer Key and Secret</h3>
+                                        <div>
+                                            <lightning-input type="text" label="Connected App Consumer Key" maxlength="255" onchange={handleChange}
+                                                name="clientid" required></lightning-input><br />
+                                            <lightning-input type="text" label="Connected App Consumer Secret" maxlength="255"
+                                                onchange={handleChange} name="clientsecret" required></lightning-input>
+                                            <br/>
+                                            <lightning-button variant="brand" label="Submit" onclick={saveData}></lightning-button>&nbsp;&nbsp;
+                                            <lightning-button variant="neutral" label="Cancel" onclick={handleClose}></lightning-button>                                                                                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </li>
+        </ol>        
+    </template>
+</template>

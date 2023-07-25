@@ -1,0 +1,258 @@
+<template>
+	<lightning-card>
+		<span class={isLoading}>
+			<div id="spinnerDiv" class="demo-only demo--inverse" style="height: 10rem">
+				<div class="slds-spinner_container">
+					<div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+						<span class="slds-assistive-text">Loading</span>
+						<div class="slds-spinner__dot-a"></div>
+						<div class="slds-spinner__dot-b"></div>
+					</div>
+				</div>
+			</div>
+		</span>
+		<div class="slds-container_small slds-p-left_large">
+			<span class ="slds-text-heading_medium" style="font-weight: bold;">{selectedEventName}</span>
+			<lightning-layout-item size="12" class="slds-p-horizontal_medium slds-p-bottom_medium ">
+				<lightning-breadcrumbs>
+					<lightning-breadcrumb
+                  label="Customer Centre"
+                  onclick={ccUrl}></lightning-breadcrumb>
+					<lightning-breadcrumb
+                  label="Customer Centre Setting"
+                  onclick={ccsettingUrl}
+                  ></lightning-breadcrumb>
+					<lightning-breadcrumb
+               label="Footer"></lightning-breadcrumb>
+				</lightning-breadcrumbs>
+			</lightning-layout-item>
+		</div>
+		<div class="slds-p-left_large slds-text-heading_medium">
+			<h1>Footer Features :</h1>
+		</div>
+		<template if:true={footerObj}>
+			<div  class="slds-grid slds-gutters slds-p-left_small slds-p-top_x-large slds-p-right_x-large">
+				<div class = "slds-col slds-size_1-of-2">
+					<table class="">
+						<tbody>
+							<tr>
+								<td
+                                            class="tableHeaderTextColor textFont slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">
+                                            Show Hours:</td>
+							</tr>
+							<tr>
+								<td class="slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">ShowHours1
+                                                
+									<lightning-helptext class="slds-p-left_small"
+                                                content="Using on customer portal footer to display show timing. Operation admin put data in this field."></lightning-helptext>
+								</td>
+								<td class="slds-col slds-size_2-of-3">
+									<lightning-input name = "showhours1"  value={footerObj.ShowHours1__c}
+                                                onchange={onChangeHandleForms}></lightning-input>
+								</td>
+							</tr>
+							<tr>
+								<td class="slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">ShowHours2
+                                                
+									<lightning-helptext class="slds-p-left_small"
+                                                content="Using on customer portal footer to display show timing. Operation admin put data in this field."></lightning-helptext>
+								</td>
+								<td class="slds-col slds-size_2-of-3">
+									<lightning-input  name = "showhours2" value={footerObj.ShowHours2__c}
+                                                onchange={onChangeHandleForms}></lightning-input>
+								</td>
+							</tr>
+							<tr>
+								<td class="slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">ShowHours3
+                                                
+									<lightning-helptext class="slds-p-left_small"
+                                                content="Using on customer portal footer to display show timing. Operation admin put data in this field."></lightning-helptext>
+								</td>
+								<td class="slds-col slds-size_2-of-3">
+									<lightning-input name = "showhours3" value={footerObj.ShowHours3__c}
+                                                onchange={onChangeHandleForms}></lightning-input>
+								</td>
+							</tr>
+							<tr>
+								<td class="slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">About Show
+                                                
+									<lightning-helptext class="slds-p-left_small"
+                                                content="Used to display content in footer at customer portal."></lightning-helptext>
+								</td>
+								<td class="slds-col slds-size_2-of-3 ">
+									<lightning-textarea name="about" value={footerObj.About_Show__c}
+                                                onchange={onChangeHandleForms}></lightning-textarea>
+								</td>
+							</tr>
+							<tr>
+								<td
+                                            class="tableHeaderTextColor textFont slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">
+                                            Follow Us:</td>
+							</tr>
+							<tr>
+								<td class="slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">FaceBook
+                                            
+									<lightning-helptext class=" slds-p-left_small"
+                                                content="Define the facebook URL on facebook icon on customer portal."></lightning-helptext>
+								</td>
+								<td class="slds-col slds-size_2-of-3">
+									<lightning-input name = "fb" value={footerObj.FaceBook__c}
+                                                onchange={onChangeHandleForms}></lightning-input>
+								</td>
+							</tr>
+							<tr>
+								<td class="slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">LinkedIn
+                                                
+									<lightning-helptext class="slds-p-left_small"
+                                                content="Provide the linked in URL on linked in icon on customer portal."></lightning-helptext>
+								</td>
+								<td class="slds-col slds-size_2-of-3">
+									<lightning-input name = "linked" value={footerObj.LinkedIn__c}
+                                                onchange={onChangeHandleForms}></lightning-input>
+								</td>
+							</tr>
+							<tr>
+								<td class="slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">Twitter
+                                            
+									<lightning-helptext class="slds-p-left_small"
+                                                content="Define redirect URL for the twitter icon on  customer portal."></lightning-helptext>
+								</td>
+								<td class="slds-col slds-size_2-of-3">
+									<lightning-input name = "twitter" value={footerObj.Twitter__c}
+                                                onchange={onChangeHandleForms}></lightning-input>
+								</td>
+							</tr>
+							<tr>
+								<td class="slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">Youtube
+                                           
+									<lightning-helptext class="slds-p-left_small"
+                                                content="Define redirect URL for the you tube icon on  customer portal."></lightning-helptext>
+								</td>
+								<td class="slds-col slds-size_2-of-3">
+									<lightning-input name = "youtube" value={footerObj.YouTube__c}
+                                                onchange={onChangeHandleForms}></lightning-input>
+								</td>
+							</tr>
+							<tr>
+								<td class="slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">Instagram
+                                           
+									<lightning-helptext class="slds-p-left_small"
+                                                content="Define redirect URL for the instagram icon on customer portal."></lightning-helptext>
+								</td>
+								<td class="slds-col slds-size_2-of-3">
+									<lightning-input name = "insta" value={footerObj.Instagram__c}
+                                                onchange={onChangeHandleForms}></lightning-input>
+								</td> 
+							</tr> 
+						</tbody>
+					</table>
+				</div>
+				<div class = "slds-col slds-size_1-of-2">
+					<table class="">
+						<tbody>
+							<tr>
+								<td
+                                class="tableHeaderTextColor textFont slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">
+                                Links:</td>
+							</tr>
+							<tr>
+								<td class="slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">Link 1 Label
+                                
+									<lightning-helptext class="slds-p-left_small"
+                                    content="Provide name of link on footer on Link 1 Label."></lightning-helptext>
+								</td>
+								<td class="slds-col slds-size_2-of-3">
+									<lightning-input name = "link1lbl" value={footerObj.Link_1_Label__c}
+                                    onchange={onChangeHandleForms}></lightning-input>
+								</td>
+							</tr>
+							<tr>
+								<td class="slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">Link 1
+                                
+									<lightning-helptext class="slds-p-left_small"
+                                    content="Provide link URL in the footer on customer portal."></lightning-helptext>
+								</td>
+								<td class="slds-col slds-size_2-of-3">
+									<lightning-input name = "link1val" value={footerObj.Link_1__c}
+                                    onchange={onChangeHandleForms}></lightning-input>
+								</td>
+							</tr>
+							<tr>
+								<td class="slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">Link 2 Label
+                                 
+									<lightning-helptext class="slds-p-left_small"
+                                    content="Provide name of link on footer on Link 2 URL"></lightning-helptext>
+								</td>
+								<td class="slds-col slds-size_2-of-3">
+									<lightning-input name = "link2lbl" value={footerObj.Link_2_Label__c}
+                                    onchange={onChangeHandleForms}></lightning-input>
+								</td>
+							</tr>
+							<tr>
+								<td class="slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">Link 2
+                                
+									<lightning-helptext class="slds-p-left_small"
+                                    content="Provide link URL in the footer on customer portal."></lightning-helptext>
+								</td>
+								<td class="slds-col slds-size_2-of-3">
+									<lightning-input name = "link2val" value={footerObj.Link_2__c}
+                                    onchange={onChangeHandleForms}></lightning-input>
+								</td>
+							</tr>
+							<tr>
+								<td class="slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">Link 3 Label
+                                
+									<lightning-helptext class="slds-p-left_small"
+                                    content="Provide name of link on footer on Link 3 URL"></lightning-helptext>
+								</td>
+								<td class="slds-col slds-size_2-of-3">
+									<lightning-input name = "link3lbl" value={footerObj.Link_3_Label__c}
+                                    onchange={onChangeHandleForms}></lightning-input>
+								</td>
+							</tr>
+							<tr>
+								<td class="slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">Link 3
+                                    
+									<lightning-helptext class="slds-p-left_small"
+                                    content="Provide link URL in the footer on customer portal."></lightning-helptext>
+								</td>
+								<td class="slds-col slds-size_2-of-3">
+									<lightning-input name = "link3val" value={footerObj.Link_3__c}
+                                    onchange={onChangeHandleForms}></lightning-input>
+								</td>
+							</tr>
+							<tr>
+								<td class=" slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">Link 4 Label
+                                    
+									<lightning-helptext class="slds-p-left_small"
+                                    content="Provide name of link on footer on Link 4 URL"></lightning-helptext>
+								</td>
+								<td class="slds-col slds-size_2-of-3">
+									<lightning-input name = "link4lbl" value={footerObj.Link_4_Label__c}
+                                    onchange={onChangeHandleForms}></lightning-input>
+								</td>
+							</tr>
+							<tr>
+								<td class="slds-size_1-of-3 slds-p-left_medium slds-p-top_medium">Link 4
+                                
+									<lightning-helptext class="slds-p-left_small"
+                                    content="Provide link URL in the footer on customer portal."></lightning-helptext>
+								</td>
+								<td class="slds-col slds-size_2-of-3">
+									<lightning-input name = "link4val" value={footerObj.Link_4__c}
+                                    onchange={onChangeHandleForms}></lightning-input>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</template>
+		<div class="slds-p-right_x-small slds-p-top_large slds-p-left_medium">
+			<lightning-button variant="brand" label="Save" title="Save" onclick={saveBtnClick}
+                class="slds-m-left_x-small"></lightning-button>
+			<lightning-button label="Cancel" title="Neutral action" onclick={cancelBtnClick}
+                class="slds-m-left_x-small"></lightning-button>
+		</div>
+	</lightning-card>
+</template>

@@ -1,0 +1,32 @@
+<!--
+    Created By		: Girikon( Yash Gupta [STL-136] )
+    Created On		: 9/4/2019
+    @description 	: This Component is used to show list of successful and unsuccessful transaction.
+    Modified By		: Girikon( Yash Gupta 9/13/2019 )
+    Updating Api Version for ticket no: EMEA-200
+-->
+
+<template>
+    <div class="slds-card slds-p-around_small" style="min-height:500px;max-height:auto;">
+        <lightning-tabset>
+            <lightning-tab label="Successful Transaction" icon-name="utility:money">
+                <template if:true={successCond}>
+                    <c-common-table condition={successCond}
+                    fields="Name,Amount__c,System_Id__c,Req_card_number__c,Req_card_type__c,Owner.Name,Transaction_Date__c,Request_Currency__c,LastModifiedDate" 
+                    object-name="CyberSource_Transaction_Log__c" object-label="CyberSource Transaction Log" is-multi-language="true" custom-label="-1,0,3,4,5,7"
+                    fields-label="Id,Amount,System Id,Card Number,Card Type,UserId,Transaction Date,Currency,Last Modified Date">
+                    </c-common-table>
+                </template>
+            </lightning-tab>        
+            <lightning-tab label="Failed Transaction" icon-name="utility:refresh">
+                <template if:true={notSuccessCond}>
+                    <c-common-table condition={notSuccessCond}
+                    fields="Name,Amount__c,System_Id__c,Req_card_number__c,Req_card_type__c,Owner.Name,Transaction_Date__c,Request_Currency__c,LastModifiedDate" 
+                    object-name="CyberSource_Transaction_Log__c" object-label="CyberSource Transaction Log" is-multi-language="true" custom-label="-1,0,3,4,5,7"
+                    fields-label="Id,Amount,System Id,Card Number,Card Type,UserId,Transaction Date,Currency,Last Modified Date">
+                    </c-common-table>
+                </template>
+            </lightning-tab>
+        </lightning-tabset>
+    </div>
+</template>

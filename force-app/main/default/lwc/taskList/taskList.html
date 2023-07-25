@@ -1,0 +1,14 @@
+<template>
+    <lightning-card>
+        <div style="height: 300px;">
+            <lightning-datatable 
+                key-field="Id" 
+                data={taskData} 
+                columns={taskColumns}
+                hide-checkbox-column="true"
+                show-row-number-column="true"
+                onrowaction={handleRowAction}>
+            </lightning-datatable>
+        </div>
+    </lightning-card>
+</template>

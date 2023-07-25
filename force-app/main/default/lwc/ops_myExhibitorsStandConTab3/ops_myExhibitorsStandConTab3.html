@@ -1,0 +1,43 @@
+<!-- Created By		: Girikon(Sunil[STL-229])
+Created On		: Sep 26, 2019
+@description 	: This component is use to show StandconTab3 in Ops admin side .
+
+Modification log --
+Modified By		: Girikon() -->
+
+<template>
+        <article class="slds-card " if:true={recordId}>
+                <div if:true={isLoading} class="slds-is-relative">
+                                <lightning-spinner variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
+                            </div>
+                            <lightning-layout multiple-rows="true" class="slds-p-right_x-small slds-p-left_x-small">
+                                        <lightning-layout-item size="12">
+        <lightning-record-edit-form layout-type="Full" density="compact" record-id={recordId}
+                object-api-name="Event_Settings__c" onload={onLoad} onerror={onError} onsubmit={onSubmit} onsuccess={handleSuccess}>
+        
+                <lightning-input-field field-name="Contractor_MyExhibitor_Detail_Tab_3__c"></lightning-input-field>
+                <lightning-input-field field-name="Cont_MyExhibitor_Detail_Tab_3_Title__c" ></lightning-input-field>
+                <lightning-input-field field-name="Is_Cont_MyEx_Detail_Tab_3_Status_Visible__c" ></lightning-input-field>
+                <lightning-input-field field-name="Stand_Design_limit__c" ></lightning-input-field>
+                <template if:true={renderedComponent}>
+                <lightning-input-field field-name="Cont_MyExh_Detail_Tab_3_Design_Label_1__c" ></lightning-input-field>
+                <lightning-input-field field-name="Cont_MyExh_Detail_Tab_3_Design_Text_1__c" ></lightning-input-field>
+                <lightning-input-field field-name="Cont_MyExh_Detail_Tab_3_Design_Label_2__c" ></lightning-input-field>
+                <lightning-input-field field-name="Cont_MyExh_Detail_Tab_3_Design_Text_2__c" ></lightning-input-field>
+                <lightning-input-field field-name="Cont_MyExh_Detail_Tab_3_Design_Label_3__c" ></lightning-input-field>
+                <lightning-input-field field-name="Cont_MyExh_Detail_Tab_3_Design_Text_3__c" ></lightning-input-field>
+                </template>
+                
+                      
+        
+                <div class="slds-p-left_small slds-p-top_xx-large">
+                        <lightning-button label="Save" variant="brand" type="submit"></lightning-button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <lightning-button label="Cancel" variant="neutral" onclick={cancelForm}>
+                        </lightning-button>
+                </div>
+        </lightning-record-edit-form>
+        </lightning-layout-item>
+        </lightning-layout>
+        </article>
+</template>

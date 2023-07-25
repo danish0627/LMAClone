@@ -1,0 +1,12 @@
+ .cssmenu{ width: 263px; height: 30px; border-width: 2px; color: #464646; font-size: 16px !important; }
+        .badges-contantt-area{padding-left: 13px;}
+        .badges-text{ font-size: 14px; color:#5a5858; letter-spacing-1px; line-height:20px; margin-top:10px;}
+        .badges-text-1{ font-size: 14px; color:#5a5858; letter-spacing-1px; line-height:20px;}
+        .branding-btn {background: #ffca2e; color: #000; font-size: 14px; font-weight: 600; border: none; cursor: pointer; padding: 10px 15px; border-radius:0px;}
+        .step-text{font-size:14px ; font-weight:700; color:#000; padding-right:10px;}
+        .badges-padding-style{margin-bottom:30px;}
+        .bPageBlock{border-radius: 0px !important; background-color: transparent !important; border:none !important;}
+        .text-dec{color:#006db0; text-decoration:underline; cursor:pointer;}
+	.divStyle { color: black !important;font-weight: bold;font-size: 24px; padding-right:15px; padding-left: 20px; float:left; }
+	.divReturn { padding-left: 22px; font-size:16px; }
+	.divPicklist { float: left;position: relative;width: 38%; }
